@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Data Analysis (Py)</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">M1 S1 DS2E/SE</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="2_Basics.html">Basics</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/P-Pelletier/">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Data Analysis (Py)</h1>
+
+</div>
+
+
+<style>
+div.python pre { background-color: #e9f7f5
+; }
+</style>
+<style>
+div.r pre { background-color: #fff5fd; }
+</style>
+<div id="tibbles-and-data.tables" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Tibbles and
+data.tables</h1>
+<div id="introduction" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Introduction</h2>
+<div class="python">
+<pre class="python"><code># Python
+import pandas as pd
+## ModuleNotFoundError: No module named &#39;pandas&#39;
+import re
+covid_papers = pd.read_csv(&quot;data/covid_papers.csv&quot;)
+## NameError: name &#39;pd&#39; is not defined
+covid_papers
+## NameError: name &#39;covid_papers&#39; is not defined
+covid_papers.sample(frac = 0.001).shape
+## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+<pre><code>## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>Select columns</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+covid_papers.doi
+## NameError: name &#39;covid_papers&#39; is not defined
+covid_papers[[&#39;doi&#39;,&#39;title&#39;]]
+## NameError: name &#39;covid_papers&#39; is not defined
+covid_papers.drop([&#39;doi&#39;,&#39;creation&#39;],axis = 1)
+## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>using regular expression</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+import numpy as np
+covid_papers = covid_papers.rename({ name:replace for name, replace in zip(list(covid_papers.columns[:4]),&#39;V&#39;+np.char.array([&#39;1&#39;,&#39;2&#39;,&#39;3&#39;]))},axis = 1)
+# filter columns using regex
+covid_papers.filter(regex=(&quot;V[12]&quot;))
+covid_papers.filter(regex=(&quot;V.*&quot;))
+
+covid_papers.filter(regex=(&quot;3$&quot;))
+
+covid_papers.filter(regex=(&quot;^V&quot;))</code></pre>
+</div>
+<ul>
+<li>Filtering</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+covid_papers.loc[3:4,]
+covid_papers.drop(range(3,8))
+
+covid_papers[covid_papers.year_pub &gt; 2018]
+covid_papers[covid_papers.title.isin([&quot;Deep convolutional approaches for the analysis of Covid-19 using chest X-Ray images from portable devices&quot;,
+                               &quot;Evaluating the effect of city lock-down on controlling COVID-19 propagation through deep learning and network science models.&quot;])]
+
+covid_papers[covid_papers.year_pub == 2018 &amp; covid_papers.title.isin([&quot;Deep convolutional approaches for the analysis of Covid-19 using chest X-Ray images from portable devices&quot;,
+                               &quot;Evaluating the effect of city lock-down on controlling COVID-19 propagation through deep learning and network science models.&quot;])]
+                               
+covid_papers = covid_papers.dropna(subset = [&#39;title&#39;])
+covid_papers[covid_papers.title.str.contains(&#39;deep learning&#39;)][:5]
+
+covid_papers.drop_duplicates()
+covid_papers.drop_duplicates(subset=[&#39;V1&#39;, &#39;title&#39;])</code></pre>
+</div>
+<ul>
+<li>Sorting</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+covid_papers.sort_values(&#39;year_pub&#39;)
+## NameError: name &#39;covid_papers&#39; is not defined
+covid_papers.sort_values(&#39;year_pub&#39;,ascending=False)
+## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>Summarise</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+covid_papers.agg({&#39;cited&#39;:sum})
+## NameError: name &#39;covid_papers&#39; is not defined
+
+covid_papers.agg({&#39;cited&#39;:[sum,np.std]})
+## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>Modifying</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+covid_papers.assign(oa = covid_papers.oa.map(lambda oa: 1 if  oa==&#39;Y&#39; else 0),
+ log_cited = np.log(covid_papers.cited+1))
+## NameError: name &#39;covid_papers&#39; is not defined
+
+np.where( covid_papers.oa==&#39;Y&#39;,1,0) 
+## NameError: name &#39;covid_papers&#39; is not defined
+
+covid_papers.title.map(lambda x: str(x).lower())
+## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>Grouping</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+covid_papers.groupby(&#39;year_pub&#39;).language.nunique()
+## NameError: name &#39;covid_papers&#39; is not defined
+# By several groups
+
+covid_papers.groupby(&#39;year_pub&#39;).agg({&#39;cited&#39;:sum})
+## NameError: name &#39;covid_papers&#39; is not defined
+
+
+# first obs for each group 
+
+covid_papers.groupby(&#39;source&#39;).first()
+## NameError: name &#39;covid_papers&#39; is not defined
+
+covid_papers.groupby(&#39;source&#39;).last()
+## NameError: name &#39;covid_papers&#39; is not defined
+
+# Add a column with number of observations for each group
+
+covid_papers[&#39;grp_count&#39;] = covid_papers.groupby(&#39;source&#39;)[&#39;source&#39;].transform(&#39;count&#39;)
+## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+</div>
+</div>
+<div id="more-complex-use-of-by" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> More complex use of
+by</h2>
+<ul>
+<li>Select specific row by group</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+covid_papers.groupby(&#39;source&#39;).apply(lambda df: df.iloc[:3])
+
+covid_papers.groupby(&#39;source&#39;).apply(lambda df: df.iloc[-5:])</code></pre>
+</div>
+<ul>
+<li>Group counter</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).ngroups</code></pre>
+</div>
+<ul>
+<li>Get row number of observation by group</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).size()
+## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>Grouping sets (multiple by at once)</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+
+covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).agg({&#39;cited&#39;:np.mean,&#39;V1&#39;:&#39;count&#39;})
+## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+</div>
+</div>
+<div id="more-complex-manipulation" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> More Complex
+manipulation</h2>
+<ul>
+<li>Using multiple Variables</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+# Summarise several columns
+
+covid_papers.agg({var:func for var, func in zip([&#39;cited&#39;,&#39;year_pub&#39;],[np.mean]*2)})
+## NameError: name &#39;covid_papers&#39; is not defined
+
+# Summarise several columns by group
+covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).agg({var:func for var, func in zip([&#39;cited&#39;,&#39;year_pub&#39;],[np.mean]*2)})
+## NameError: name &#39;covid_papers&#39; is not defined
+
+## using patterns (regex)
+
+cols = list(filter(lambda x: x.startswith(&quot;V&quot;),covid_papers.columns.tolist()))
+## NameError: name &#39;covid_papers&#39; is not defined
+
+
+covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).agg({var:func for var, func in zip(cols,[&#39;count&#39;]*len(cols))})
+## NameError: name &#39;covid_papers&#39; is not defined
+
+# Summarise with more than one function by group
+
+covid_papers.groupby([&#39;source&#39;]).agg({var:func for var, func in zip([&#39;year_pub&#39;,&#39;cited&#39;],[np.mean,np.median]*len(cols))})
+## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>Modify Multiples Variables</li>
+</ul>
+<div class="python">
+<pre class="python"><code>
+def tobinary(x):
+    if str(x) == &#39;Y&#39;:
+        return 1
+    else :
+        return 0
+        
+# Modify several columns (dropping the others)
+
+covid_papers.agg({var:func for var, func in zip([&#39;oa&#39;,&#39;has_data&#39;],[tobinary]*2)})
+## NameError: name &#39;covid_papers&#39; is not defined
+
+# Modify several columns (keeping the others)
+for var in [&#39;oa&#39;,&#39;has_data&#39;]:
+    covid_papers = covid_papers.assign(var = tobinary)
+## NameError: name &#39;covid_papers&#39; is not defined
+
+# Modify columns using a condition
+
+for var in [&#39;oa&#39;,&#39;has_data&#39;]:
+    if covid_papers[var].dtypes == &#39;O&#39;:
+        covid_papers = covid_papers.assign(var = tobinary)
+## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>More complex expression</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+grp_size = covid_papers.groupby(&#39;year_pub&#39;).size().to_frame()
+## NameError: name &#39;covid_papers&#39; is not defined
+grp_size.columns = [&#39;share_en&#39;]
+## NameError: name &#39;grp_size&#39; is not defined
+
+covid_papers.assign(is_en = np.where(covid_papers.language == &#39;eng&#39;,1,0),
+oa = tobinary).groupby(&#39;year_pub&#39;).agg(share_en= (&#39;is_en&#39;,sum)).div(grp_size).sort_values(&#39;share_en&#39;)
+## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+</div>
+</div>
+</div>
+<div id="reshape-data" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Reshape data</h1>
+<p>Imagine you have a variable with multiple categories that are store
+in one cell as the variables ‘pubtype’ in our dataset. You may want to
+create different columns for each of this variable. The opposit is also
+possible, one can have several columns with value that we want to
+transforme in two columns : one with the factor and the other with the
+values.</p>
+<p>First let’s clean this variable and separate the string in each cells
+in order to have one row for each article’s pubtype.</p>
+<div class="python">
+<pre class="python"><code># Python
+covid_papers.pubtype.loc[1]
+## NameError: name &#39;covid_papers&#39; is not defined
+
+def clean_pubtype(str_):
+  return re.sub(&#39;[{]|[}]|pubType|: |[[]|[]]&#39;,&#39;&#39;,str_)
+
+
+clean_pubtype(covid_papers.pubtype.loc[1])
+## NameError: name &#39;covid_papers&#39; is not defined
+
+covid_papers[&#39;pubtype&#39;] = covid_papers.pubtype.map(lambda pt: clean_pubtype(str(pt)))
+## NameError: name &#39;covid_papers&#39; is not defined
+pubtype_cp = covid_papers.assign(pubtype = covid_papers.pubtype.str.split(&#39;&quot;, &quot;&#39;)).explode(&#39;pubtype&#39;)
+## NameError: name &#39;covid_papers&#39; is not defined
+pubtype_cp[&#39;pubtype&#39;] = pubtype_cp.pubtype.map(lambda pubtype: re.sub(&#39;&quot;&#39;,&#39;&#39;,(pubtype)))
+## NameError: name &#39;pubtype_cp&#39; is not defined
+pubtype_cp
+## NameError: name &#39;pubtype_cp&#39; is not defined
+
+pubtype_cp =  pubtype_cp[[&#39;V2&#39;,&#39;pubtype&#39;]].groupby([&#39;V2&#39;,&#39;pubtype&#39;]).size().to_frame(&#39;n&#39;).reset_index()
+## NameError: name &#39;pubtype_cp&#39; is not defined
+pubtype_cp_i = pubtype_cp[[&#39;V2&#39;,&#39;pubtype&#39;]].groupby([&#39;V2&#39;,&#39;pubtype&#39;]).size().to_frame(&#39;n&#39;)
+## NameError: name &#39;pubtype_cp&#39; is not defined</code></pre>
+</div>
+<div id="cast-data-from-long-to-wide" class="section level2"
+number="2.1">
+<h2><span class="header-section-number">2.1</span> Cast data (from long
+to wide)</h2>
+<div class="python">
+<pre class="python"><code># Python
+pubtype_cp_i.unstack().fillna(0)
+## NameError: name &#39;pubtype_cp_i&#39; is not defined
+casted_pubtype_cp = pubtype_cp.pivot(index=&quot;V2&quot;, columns=&quot;pubtype&quot;, values=&quot;n&quot;).fillna(0)
+## NameError: name &#39;pubtype_cp&#39; is not defined
+
+casted_pubtype_cp.shape
+## NameError: name &#39;casted_pubtype_cp&#39; is not defined</code></pre>
+</div>
+</div>
+<div id="melt-data-from-wide-to-long" class="section level2"
+number="2.2">
+<h2><span class="header-section-number">2.2</span> Melt data (from wide
+to long)</h2>
+<div class="python">
+<pre class="python"><code># Python
+
+casted_pubtype_cp.stack()
+## NameError: name &#39;casted_pubtype_cp&#39; is not defined
+
+
+casted_pubtype_cp.stack().to_frame(&#39;n&#39;).reset_index()
+## NameError: name &#39;casted_pubtype_cp&#39; is not defined</code></pre>
+</div>
+</div>
+<div id="split" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Split</h2>
+<div class="python">
+<pre class="python"><code># Python
+
+list(covid_papers.groupby(&#39;oa&#39;))</code></pre>
+</div>
+</div>
+<div id="split-and-transpose-a-vectorcolumn" class="section level2"
+number="2.4">
+<h2><span class="header-section-number">2.4</span> Split and transpose a
+vector/column</h2>
+<div class="python">
+<pre class="python"><code># Python
+covid_papers[[&#39;doi1&#39;,&#39;doi2&#39;]] = covid_papers.doi.str.split(&quot;/&quot;,expand=True).loc[:,:1]
+## NameError: name &#39;covid_papers&#39; is not defined
+covid_papers[[&#39;doi&#39;,&#39;doi1&#39;,&#39;doi2&#39;]]
+## NameError: name &#39;covid_papers&#39; is not defined
+
+covid_papers.doi.str.split(&#39;/&#39;).explode()
+## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+</div>
+</div>
+</div>
+<div id="index-and-keys" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Index and Keys</h1>
+<ul>
+<li>df.loc are for labels/ names</li>
+<li>df.iloc are for position numbers</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+covid_papers = covid_papers.set_index(&#39;V2&#39;)
+## NameError: name &#39;covid_papers&#39; is not defined
+
+covid_papers.loc[32837036,&#39;doi&#39;]
+## NameError: name &#39;covid_papers&#39; is not defined
+
+covid_papers.iloc[2,5]
+## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+</div>
+</div>
+<div id="joinbind-data-sets" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Join/Bind data
+sets</h1>
+<div id="join" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Join</h2>
+<div class="python">
+<pre class="python"><code># Python
+
+df1 = pd.DataFrame({&#39;Id&#39;: [&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;C&#39;],
+                    &#39;X1&#39;: [1,3,5,7],
+                    &#39;X2&#39;: [&#39;x2&#39;,&#39;x4&#39;,&#39;x6&#39;,&#39;x8&#39;]}).set_index(&#39;Id&#39;)
+## NameError: name &#39;pd&#39; is not defined
+
+df2 = pd.DataFrame({&#39;Id&#39;: [&#39;A&#39;,&#39;B&#39;,&#39;B&#39;,&#39;D&#39;],
+                    &#39;Y1&#39;: [1,3,5,7],
+                    &#39;Y2&#39;: [&#39;y1&#39;,&#39;y3&#39;,&#39;y5&#39;,&#39;y7&#39;]}).set_index(&#39;Id&#39;)
+## NameError: name &#39;pd&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>Join matching rows from y to x</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+df1.join(df2)
+## NameError: name &#39;df1&#39; is not defined
+
+pd.merge(df1, df2, how= &#39;left&#39;, on = &#39;Id&#39;)
+## NameError: name &#39;pd&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>Join matching rows from x to y</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+df2.join(df1)
+## NameError: name &#39;df2&#39; is not defined
+
+
+pd.merge(df1, df2, how= &#39;right&#39;, on = &#39;Id&#39;)
+## NameError: name &#39;pd&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>Join matching rows from both x and y</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+pd.merge(df1, df2, how= &#39;inner&#39;, on = &#39;Id&#39;)
+## NameError: name &#39;pd&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>Join keeping all the rows</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+pd.merge(df1, df2, how= &#39;outer&#39;, on = &#39;Id&#39;)
+## NameError: name &#39;pd&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>Return rows from x matching y</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+df1[df1.index == df2.index]
+## NameError: name &#39;df1&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>Return rows from x not matching y</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+df1[df1.index != df2.index]
+## NameError: name &#39;df1&#39; is not defined</code></pre>
+</div>
+</div>
+<div id="bind" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Bind</h2>
+<ul>
+<li>Bind rows</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+df1 = pd.DataFrame({&#39;Id&#39;: [&#39;A&#39;,&#39;B&#39;,&#39;C&#39;],
+                    &#39;X1&#39;: [1,3,5],
+                    &#39;X2&#39;: [&#39;x2&#39;,&#39;x4&#39;,&#39;x6&#39;]}).set_index(&#39;Id&#39;)
+## NameError: name &#39;pd&#39; is not defined
+
+df2 = pd.DataFrame({&#39;Id&#39;: [&#39;A&#39;,&#39;B&#39;,&#39;C&#39;],
+                    &#39;Y1&#39;: [1,3,5],
+                    &#39;Y2&#39;: [&#39;y1&#39;,&#39;y3&#39;,&#39;y5&#39;]}).set_index(&#39;Id&#39;)
+## NameError: name &#39;pd&#39; is not defined
+
+pd.concat([df1,df2])
+## NameError: name &#39;pd&#39; is not defined</code></pre>
+</div>
+<ul>
+<li>Bind columns</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+df3 = pd.concat([df1,df2],axis =1)
+## NameError: name &#39;pd&#39; is not defined
+df3
+## NameError: name &#39;df3&#39; is not defined</code></pre>
+</div>
+</div>
+</div>
+<div id="other" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Other</h1>
+<ul>
+<li>Lead/Lag</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+
+df3.shift(periods = 1)
+## NameError: name &#39;df3&#39; is not defined
+
+df3.shift(periods = 1, axis= 1)
+## NameError: name &#39;df3&#39; is not defined</code></pre>
+</div>
+</div>
+<div id="readwrite-data" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Read/Write data</h1>
+<div id="read" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Read</h2>
+<ul>
+<li>read csv file with pandas</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+covid_papers = pd.read_csv(&quot;data/covid_papers.csv&quot;)
+## NameError: name &#39;pd&#39; is not defined
+
+covid_papers
+## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+</div>
+</div>
+<div id="write" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Write</h2>
+<ul>
+<li>write data to a csv file</li>
+</ul>
+<div class="python">
+<pre class="python"><code># Python
+
+covid_papers.to_csv(&quot;data/covid_papers.csv&quot;)</code></pre>
+</div>
+</div>
+</div>
+<div id="exercise" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Exercise</h1>
+<p>Translate last chapter’s exercice in Python using pandas.</p>
+<p><a href="exo_4_py.html">solution with pandas (python)</a></p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
