@@ -6,6 +6,7 @@ title: "Basics"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,error=TRUE,collapse = T)
 library(reticulate)
+py_require('pandas')
 
 #  md_document:
 #    variant: markdown_github
@@ -244,9 +245,7 @@ y = c(TRUE,FALSE)
 
 !x[1]
 x & y
-x && y
 x | y
-x || y
 ```
 </div>
 </div>
@@ -254,11 +253,9 @@ x || y
 
 Operator (R)| Operator (Python)|	Description
 -|:-:|-:
-! | not |	Logical NOT
-& | and |	Element-wise logical AND
-&& |  |Logical AND
-\| |or|	Element-wise logical OR
-\|\|  | |	Logical OR
+! | not |	not
+& | and | and
+\| |or|	 or
 
 
 <p>&nbsp;</p>
@@ -936,8 +933,6 @@ a.get('a')
 a.get('d',4) # set to 4 if the key 'd' is not detected
 
 a.pop('a') # pop will use the corresponding value to the key a and remove the pair (key, value).
-a
-a.popitem('b')
 a
 ```
 ```{python dic2,echo = T,collapse = TRUE}
