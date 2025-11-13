@@ -2017,7 +2017,7 @@ while total &lt; 1:
     total += rnd
   
 total
-## 1.6855618499065197</code></pre>
+## 2.106540591465749</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -2047,7 +2047,7 @@ while(total &lt; 1){
 }
   
 total
-## [1] 2.911006</code></pre>
+## [1] 1.315373</code></pre>
 </div>
 </div>
 </div>
@@ -2113,7 +2113,7 @@ for val in lst:
   if val &gt; 2:
     results.append(val)
 time.time()-t
-## 0.0018851757049560547
+## 0.0019481182098388672
 
 results
 ## [3, 4]
@@ -2122,7 +2122,7 @@ t = time.time()
 # this loop their will produce the same output than a using List comprehension.
 results = [val for val in lst if val&gt;2]
 time.time()-t
-## 0.0012259483337402344
+## 0.0014700889587402344
 
 results
 ## [3, 4]</code></pre>
@@ -2140,7 +2140,7 @@ for val in st:
   if val &gt; 2:
     results.add(val)
 time.time()-t
-## 0.001966714859008789
+## 0.001961946487426758
 
 results
 ## {3, 4}
@@ -2150,7 +2150,7 @@ t = time.time()
 # this loop their will produce the same output than a using Set comprehension.
 results = {val for val in st if val&gt;2}
 time.time()-t
-## 0.0013430118560791016
+## 0.0013701915740966797
 
 results
 ## {3, 4}</code></pre>
@@ -2168,7 +2168,7 @@ for val in dct:
   if dct[val] &gt; 2:
     results.update({str(val): dct[val]})
 time.time()-t
-## 0.0019578933715820312
+## 0.0019779205322265625
 
 results
 ## {&#39;c&#39;: 3, &#39;d&#39;: 4}
@@ -2177,7 +2177,7 @@ t = time.time()
 # this loop their will produce the same output than a using Dict comprehension.
 results = {str(val): dct[val] for val in dct if dct[val]&gt;2}
 time.time()-t
-## 0.0014510154724121094
+## 0.0012369155883789062
 
 results
 ## {&#39;c&#39;: 3, &#39;d&#39;: 4}</code></pre>
@@ -2256,7 +2256,7 @@ t = time.time()
 clean_sum(seq = seq)
 ## 1560
 time.time() - t
-## 0.0013120174407958984
+## 0.0013480186462402344
 
 
 def clean_sum2(seq):
@@ -2267,7 +2267,7 @@ t = time.time()
 clean_sum2(seq = seq)
 ## 1560
 time.time() - t
-## 0.0012619495391845703</code></pre>
+## 0.001300811767578125</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -2290,7 +2290,7 @@ t = Sys.time()
 clean_sum(seq = seq)
 ## [1] 1560
 Sys.time() - t
-## Time difference of 0.004787207 secs
+## Time difference of 0.004907131 secs
 
 
 
@@ -2303,7 +2303,7 @@ t &lt;- Sys.time()
 clean_sum(seq = seq)
 ## [1] 1560
 Sys.time() - t
-## Time difference of 0.0007610321 secs</code></pre>
+## Time difference of 0.0006980896 secs</code></pre>
 </div>
 </div>
 </div>
