@@ -398,7 +398,7 @@ table_1 = table_1 %&gt;%
   filter(pmid != &#39;null&#39; &amp; year_pub &gt; 1975)</code></pre>
 <pre><code>## Error: object &#39;table_2&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+<pre><code>## 0.001 sec elapsed</code></pre>
 </div>
 </div>
 <div id="merge" class="section level1" number="3">
@@ -429,7 +429,7 @@ final_table = final_table %&gt;%
   mutate(nb_aut = dim(str_match_all(authors, &#39;&lt;AUTHOR&gt;&#39;)[[1]])[1]) </code></pre>
 <pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.001 sec elapsed</code></pre>
+<pre><code>## 0 sec elapsed</code></pre>
 <pre class="r"><code>final_table = final_table %&gt;% 
   filter(nb_aut &gt; 0)</code></pre>
 <pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
@@ -467,7 +467,7 @@ final_table = final_table %&gt;%
          oa = ifelse(oa == &#39;Y&#39;, 1, 0))</code></pre>
 <pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.001 sec elapsed</code></pre>
+<pre><code>## 0 sec elapsed</code></pre>
 <pre class="r"><code>sum(final_table$ML)</code></pre>
 <pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
 <pre class="r"><code>sum(final_table$oa)</code></pre>
@@ -549,7 +549,7 @@ countries_tibble = final_table %&gt;%
   separate_rows(authors, sep = &#39;&lt;AUTHOR&gt;&#39;)</code></pre>
 <pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.001 sec elapsed</code></pre>
+<pre><code>## 0 sec elapsed</code></pre>
 <pre class="r"><code>countries_tibble %&gt;% 
   select(authors)</code></pre>
 <pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
@@ -559,7 +559,7 @@ countries_tibble = countries_tibble %&gt;%
   filter(authors !=&quot;&quot; &amp; !str_detect(authors, &#39;&lt;AFFILIATION&gt;None&#39;))</code></pre>
 <pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+<pre><code>## 0.001 sec elapsed</code></pre>
 <pre class="r"><code>countries_tibble %&gt;% 
   select(authors)</code></pre>
 <pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>

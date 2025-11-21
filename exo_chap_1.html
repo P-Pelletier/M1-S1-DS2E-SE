@@ -389,7 +389,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below1(10000,3,5)
 ## [1] 23331668
 Sys.time() - t
-## Time difference of 0.004539013 secs</code></pre>
+## Time difference of 0.004550934 secs</code></pre>
 </div>
 </div>
 <div id="python" class="section level2" number="1.2">
@@ -411,7 +411,7 @@ t = time.time()
 get_sum_multiples_below1(10000,3,5)
 ## 23331668
 time.time() - t
-## 0.001764059066772461</code></pre>
+## 0.0016841888427734375</code></pre>
 <pre class="python"><code># Python 
 
 def get_sum_multiples_below2(below,mutiple_1,multiple_2):
@@ -422,7 +422,7 @@ t = time.time()
 get_sum_multiples_below2(10000,3,5)
 ## 23331668
 time.time() - t
-## 0.0017049312591552734</code></pre>
+## 0.001631021499633789</code></pre>
 </div>
 </div>
 </div>
@@ -465,7 +465,7 @@ t &lt;- Sys.time()
 nth_prime(10001)
 ## [1] 104743
 Sys.time() - t
-## Time difference of 0.431056 secs</code></pre>
+## Time difference of 0.4211071 secs</code></pre>
 </div>
 </div>
 <div id="python-1" class="section level2" number="2.2">
@@ -498,7 +498,7 @@ t = time.time()
 nth_prime(10001)
 ## 104743
 time.time() - t
-## 0.08264899253845215</code></pre>
+## 0.08280515670776367</code></pre>
 </div>
 </div>
 </div>
@@ -559,7 +559,7 @@ for(i in seq(1901,2000)){
   nb_sundays = nb_sundays + year_result[2]
 }
 Sys.time() - t
-## Time difference of 0.006487131 secs
+## Time difference of 0.006302834 secs
 
 
 # results
@@ -591,7 +591,7 @@ def get_sundays(year,first_sunday):
   # get first sunday of the following year
   next_sunday_position = sundays[-1] - nb_days + 7
   
-  nb_sundays_first = len(np.where(np.isin(sundays,cumsum_year)==True)[0])
+  nb_sundays_first = len(np.where(np.isin(sundays,cumsum_year))[0])
   
   return next_sunday_position, nb_sundays_first
 
@@ -610,7 +610,7 @@ for i in range(1901,2001):
 
 
 time.time() - t
-## 0.004177093505859375
+## 0.004143714904785156
 nb_sundays
 ## 171</code></pre>
 </div>
