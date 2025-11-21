@@ -380,7 +380,7 @@ table_1 = read_csv(file = &#39;data/table_1.csv&#39;)</code></pre>
 <pre class="r"><code>cities = read_csv(file = &#39;data/cities_loc.csv&#39;)</code></pre>
 <pre><code>## Error: &#39;data/cities_loc.csv&#39; does not exist in current working directory (&#39;/Users/peltouz/Documents/GitHub/M1-S1-DS2E-SE&#39;).</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.002 sec elapsed</code></pre>
+<pre><code>## 0.003 sec elapsed</code></pre>
 </div>
 </div>
 <div id="clean" class="section level1" number="2">
@@ -429,7 +429,7 @@ final_table = final_table %&gt;%
   mutate(nb_aut = dim(str_match_all(authors, &#39;&lt;AUTHOR&gt;&#39;)[[1]])[1]) </code></pre>
 <pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+<pre><code>## 0.001 sec elapsed</code></pre>
 <pre class="r"><code>final_table = final_table %&gt;% 
   filter(nb_aut &gt; 0)</code></pre>
 <pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
@@ -467,7 +467,7 @@ final_table = final_table %&gt;%
          oa = ifelse(oa == &#39;Y&#39;, 1, 0))</code></pre>
 <pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+<pre><code>## 0.001 sec elapsed</code></pre>
 <pre class="r"><code>sum(final_table$ML)</code></pre>
 <pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
 <pre class="r"><code>sum(final_table$oa)</code></pre>
@@ -488,7 +488,7 @@ final_table %&gt;%
             citation = mean(cited))</code></pre>
 <pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.001 sec elapsed</code></pre>
+<pre><code>## 0 sec elapsed</code></pre>
 </div>
 </div>
 <div id="clean-up-pub_type" class="section level1" number="7">
@@ -585,7 +585,7 @@ countries_tibble  = countries_tibble %&gt;%
          authors = tolower(authors)) </code></pre>
 <pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.001 sec elapsed</code></pre>
+<pre><code>## 0 sec elapsed</code></pre>
 <pre class="r"><code>tic()
 countries_tibble = countries_tibble %&gt;%
   group_by(pmid, authors) %&gt;%
@@ -611,7 +611,7 @@ countries_tibble = left_join(countries_tibble,
                              by = &#39;pmid&#39;)</code></pre>
 <pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+<pre><code>## 0.001 sec elapsed</code></pre>
 <pre class="r"><code>tic()
 countries_pub = countries_tibble %&gt;% 
   group_by(country, year_pub) %&gt;%

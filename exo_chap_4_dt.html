@@ -419,7 +419,7 @@ dt_table_1 = dt_table_1[pmid != &#39;null&#39; &amp; doi != &#39;null&#39;]
 dt_table_2 = dt_table_2[pmid != &#39;null&#39; &amp; year_pub &gt; 1975]
 ## Error: object &#39;dt_table_2&#39; not found
 toc()
-## 0 sec elapsed</code></pre>
+## 0.001 sec elapsed</code></pre>
 </div>
 </div>
 <div id="merge" class="section level1" number="3">
@@ -490,7 +490,7 @@ dt_final_table[, &#39;title&#39; := .(tolower(title)),
                  by = &#39;pmid&#39;]
 ## Error: object &#39;dt_final_table&#39; not found
 toc()
-## 0.001 sec elapsed
+## 0 sec elapsed
 
 
 sum(dt_final_table$ML)
@@ -525,7 +525,7 @@ tic()
 dt_final_table[,pub_type := str_match_all(pubtype, &#39;\\[&quot;&quot;(.*?)&quot;&quot;&#39;)[[1]][2],by = &#39;pmid&#39;]
 ## Error: object &#39;dt_final_table&#39; not found
 toc()
-## 0.001 sec elapsed
+## 0 sec elapsed
 
 dt_final_table[,.(pubtype,pub_type)]
 ## Error: object &#39;dt_final_table&#39; not found</code></pre>
@@ -646,7 +646,7 @@ countries_year = countries_dt[dt_final_table[,c(&#39;pmid&#39;,&#39;year_pub&#39
 countries_year = na.omit(countries_year)
 ## Error: object &#39;countries_year&#39; not found
 toc()
-## 0 sec elapsed
+## 0.001 sec elapsed
 
 tic()
 countries_pub_dt = countries_year[,
@@ -657,7 +657,7 @@ countries_pub_dt = countries_year[,
 head(countries_pub_dt[order(n,decreasing = T)])
 ## Error: object &#39;countries_pub_dt&#39; not found
 toc()
-## 0.001 sec elapsed</code></pre>
+## 0 sec elapsed</code></pre>
 </div>
 </div>
 <div id="country-bar-plot-with-plotly" class="section level1"
