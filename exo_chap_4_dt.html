@@ -332,6 +332,9 @@ div.tocify {
 <li>
   <a href="2_Basics.html">Basics</a>
 </li>
+<li>
+  <a href="3_Arrays_Vectors.html">Arrays/Vectors</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -429,7 +432,7 @@ tic()
 dt_final_table = na.omit(dt_table_2[dt_table_1, on = &#39;pmid&#39;])
 ## Error: object &#39;dt_table_2&#39; not found
 toc()
-## 0 sec elapsed
+## 0.001 sec elapsed
 
 dt_final_table
 ## Error: object &#39;dt_final_table&#39; not found</code></pre>
@@ -487,7 +490,7 @@ dt_final_table[, &#39;title&#39; := .(tolower(title)),
                  by = &#39;pmid&#39;]
 ## Error: object &#39;dt_final_table&#39; not found
 toc()
-## 0 sec elapsed
+## 0.001 sec elapsed
 
 
 sum(dt_final_table$ML)
@@ -522,7 +525,7 @@ tic()
 dt_final_table[,pub_type := str_match_all(pubtype, &#39;\\[&quot;&quot;(.*?)&quot;&quot;&#39;)[[1]][2],by = &#39;pmid&#39;]
 ## Error: object &#39;dt_final_table&#39; not found
 toc()
-## 0 sec elapsed
+## 0.001 sec elapsed
 
 dt_final_table[,.(pubtype,pub_type)]
 ## Error: object &#39;dt_final_table&#39; not found</code></pre>
@@ -608,7 +611,7 @@ countries_dt[, clean_aff := str_replace_all(clean_aff,&#39; USA&#39;,&#39;United
                  ][, clean_aff := tolower(clean_aff)]
 ## Error: object &#39;countries_dt&#39; not found
 toc()
-## 0.001 sec elapsed
+## 0 sec elapsed
 countries_dt
 ## Error: object &#39;countries_dt&#39; not found
 
@@ -635,7 +638,7 @@ setkey(countries_dt,pmid,country)
 countries_dt = unique(countries_dt)
 ## Error: object &#39;countries_dt&#39; not found
 toc()
-## 0.001 sec elapsed
+## 0 sec elapsed
 
 tic()
 countries_year = countries_dt[dt_final_table[,c(&#39;pmid&#39;,&#39;year_pub&#39;)], on =&#39;pmid&#39;]

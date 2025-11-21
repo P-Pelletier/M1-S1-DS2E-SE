@@ -9,8 +9,8 @@ navbar:
       href: index.html
     - text: "Basics"
       href: 2_Basics.html
-    #- text: "Arrays/Vectors"
-    #  href: 3_Arrays_Vectors.html
+    - text: "Arrays/Vectors"
+      href: 3_Arrays_Vectors.html
     #- text: "Data Analysis (R)"
     #  href: 5_Data_Analysis_R.html
     #- text: "Data Analysis (Python)"

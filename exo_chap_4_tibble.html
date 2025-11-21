@@ -332,6 +332,9 @@ div.tocify {
 <li>
   <a href="2_Basics.html">Basics</a>
 </li>
+<li>
+  <a href="3_Arrays_Vectors.html">Arrays/Vectors</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -377,7 +380,7 @@ table_1 = read_csv(file = &#39;data/table_1.csv&#39;)</code></pre>
 <pre class="r"><code>cities = read_csv(file = &#39;data/cities_loc.csv&#39;)</code></pre>
 <pre><code>## Error: &#39;data/cities_loc.csv&#39; does not exist in current working directory (&#39;/Users/peltouz/Documents/GitHub/M1-S1-DS2E-SE&#39;).</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.003 sec elapsed</code></pre>
+<pre><code>## 0.002 sec elapsed</code></pre>
 </div>
 </div>
 <div id="clean" class="section level1" number="2">
@@ -395,7 +398,7 @@ table_1 = table_1 %&gt;%
   filter(pmid != &#39;null&#39; &amp; year_pub &gt; 1975)</code></pre>
 <pre><code>## Error: object &#39;table_2&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.001 sec elapsed</code></pre>
+<pre><code>## 0 sec elapsed</code></pre>
 </div>
 </div>
 <div id="merge" class="section level1" number="3">
@@ -477,7 +480,7 @@ final_table %&gt;%
   summarize(mean_nb_aut = mean(nb_aut))</code></pre>
 <pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.001 sec elapsed</code></pre>
+<pre><code>## 0 sec elapsed</code></pre>
 <pre class="r"><code>tic()
 final_table %&gt;% 
   group_by(ML) %&gt;% 
@@ -485,7 +488,7 @@ final_table %&gt;%
             citation = mean(cited))</code></pre>
 <pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+<pre><code>## 0.001 sec elapsed</code></pre>
 </div>
 </div>
 <div id="clean-up-pub_type" class="section level1" number="7">
@@ -546,7 +549,7 @@ countries_tibble = final_table %&gt;%
   separate_rows(authors, sep = &#39;&lt;AUTHOR&gt;&#39;)</code></pre>
 <pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+<pre><code>## 0.001 sec elapsed</code></pre>
 <pre class="r"><code>countries_tibble %&gt;% 
   select(authors)</code></pre>
 <pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
@@ -567,7 +570,7 @@ countries_tibble = countries_tibble %&gt;%
   filter(!duplicated(pmid, authors))</code></pre>
 <pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+<pre><code>## 0.001 sec elapsed</code></pre>
 <pre class="r"><code>countries_tibble %&gt;% 
   select(authors)</code></pre>
 <pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
@@ -582,7 +585,7 @@ countries_tibble  = countries_tibble %&gt;%
          authors = tolower(authors)) </code></pre>
 <pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+<pre><code>## 0.001 sec elapsed</code></pre>
 <pre class="r"><code>tic()
 countries_tibble = countries_tibble %&gt;%
   group_by(pmid, authors) %&gt;%
@@ -599,7 +602,7 @@ countries_tibble = countries_tibble %&gt;%
   distinct(pmid, country)</code></pre>
 <pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.001 sec elapsed</code></pre>
+<pre><code>## 0 sec elapsed</code></pre>
 <pre class="r"><code>countries_tibble</code></pre>
 <pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
 <pre class="r"><code>tic()
@@ -616,7 +619,7 @@ countries_pub = countries_tibble %&gt;%
   arrange(desc(n))</code></pre>
 <pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.001 sec elapsed</code></pre>
+<pre><code>## 0 sec elapsed</code></pre>
 </div>
 </div>
 <div id="country-bar-plot-with-plotly" class="section level1"

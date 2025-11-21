@@ -332,6 +332,9 @@ div.tocify {
 <li>
   <a href="2_Basics.html">Basics</a>
 </li>
+<li>
+  <a href="3_Arrays_Vectors.html">Arrays/Vectors</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -390,12 +393,12 @@ lst = list(range(2000000))
 t = time.time()
 arr_2 = arr*2
 time.time() - t
-## 0.005506992340087891
+## 0.005872011184692383
 
 t = time.time()
 lst_2 = [i*2  for i in lst]
 time.time() - t
-## 0.02019500732421875</code></pre>
+## 0.020996809005737305</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -407,7 +410,7 @@ vec = c(1:2000000)
 t = Sys.time()
 vec_2 = vec*2
 Sys.time() - t
-## Time difference of 0.002414942 secs
+## Time difference of 0.00249505 secs
 
 t = Sys.time()
 vec_2_loop &lt;- rep(0,length(vec))
@@ -415,7 +418,7 @@ for(i in 1:length(vec)){
   vec_2_loop[i] = vec[i]*2
     }
 Sys.time() - t
-## Time difference of 0.121717 secs</code></pre>
+## Time difference of 0.1169951 secs</code></pre>
 </div>
 </div>
 </div>
@@ -600,10 +603,10 @@ seq(1, 4, length.out = 10)
 arr_rd = np.random.randn(4,5)
 
 arr_rd
-## array([[ 2.35376206, -1.30160384,  0.65470633,  0.68394754,  0.98359337],
-##        [-0.35438114,  0.83587619, -0.11927434,  0.66803525,  1.05875858],
-##        [-1.20612216, -0.61095038,  0.41565746,  0.85097489, -0.88938637],
-##        [ 0.08493633, -1.24981027,  1.18502639,  0.28875867,  0.65514384]])</code></pre>
+## array([[ 0.99680817,  0.55939328,  1.54277386, -0.34654673, -1.66881631],
+##        [-0.20236077,  0.08828547,  0.66446917,  1.39763976, -2.21134677],
+##        [-0.58600685,  1.19171496, -0.11773121,  0.20148384, -0.33835084],
+##        [-0.48223659,  1.14834081,  0.76519556, -0.14746157,  1.74679146]])</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -611,14 +614,14 @@ arr_rd
 <pre class="r"><code># R
 
 #generate a matrix
-mat_rd &lt;- matrix(runif(4*5),4,5)
+mat_rd &lt;- matrix(rnorm(4*5),4,5)
 
 mat_rd
-##           [,1]      [,2]      [,3]      [,4]       [,5]
-## [1,] 0.7149974 0.9274198 0.4607967 0.4609036 0.28741466
-## [2,] 0.3755205 0.8690085 0.7120232 0.7919372 0.55261695
-## [3,] 0.6362894 0.2320243 0.6921108 0.0130462 0.18952799
-## [4,] 0.7482240 0.7912685 0.1443386 0.7581271 0.09151461</code></pre>
+##            [,1]       [,2]       [,3]        [,4]       [,5]
+## [1,] -0.9206695 -1.2526019  0.7803557 -0.64614963 -0.2816132
+## [2,] -0.8987722  1.7705436  2.0279386  0.03187668  0.8253842
+## [3,]  2.0039010 -0.8121992 -0.1047314  0.57049718 -0.3539397
+## [4,]  0.4242620  0.1254059  1.0815740 -0.24528353  0.5926029</code></pre>
 </div>
 </div>
 </div>
@@ -883,8 +886,8 @@ mat[-2,]
 arr = np.random.randn(10)
 
 arr
-## array([-0.69016382, -0.31861519,  0.61318283, -0.31899826,  0.26225782,
-##        -1.10738946,  0.55659821, -0.98720531, -0.33312101,  0.09891999])
+## array([-1.18067019, -0.07914243,  0.40741712,  0.72748684,  1.45175466,
+##         0.4731612 , -1.96145291,  0.10927165,  0.08418122, -0.83661683])
 arr.sort()
 </code></pre>
 <pre class="python"><code># Python 
@@ -892,10 +895,10 @@ arr.sort()
 arr = np.random.randn(4,3)
 
 arr
-## array([[-1.05798787, -0.66136562, -0.4474713 ],
-##        [ 0.47187733,  0.60918191, -0.98132194],
-##        [-0.4212184 , -0.89290192,  0.9852271 ],
-##        [ 0.34896788, -1.54878371, -0.3126448 ]])
+## array([[-0.43340967,  1.68533189,  1.59817574],
+##        [ 0.54231776, -0.68820461, -0.4204588 ],
+##        [-0.16219304,  0.04974691,  1.272959  ],
+##        [-0.59967239, -0.2913399 ,  0.29876687]])
 arr.sort(1)
 </code></pre>
 </div>
@@ -904,30 +907,30 @@ arr.sort(1)
 <div class="r">
 <pre class="r"><code># R
 
-arr &lt;- runif(10)
+arr &lt;- rnorm(10)
 
 arr
-##  [1] 0.2440417 0.6229367 0.7266658 0.2097081 0.7910001 0.4072493 0.8753147
-##  [8] 0.6098223 0.6526028 0.8378329
+##  [1] -1.86657429  0.85437162  0.03204504  0.69226975  1.52734797 -0.30548776
+##  [7]  2.00986420  1.07818159  0.54030141 -1.43486086
 sort(arr)
-##  [1] 0.2097081 0.2440417 0.4072493 0.6098223 0.6229367 0.6526028 0.7266658
-##  [8] 0.7910001 0.8378329 0.8753147</code></pre>
+##  [1] -1.86657429 -1.43486086 -0.30548776  0.03204504  0.54030141  0.69226975
+##  [7]  0.85437162  1.07818159  1.52734797  2.00986420</code></pre>
 <pre class="r"><code># R
 
-arr &lt;- matrix(runif(4*3),4,3)
+arr &lt;- matrix(rnorm(4*3),4,3)
 
 arr
-##           [,1]      [,2]       [,3]
-## [1,] 0.2727843 0.4130955 0.24513959
-## [2,] 0.9986546 0.5127219 0.05940056
-## [3,] 0.6919806 0.3646895 0.64820526
-## [4,] 0.2269705 0.8286509 0.18533000
+##              [,1]       [,2]       [,3]
+## [1,]  0.978081813  0.7868608 -0.7186762
+## [2,] -0.007352782  0.4267096  1.0244705
+## [3,]  1.193511783  0.3250775 -0.9755405
+## [4,] -1.264685358 -0.7291816  2.3108393
 apply(arr,MARGIN = 2, FUN = sort)
-##           [,1]      [,2]       [,3]
-## [1,] 0.2269705 0.3646895 0.05940056
-## [2,] 0.2727843 0.4130955 0.18533000
-## [3,] 0.6919806 0.5127219 0.24513959
-## [4,] 0.9986546 0.8286509 0.64820526</code></pre>
+##              [,1]       [,2]       [,3]
+## [1,] -1.264685358 -0.7291816 -0.9755405
+## [2,] -0.007352782  0.3250775 -0.7186762
+## [3,]  0.978081813  0.4267096  1.0244705
+## [4,]  1.193511783  0.7868608  2.3108393</code></pre>
 </div>
 </div>
 </div>
@@ -1038,13 +1041,13 @@ arr = np.arange(200000)
 t = time.time()
 results = [(i if i%2==0 else 0) for i in arr]
 time.time() - t
-## 0.009987115859985352
+## 0.010415077209472656
 
 
 t = time.time()
 results = np.where(arr%2!=0,0,arr)
 time.time() - t
-## 0.0019037723541259766</code></pre>
+## 0.0023877620697021484</code></pre>
 <pre class="python"><code># Python 
 
 arr = np.arange(20000000)
@@ -1053,13 +1056,13 @@ arr = np.arange(20000000)
 t = time.time()
 results = [(i if i%2==0 else 0) for i in arr]
 time.time() - t
-## 0.9232950210571289
+## 0.9165191650390625
 
 
 t = time.time()
 results = np.where(arr%2!=0,0,arr)
 time.time() - t
-## 0.07110595703125</code></pre>
+## 0.0853581428527832</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -1078,13 +1081,13 @@ for(i in 1:length(vec)){
   }
 }
 Sys.time() - t
-## Time difference of 0.02279592 secs
+## Time difference of 0.02411294 secs
 
 
 t &lt;- Sys.time()
 results &lt;- ifelse(vec%%2!=0,vec,0)
 Sys.time() - t
-## Time difference of 0.002549171 secs</code></pre>
+## Time difference of 0.00278306 secs</code></pre>
 <pre class="r"><code># R
 
 vec &lt;- seq(1,20000000)
@@ -1099,13 +1102,13 @@ for(i in 1:length(vec)){
   }
 }
 Sys.time() - t
-## Time difference of 1.836243 secs
+## Time difference of 1.866482 secs
 
 
 t &lt;- Sys.time()
 results &lt;- ifelse(vec%%2!=0,vec,0)
 Sys.time() - t
-## Time difference of 0.403836 secs
+## Time difference of 0.400182 secs
 
 
 ## other way using which
@@ -1113,7 +1116,7 @@ Sys.time() - t
 t &lt;- Sys.time()
 vec[which(vec%%2==0)] = 0
 Sys.time() - t 
-## Time difference of 0.171797 secs</code></pre>
+## Time difference of 0.1682482 secs</code></pre>
 </div>
 </div>
 </div>
@@ -1519,24 +1522,26 @@ mapply(FUN = function(x,y,z){seq(x,y,length.out = z)},1,1:5,1:5)
 <h2><span class="header-section-number">5.2</span> Map (Python)</h2>
 <p>In python we can use <code>map</code> to do the same thing than apply
 familly in R with a bit of manipulation.</p>
-<p><code>map</code> takes different kind of input, it transforms it by
-row if the object is an array and returns an iterator.You can then
-transform this into a list or an array.</p>
+<p>The function <code>map</code> takes different kind of input, it
+transforms it by row if the object is an array and returns an
+iterator.You can then transform this into a list or an array.</p>
 <div class="python">
 <pre class="python"><code># Python
 
 arr_1 = np.arange(1,17).reshape([4,4], order = &#39;F&#39;)
+arr_1
+## array([[ 1,  5,  9, 13],
+##        [ 2,  6, 10, 14],
+##        [ 3,  7, 11, 15],
+##        [ 4,  8, 12, 16]])
 
 # by row, by columns you need to tranpose the array
 map(np.sum,arr_1)
-## &lt;map object at 0x11e302260&gt;
+## &lt;map object at 0x14da04970&gt;
 list(map(np.sum,arr_1))
 ## [np.int64(28), np.int64(32), np.int64(36), np.int64(40)]
-np.fromiter(map(sum,arr_1.T), dtype = np.int)
-## AttributeError: module &#39;numpy&#39; has no attribute &#39;int&#39;.
-## `np.int` was a deprecated alias for the builtin `int`. To avoid this error in existing code, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
-## The aliases was originally deprecated in NumPy 1.20; for more details and guidance see the original release note at:
-##     https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+np.fromiter(map(sum,arr_1), dtype = int)
+## array([28, 32, 36, 40])
 
 # with a list
 lst_1 = [arr_1,np.linspace(1,8,num=arr_1.size)]
@@ -1594,8 +1599,8 @@ class="math inline">\(1^{1} + 2^{2} + 3^{3} + ... +
 </div>
 <div id="exercise-2" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Exercise 2</h2>
-<p>Try to vectorize exercices from chapter 1, you can also compare it
-with apply/map functions.</p>
+<p>Try to vectorize exercices 1 and 2 from chapter 1, you can also
+compare it with apply/map functions.</p>
 </div>
 <div id="exercise-3" class="section level2" number="6.3">
 <h2><span class="header-section-number">6.3</span> Exercise 3</h2>
@@ -1617,7 +1622,7 @@ numbers.</p>
 its digits is 3 + 2 + 7 + 6 + 8 = 26.</p>
 <p>What is the sum of the digits of the number <span
 class="math inline">\(2^{1000}\)</span>?</p>
-<p><a href="exo_chap_2.html">Solutions</a></p>
+<p><a href="">Solutions</a></p>
 </div>
 </div>
 

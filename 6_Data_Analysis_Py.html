@@ -332,6 +332,9 @@ div.tocify {
 <li>
   <a href="2_Basics.html">Basics</a>
 </li>
+<li>
+  <a href="3_Arrays_Vectors.html">Arrays/Vectors</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -524,7 +527,7 @@ covid_papers.agg({&#39;cited&#39;:sum})
 
 covid_papers.agg({&#39;cited&#39;:[sum,np.std]})
 ## &lt;string&gt;:2: FutureWarning: The provided callable &lt;built-in function sum&gt; is currently using Series.sum. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;sum&quot; instead.
-## &lt;string&gt;:2: FutureWarning: The provided callable &lt;function std at 0x103f34220&gt; is currently using Series.std. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;std&quot; instead.
+## &lt;string&gt;:2: FutureWarning: The provided callable &lt;function std at 0x12936c4a0&gt; is currently using Series.std. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;std&quot; instead.
 ##             cited
 ## sum  1.241806e+06
 ## std  3.883440e+01</code></pre>
@@ -696,7 +699,7 @@ covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).size()
 
 
 covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).agg({&#39;cited&#39;:np.mean,&#39;V1&#39;:&#39;count&#39;})
-## &lt;string&gt;:4: FutureWarning: The provided callable &lt;function mean at 0x103f340e0&gt; is currently using SeriesGroupBy.mean. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;mean&quot; instead.
+## &lt;string&gt;:4: FutureWarning: The provided callable &lt;function mean at 0x12936c360&gt; is currently using SeriesGroupBy.mean. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;mean&quot; instead.
 ##                      cited     V1
 ## source year_pub                  
 ## AGR    1987.0     0.500000      2
@@ -725,15 +728,15 @@ manipulation</h2>
 # Summarise several columns
 
 covid_papers.agg({var:func for var, func in zip([&#39;cited&#39;,&#39;year_pub&#39;],[np.mean]*2)})
-## &lt;string&gt;:4: FutureWarning: The provided callable &lt;function mean at 0x103f340e0&gt; is currently using Series.mean. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;mean&quot; instead.
+## &lt;string&gt;:4: FutureWarning: The provided callable &lt;function mean at 0x12936c360&gt; is currently using Series.mean. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;mean&quot; instead.
 ## cited          8.341434
 ## year_pub    2015.348434
 ## dtype: float64
 
 # Summarise several columns by group
 covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).agg({var:func for var, func in zip([&#39;cited&#39;,&#39;year_pub&#39;],[np.mean]*2)})
-## &lt;string&gt;:3: FutureWarning: The provided callable &lt;function mean at 0x103f340e0&gt; is currently using SeriesGroupBy.mean. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;mean&quot; instead.
-## &lt;string&gt;:3: FutureWarning: The provided callable &lt;function mean at 0x103f340e0&gt; is currently using SeriesGroupBy.mean. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;mean&quot; instead.
+## &lt;string&gt;:3: FutureWarning: The provided callable &lt;function mean at 0x12936c360&gt; is currently using SeriesGroupBy.mean. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;mean&quot; instead.
+## &lt;string&gt;:3: FutureWarning: The provided callable &lt;function mean at 0x12936c360&gt; is currently using SeriesGroupBy.mean. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;mean&quot; instead.
 ##                      cited  year_pub
 ## source year_pub                     
 ## AGR    1987.0     0.500000    1987.0
@@ -775,8 +778,8 @@ covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).agg({var:func for va
 # Summarise with more than one function by group
 
 covid_papers.groupby([&#39;source&#39;]).agg({var:func for var, func in zip([&#39;year_pub&#39;,&#39;cited&#39;],[np.mean,np.median]*len(cols))})
-## &lt;string&gt;:4: FutureWarning: The provided callable &lt;function mean at 0x103f340e0&gt; is currently using SeriesGroupBy.mean. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;mean&quot; instead.
-## &lt;string&gt;:4: FutureWarning: The provided callable &lt;function median at 0x10b0e82c0&gt; is currently using SeriesGroupBy.median. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;median&quot; instead.
+## &lt;string&gt;:4: FutureWarning: The provided callable &lt;function mean at 0x12936c360&gt; is currently using SeriesGroupBy.mean. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;mean&quot; instead.
+## &lt;string&gt;:4: FutureWarning: The provided callable &lt;function median at 0x1294e8540&gt; is currently using SeriesGroupBy.median. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;median&quot; instead.
 ##            year_pub  cited
 ## source                    
 ## AGR     2003.371429    2.0
@@ -803,7 +806,7 @@ def tobinary(x):
 # Modify several columns (dropping the others)
 
 covid_papers.agg({var:func for var, func in zip([&#39;oa&#39;,&#39;has_data&#39;],[tobinary]*2)})
-## &lt;string&gt;:4: FutureWarning: using &lt;function tobinary at 0x11c4a7380&gt; in Series.agg cannot aggregate and has been deprecated. Use Series.transform to keep behavior unchanged.
+## &lt;string&gt;:4: FutureWarning: using &lt;function tobinary at 0x3d5dd3c40&gt; in Series.agg cannot aggregate and has been deprecated. Use Series.transform to keep behavior unchanged.
 ##         oa  has_data
 ## 0        1         0
 ## 1        1         0
