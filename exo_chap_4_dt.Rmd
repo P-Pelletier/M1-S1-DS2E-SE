@@ -37,8 +37,6 @@ library(data.table)
 library(stringr)
 library(tictoc)
 # Import the two datasets 
-setwd('C:/Users/Beta/Documents/GitHub/M1_TDP')
-
 tic()
 dt_table_1 = fread(file = 'data/table_1.csv')
 dt_table_2 = fread(file = 'data/table_2.csv')
@@ -272,16 +270,17 @@ countries_dt
 
 key(countries_dt)
 setkey(countries_dt,pmid,clean_aff)
+
+
+pattern = paste0("\\b(", paste(countries, collapse = "|"), ")\\b")
 tic()
-countries_dt[,country := .(ifelse(any(str_detect(clean_aff,countries)),
-                                  countries[str_detect(clean_aff,countries)][1],
-                                  "")),
+countries_dt[,country := .(str_extract(clean_aff, pattern)),
              by=c('pmid', 'clean_aff')]
 toc()
 countries_dt
 
 tic()
-countries_dt = countries_dt[country != "", -'clean_aff']
+countries_dt = countries_dt[!is.na(country), -'clean_aff']
 setkey(countries_dt,pmid,country)
 countries_dt = unique(countries_dt)
 toc()

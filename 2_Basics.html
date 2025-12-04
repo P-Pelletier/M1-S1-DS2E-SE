@@ -13,7 +13,7 @@
 
 <title>Basics</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -334,6 +334,9 @@ div.tocify {
 </li>
 <li>
   <a href="3_Arrays_Vectors.html">Arrays/Vectors</a>
+</li>
+<li>
+  <a href="5_Data_Analysis_R.html">Data Analysis (R)</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -2020,7 +2023,7 @@ while total &lt; 1:
     total += rnd
   
 total
-## 2.633414249899508</code></pre>
+## 1.6559332464648555</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -2050,7 +2053,7 @@ while(total &lt; 1){
 }
   
 total
-## [1] 2.550405</code></pre>
+## [1] 1.077593</code></pre>
 </div>
 </div>
 </div>
@@ -2116,7 +2119,7 @@ for val in lst:
   if val &gt; 2:
     results.append(val)
 time.time()-t
-## 0.001878976821899414
+## 0.0019698143005371094
 
 results
 ## [3, 4]
@@ -2125,7 +2128,7 @@ t = time.time()
 # this loop their will produce the same output than a using List comprehension.
 results = [val for val in lst if val&gt;2]
 time.time()-t
-## 0.0012416839599609375
+## 0.0012629032135009766
 
 results
 ## [3, 4]</code></pre>
@@ -2143,7 +2146,7 @@ for val in st:
   if val &gt; 2:
     results.add(val)
 time.time()-t
-## 0.003225088119506836
+## 0.002051115036010742
 
 results
 ## {3, 4}
@@ -2153,7 +2156,7 @@ t = time.time()
 # this loop their will produce the same output than a using Set comprehension.
 results = {val for val in st if val&gt;2}
 time.time()-t
-## 0.0014081001281738281
+## 0.0013928413391113281
 
 results
 ## {3, 4}</code></pre>
@@ -2171,7 +2174,7 @@ for val in dct:
   if dct[val] &gt; 2:
     results.update({str(val): dct[val]})
 time.time()-t
-## 0.0020401477813720703
+## 0.0019559860229492188
 
 results
 ## {&#39;c&#39;: 3, &#39;d&#39;: 4}
@@ -2180,7 +2183,7 @@ t = time.time()
 # this loop their will produce the same output than a using Dict comprehension.
 results = {str(val): dct[val] for val in dct if dct[val]&gt;2}
 time.time()-t
-## 0.0013759136199951172
+## 0.0013451576232910156
 
 results
 ## {&#39;c&#39;: 3, &#39;d&#39;: 4}</code></pre>
@@ -2270,7 +2273,7 @@ t = time.time()
 clean_sum2(seq = seq)
 ## 1560
 time.time() - t
-## 0.0013120174407958984</code></pre>
+## 0.0012717247009277344</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -2293,7 +2296,7 @@ t = Sys.time()
 clean_sum(seq = seq)
 ## [1] 1560
 Sys.time() - t
-## Time difference of 0.001346111 secs
+## Time difference of 0.00532198 secs
 
 
 
@@ -2306,7 +2309,7 @@ t &lt;- Sys.time()
 clean_sum(seq = seq)
 ## [1] 1560
 Sys.time() - t
-## Time difference of 0.0002930164 secs</code></pre>
+## Time difference of 0.0008430481 secs</code></pre>
 </div>
 </div>
 </div>
@@ -2350,6 +2353,7 @@ x2
 <div class="r">
 <pre class="r"><code># R
 library(zeallot)
+## Error in library(zeallot): there is no package called &#39;zeallot&#39;
 
 add_two &lt;- function(nb){
   nb = nb + 2
@@ -2371,10 +2375,11 @@ global_function &lt;- function(nb){
 func_list = c(add_two,square_nb)
 
 c(x1, x2) %&lt;-% global_function(c(2,3))
+## Error in c(x1, x2) %&lt;-% global_function(c(2, 3)): could not find function &quot;%&lt;-%&quot;
 x1
-## [1] 16
+## Error: object &#39;x1&#39; not found
 x2
-## [1] 25</code></pre>
+## Error: object &#39;x2&#39; not found</code></pre>
 </div>
 </div>
 </div>

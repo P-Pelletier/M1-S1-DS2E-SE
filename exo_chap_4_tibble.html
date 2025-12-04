@@ -13,7 +13,7 @@
 
 <title>Dplyr</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -35,6 +35,14 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.11.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 <link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
 
@@ -335,6 +343,9 @@ div.tocify {
 <li>
   <a href="3_Arrays_Vectors.html">Arrays/Vectors</a>
 </li>
+<li>
+  <a href="5_Data_Analysis_R.html">Data Analysis (R)</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -374,13 +385,33 @@ library(tictoc)
 # Import the two datasets using readr&#39;s read_csv funciton
 tic()
 table_1 = read_csv(file = &#39;data/table_1.csv&#39;)</code></pre>
-<pre><code>## Error: &#39;data/table_1.csv&#39; does not exist in current working directory (&#39;/Users/peltouz/Documents/GitHub/M1-S1-DS2E-SE&#39;).</code></pre>
+<pre><code>## Rows: 148916 Columns: 7
+## ── Column specification ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (7): pmid, doi, title, source, language, pubtype, pubmodel
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>table_2 = read_csv(file = &#39;data/table_2.csv&#39;)</code></pre>
-<pre><code>## Error: &#39;data/table_2.csv&#39; does not exist in current working directory (&#39;/Users/peltouz/Documents/GitHub/M1-S1-DS2E-SE&#39;).</code></pre>
+<pre><code>## Rows: 148916 Columns: 6
+## ── Column specification ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (5): pmid, authors, year_pub, has_data, oa
+## dbl (1): cited
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>cities = read_csv(file = &#39;data/cities_loc.csv&#39;)</code></pre>
-<pre><code>## Error: &#39;data/cities_loc.csv&#39; does not exist in current working directory (&#39;/Users/peltouz/Documents/GitHub/M1-S1-DS2E-SE&#39;).</code></pre>
+<pre><code>## Rows: 13751 Columns: 4
+## ── Column specification ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (2): city, country
+## dbl (2): lng, lat
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.003 sec elapsed</code></pre>
+<pre><code>## 0.564 sec elapsed</code></pre>
 </div>
 </div>
 <div id="clean" class="section level1" number="2">
@@ -392,13 +423,12 @@ table_1 = read_csv(file = &#39;data/table_1.csv&#39;)</code></pre>
 
 tic()
 table_1 = table_1 %&gt;%
-  filter(pmid != &#39;null&#39; &amp; doi != &#39;null&#39;)</code></pre>
-<pre><code>## Error: object &#39;table_1&#39; not found</code></pre>
-<pre class="r"><code>table_2 = table_2 %&gt;%
-  filter(pmid != &#39;null&#39; &amp; year_pub &gt; 1975)</code></pre>
-<pre><code>## Error: object &#39;table_2&#39; not found</code></pre>
-<pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.001 sec elapsed</code></pre>
+  filter(pmid != &#39;null&#39; &amp; doi != &#39;null&#39;)
+
+table_2 = table_2 %&gt;%
+  filter(pmid != &#39;null&#39; &amp; year_pub &gt; 1975)
+toc()</code></pre>
+<pre><code>## 0.017 sec elapsed</code></pre>
 </div>
 </div>
 <div id="merge" class="section level1" number="3">
@@ -407,14 +437,26 @@ table_1 = table_1 %&gt;%
 <div class="r">
 <pre class="r"><code># R dplyr
 tic()
-final_table = inner_join(table_1, table_2, by = &#39;pmid&#39;)</code></pre>
-<pre><code>## Error: object &#39;table_1&#39; not found</code></pre>
-<pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
-<pre class="r"><code>final_table = na.omit(final_table)</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
-<pre class="r"><code>final_table</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
+final_table = inner_join(table_1, table_2, by = &#39;pmid&#39;)
+toc()</code></pre>
+<pre><code>## 0.039 sec elapsed</code></pre>
+<pre class="r"><code>final_table = na.omit(final_table)
+final_table</code></pre>
+<pre><code>## # A tibble: 108,721 × 12
+##    pmid   doi   title source language pubtype pubmodel authors year_pub has_data
+##    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   
+##  1 32837… 10.1… The … MED    eng      &quot;{\&quot;pu… &quot;\&quot;Prin… &lt;AUTHO… 2020     N       
+##  2 32196… 10.1… Hypo… MED    eng      &quot;{\&quot;pu… &quot;\&quot;Prin… &lt;AUTHO… 2020     N       
+##  3 32778… 10.1… The … MED    eng      &quot;{\&quot;pu… &quot;\&quot;Prin… &lt;AUTHO… 2020     N       
+##  4 32730… 10.1… A co… MED    eng      &quot;{\&quot;pu… &quot;\&quot;Prin… &lt;AUTHO… 2020     N       
+##  5 32394… 10.1… A gl… MED    eng      &quot;{\&quot;pu… &quot;\&quot;Prin… &lt;AUTHO… 2020     N       
+##  6 32257… 10.1… COVI… MED    eng      &quot;{\&quot;pu… &quot;\&quot;Elec… &lt;AUTHO… 2020     N       
+##  7 32720… 10.1… The … MED    eng      &quot;{\&quot;pu… &quot;\&quot;Prin… &lt;AUTHO… 2020     N       
+##  8 32196… 10.1… Labo… MED    eng      &quot;{\&quot;pu… &quot;\&quot;Prin… &lt;AUTHO… 2020     Y       
+##  9 32656… 10.1… The … MED    eng      &quot;{\&quot;pu… &quot;\&quot;Prin… &lt;AUTHO… 2020     N       
+## 10 32732… 10.1… Cycl… MED    eng      &quot;{\&quot;pu… &quot;\&quot;Prin… &lt;AUTHO… 2020     N       
+## # ℹ 108,711 more rows
+## # ℹ 2 more variables: oa &lt;chr&gt;, cited &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <div id="number-of-authors" class="section level1" number="4">
@@ -426,16 +468,29 @@ final_table = inner_join(table_1, table_2, by = &#39;pmid&#39;)</code></pre>
 tic()
 final_table = final_table %&gt;% 
   rowwise() %&gt;%
-  mutate(nb_aut = dim(str_match_all(authors, &#39;&lt;AUTHOR&gt;&#39;)[[1]])[1]) </code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
-<pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+  mutate(nb_aut = dim(str_match_all(authors, &#39;&lt;AUTHOR&gt;&#39;)[[1]])[1]) 
+toc()</code></pre>
+<pre><code>## 1.463 sec elapsed</code></pre>
 <pre class="r"><code>final_table = final_table %&gt;% 
-  filter(nb_aut &gt; 0)</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
-<pre class="r"><code>final_table %&gt;% 
+  filter(nb_aut &gt; 0)
+
+final_table %&gt;% 
   select(authors, nb_aut)</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
+<pre><code>## # A tibble: 107,103 × 2
+## # Rowwise: 
+##    authors                                                                nb_aut
+##    &lt;chr&gt;                                                                   &lt;int&gt;
+##  1 &lt;AUTHOR&gt; Das SK Subir Kumar Das&lt;AFFILIATION&gt;Department of Biochemistr…      1
+##  2 &lt;AUTHOR&gt; Lin L Ling Lin&lt;AFFILIATION&gt;Department of Infectious Diseases…      4
+##  3 &lt;AUTHOR&gt; Bchetnia M Mbarka Bchetnia&lt;AFFILIATION&gt;Université du Québec …      4
+##  4 &lt;AUTHOR&gt; Liu J Jie Liu&lt;AFFILIATION&gt;Department of Anesthesiology, Unio…      7
+##  5 &lt;AUTHOR&gt; Yousefi B Bahman Yousefi&lt;AFFILIATION&gt;Department of Immunolog…      6
+##  6 &lt;AUTHOR&gt; Shereen MA Muhammad Adnan Shereen&lt;AFFILIATION&gt;The Department…      5
+##  7 &lt;AUTHOR&gt; Taverna G Gianluigi Taverna&lt;AFFILIATION&gt;Urology Unit, Humani…     13
+##  8 &lt;AUTHOR&gt; Loeffelholz MJ Michael J Loeffelholz&lt;AFFILIATION&gt;Cepheid, Su…      2
+##  9 &lt;AUTHOR&gt; Mandal B Bikash Mandal&lt;AFFILIATION&gt;Division of Plant Patholo…      1
+## 10 &lt;AUTHOR&gt; Molyvdas A Adam Molyvdas&lt;AFFILIATION&gt;Departments of Anesthes…      2
+## # ℹ 107,093 more rows</code></pre>
 </div>
 </div>
 <div id="plot-distribution" class="section level1" number="5">
@@ -445,7 +500,7 @@ final_table = final_table %&gt;%
 <pre class="r"><code># R 
 
 plot(density(log(final_table$nb_aut+1)))</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
+<p><img src="exo_chap_4_tibble_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 </div>
 <div id="search-for-dlmlnn-in-title" class="section level1" number="6">
@@ -464,31 +519,38 @@ final_table = final_table %&gt;%
   mutate(title = tolower(title),
          ML = ifelse(str_detect(title,&#39;deep learning|machine learning|neural networks?&#39;), 1, 0),
          has_data = ifelse(has_data == &#39;Y&#39;, 1, 0),
-         oa = ifelse(oa == &#39;Y&#39;, 1, 0))</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
-<pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+         oa = ifelse(oa == &#39;Y&#39;, 1, 0))
+toc()</code></pre>
+<pre><code>## 2.327 sec elapsed</code></pre>
 <pre class="r"><code>sum(final_table$ML)</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
+<pre><code>## [1] 222</code></pre>
 <pre class="r"><code>sum(final_table$oa)</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
+<pre><code>## [1] 77847</code></pre>
 <pre class="r"><code>sum(final_table$has_data)</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
+<pre><code>## [1] 23980</code></pre>
 <pre class="r"><code>tic()
 final_table %&gt;% 
   group_by(ML) %&gt;%
   summarize(mean_nb_aut = mean(nb_aut))</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
+<pre><code>## # A tibble: 2 × 2
+##      ML mean_nb_aut
+##   &lt;dbl&gt;       &lt;dbl&gt;
+## 1     0        5.77
+## 2     1        6.06</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+<pre><code>## 0.005 sec elapsed</code></pre>
 <pre class="r"><code>tic()
 final_table %&gt;% 
   group_by(ML) %&gt;% 
   summarize(n = sum(oa)/n(),
             citation = mean(cited))</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
+<pre><code>## # A tibble: 2 × 3
+##      ML     n citation
+##   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+## 1     0 0.727    11.3 
+## 2     1 0.802     1.05</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+<pre><code>## 0.005 sec elapsed</code></pre>
 </div>
 </div>
 <div id="clean-up-pub_type" class="section level1" number="7">
@@ -498,13 +560,26 @@ final_table %&gt;%
 <pre class="r"><code># R dplyr
 tic()
 final_table = final_table %&gt;%
-  mutate(pub_type = str_match_all(pubtype, &#39;\\[\\&quot;(.*?)\\&quot;&#39;)[[1]][2])</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
-<pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+  mutate(pub_type = str_match_all(pubtype, &#39;\\[\\&quot;(.*?)\\&quot;&#39;)[[1]][2])
+toc()</code></pre>
+<pre><code>## 1.188 sec elapsed</code></pre>
 <pre class="r"><code>final_table %&gt;% 
   select(pubtype,pub_type)</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
+<pre><code>## # A tibble: 107,103 × 2
+## # Rowwise: 
+##    pubtype                                                              pub_type
+##    &lt;chr&gt;                                                                &lt;chr&gt;   
+##  1 &quot;{\&quot;pubType\&quot;: [\&quot;review-article\&quot;, \&quot;Review\&quot;, \&quot;Journal Article\&quot;… review-…
+##  2 &quot;{\&quot;pubType\&quot;: [\&quot;review-article\&quot;, \&quot;Journal Article\&quot;]}&quot;           review-…
+##  3 &quot;{\&quot;pubType\&quot;: [\&quot;review-article\&quot;, \&quot;Review\&quot;, \&quot;Journal Article\&quot;… review-…
+##  4 &quot;{\&quot;pubType\&quot;: [\&quot;review-article\&quot;, \&quot;Review\&quot;, \&quot;Journal Article\&quot;… review-…
+##  5 &quot;{\&quot;pubType\&quot;: [\&quot;review-article\&quot;, \&quot;Review\&quot;, \&quot;Journal Article\&quot;… review-…
+##  6 &quot;{\&quot;pubType\&quot;: [\&quot;review-article\&quot;, \&quot;Review\&quot;, \&quot;Journal Article\&quot;… review-…
+##  7 &quot;{\&quot;pubType\&quot;: [\&quot;review-article\&quot;, \&quot;Review\&quot;, \&quot;Journal Article\&quot;… review-…
+##  8 &quot;{\&quot;pubType\&quot;: [\&quot;review-article\&quot;, \&quot;Review\&quot;, \&quot;Journal Article\&quot;… review-…
+##  9 &quot;{\&quot;pubType\&quot;: [\&quot;Editorial\&quot;]}&quot;                                     Editori…
+## 10 &quot;{\&quot;pubType\&quot;: [\&quot;Editorial\&quot;]}&quot;                                     Editori…
+## # ℹ 107,093 more rows</code></pre>
 </div>
 </div>
 <div id="highest-meansd-of-citation" class="section level1" number="8">
@@ -520,13 +595,39 @@ final_table %&gt;%
   summarize(mean = mean(cited),
             sd = sd(cited)) %&gt;%
   arrange(desc(mean))</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
+<pre><code>## # A tibble: 83 × 3
+##    pub_type                                                  mean    sd
+##    &lt;chr&gt;                                                    &lt;dbl&gt; &lt;dbl&gt;
+##  1 Consensus Development Conference                          94.1 392. 
+##  2 Research Support, American Recovery and Reinvestment Act  64.4  77.2
+##  3 Research Support, U.S. Gov&#39;t, P.H.S.                      54.0  97.1
+##  4 Research Support, N.I.H., Intramural                      48.5 144. 
+##  5 Clinical Trial, Phase II                                  35.3  74.0
+##  6 Clinical Conference                                       30.4  84.3
+##  7 Comparative Study                                         29.3  57.1
+##  8 Controlled Clinical Trial                                 27    49.3
+##  9 Research Support, Non-U.S. Gov&#39;t                          26.3  67.8
+## 10 Clinical Trial                                            24.9  56.6
+## # ℹ 73 more rows</code></pre>
 <pre class="r"><code>final_table %&gt;%
   group_by(pub_type) %&gt;% 
   summarize(mean = mean(cited),
             sd = sd(cited)) %&gt;%
   arrange(desc(sd))</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
+<pre><code>## # A tibble: 83 × 3
+##    pub_type                                                  mean    sd
+##    &lt;chr&gt;                                                    &lt;dbl&gt; &lt;dbl&gt;
+##  1 Consensus Development Conference                         94.1  392. 
+##  2 Research Support, N.I.H., Intramural                     48.5  144. 
+##  3 Research Support, U.S. Gov&#39;t, P.H.S.                     54.0   97.1
+##  4 editorial                                                 7.28  90.8
+##  5 Clinical Conference                                      30.4   84.3
+##  6 Research Support, American Recovery and Reinvestment Act 64.4   77.2
+##  7 Clinical Trial, Phase II                                 35.3   74.0
+##  8 Research Support, Non-U.S. Gov&#39;t                         26.3   67.8
+##  9 Video-Audio Media                                        12     61.6
+## 10 Comparative Study                                        29.3   57.1
+## # ℹ 73 more rows</code></pre>
 </div>
 </div>
 <div id="most-representative-countres-by-year" class="section level1"
@@ -541,39 +642,77 @@ paper,if an authors have multiple affiliations, take the first one.</p>
 <div class="r">
 <pre class="r"><code># R dplyr
 
-countries = tolower(unique(cities$country))</code></pre>
-<pre><code>## Error: object &#39;cities&#39; not found</code></pre>
-<pre class="r"><code>tic()
+countries = tolower(unique(cities$country))
+tic()
 countries_tibble = final_table %&gt;%
   select(pmid,authors) %&gt;% 
-  separate_rows(authors, sep = &#39;&lt;AUTHOR&gt;&#39;)</code></pre>
-<pre><code>## Error: object &#39;final_table&#39; not found</code></pre>
-<pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+  separate_rows(authors, sep = &#39;&lt;AUTHOR&gt;&#39;)
+toc()</code></pre>
+<pre><code>## 2.952 sec elapsed</code></pre>
 <pre class="r"><code>countries_tibble %&gt;% 
   select(authors)</code></pre>
-<pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
+<pre><code>## # A tibble: 725,396 × 1
+##    authors                                                                      
+##    &lt;chr&gt;                                                                        
+##  1 &quot;&quot;                                                                           
+##  2 &quot; Das SK Subir Kumar Das&lt;AFFILIATION&gt;Department of Biochemistry, College of …
+##  3 &quot;&quot;                                                                           
+##  4 &quot; Lin L Ling Lin&lt;AFFILIATION&gt;Department of Infectious Diseases, Peking Union…
+##  5 &quot; Lu L Lianfeng Lu&lt;AFFILIATION&gt;Department of Infectious Diseases, Peking Uni…
+##  6 &quot; Cao W Wei Cao&lt;AFFILIATION&gt;Department of Infectious Diseases, Peking Union …
+##  7 &quot; Li T Taisheng Li&lt;AFFILIATION&gt;Department of Infectious Diseases, Peking Uni…
+##  8 &quot;&quot;                                                                           
+##  9 &quot; Bchetnia M Mbarka Bchetnia&lt;AFFILIATION&gt;Université du Québec à Chicoutimi (…
+## 10 &quot; Girard C Catherine Girard&lt;AFFILIATION&gt;Université du Québec à Chicoutimi (U…
+## # ℹ 725,386 more rows</code></pre>
 <pre class="r"><code>tic()
 countries_tibble = countries_tibble %&gt;%
   rowwise() %&gt;% 
-  filter(authors !=&quot;&quot; &amp; !str_detect(authors, &#39;&lt;AFFILIATION&gt;None&#39;))</code></pre>
-<pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
-<pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.001 sec elapsed</code></pre>
+  filter(authors !=&quot;&quot; &amp; !str_detect(authors, &#39;&lt;AFFILIATION&gt;None&#39;))
+toc()</code></pre>
+<pre><code>## 7.721 sec elapsed</code></pre>
 <pre class="r"><code>countries_tibble %&gt;% 
   select(authors)</code></pre>
-<pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
+<pre><code>## # A tibble: 476,357 × 1
+## # Rowwise: 
+##    authors                                                                      
+##    &lt;chr&gt;                                                                        
+##  1 &quot; Das SK Subir Kumar Das&lt;AFFILIATION&gt;Department of Biochemistry, College of …
+##  2 &quot; Lin L Ling Lin&lt;AFFILIATION&gt;Department of Infectious Diseases, Peking Union…
+##  3 &quot; Lu L Lianfeng Lu&lt;AFFILIATION&gt;Department of Infectious Diseases, Peking Uni…
+##  4 &quot; Cao W Wei Cao&lt;AFFILIATION&gt;Department of Infectious Diseases, Peking Union …
+##  5 &quot; Li T Taisheng Li&lt;AFFILIATION&gt;Department of Infectious Diseases, Peking Uni…
+##  6 &quot; Bchetnia M Mbarka Bchetnia&lt;AFFILIATION&gt;Université du Québec à Chicoutimi (…
+##  7 &quot; Girard C Catherine Girard&lt;AFFILIATION&gt;Université du Québec à Chicoutimi (U…
+##  8 &quot; Duchaine C Caroline Duchaine&lt;AFFILIATION&gt;Centre de recherche, Institut uni…
+##  9 &quot; Laprise C Catherine Laprise&lt;AFFILIATION&gt;Université du Québec à Chicoutimi …
+## 10 &quot; Liu J Jie Liu&lt;AFFILIATION&gt;Department of Anesthesiology, Union Hospital, To…
+## # ℹ 476,347 more rows</code></pre>
 <pre class="r"><code>tic()
 countries_tibble = countries_tibble %&gt;%
   group_by(pmid,authors) %&gt;%
   mutate(authors = unlist(str_split(authors, &#39;&lt;AFFILIATION&gt;&#39;))[2]) %&gt;% 
-  filter(!duplicated(pmid, authors))</code></pre>
-<pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
-<pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.001 sec elapsed</code></pre>
+  filter(!duplicated(pmid, authors))
+toc()</code></pre>
+<pre><code>## 8.842 sec elapsed</code></pre>
 <pre class="r"><code>countries_tibble %&gt;% 
   select(authors)</code></pre>
-<pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
+<pre><code>## Adding missing grouping variables: `pmid`</code></pre>
+<pre><code>## # A tibble: 291,650 × 2
+## # Groups:   pmid, authors [291,650]
+##    pmid     authors                                                             
+##    &lt;chr&gt;    &lt;chr&gt;                                                               
+##  1 32837036 &quot;Department of Biochemistry, College of Medicine and JNM Hospital, …
+##  2 32196410 &quot;Department of Infectious Diseases, Peking Union Medical College Ho…
+##  3 32196410 &quot;Department of Infectious Diseases, Peking Union Medical College Ho…
+##  4 32778421 &quot;Université du Québec à Chicoutimi (UQAC), Département des sciences…
+##  5 32778421 &quot;Centre de recherche, Institut universitaire de cardiologie et de p…
+##  6 32778421 &quot;Université du Québec à Chicoutimi (UQAC), Département des sciences…
+##  7 32730205 &quot;Department of Anesthesiology, Union Hospital, Tongji Medical Colle…
+##  8 32730205 &quot;Department of Anesthesiology, Union Hospital, Tongji Medical Colle…
+##  9 32394467 &quot;Department of Immunology, Semnan University of Medical Sciences, S…
+## 10 32394467 &quot;Department of Bacteriology and Virology, Semnan University of Medi…
+## # ℹ 291,640 more rows</code></pre>
 </div>
 <div class="r">
 <pre class="r"><code># R dplyr
@@ -582,44 +721,55 @@ countries_tibble  = countries_tibble %&gt;%
   mutate(authors = str_replace_all(authors, &#39; USA&#39;, &#39;United States&#39;),
          authors = str_replace_all(authors, &#39; UK&#39;, &#39;United Kingdom&#39;),
          authors = str_replace_all(authors, &#39; Korea&#39;, &#39;South Korea&#39;),
-         authors = tolower(authors)) </code></pre>
-<pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
-<pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
-<pre class="r"><code>tic()
-countries_tibble = countries_tibble %&gt;%
-  group_by(pmid, authors) %&gt;%
-  mutate(country = ifelse(any(str_detect(authors, countries)),
-                          countries[str_detect(authors, countries)][1],
-                          &quot;&quot;)) %&gt;%
+         authors = tolower(authors)) 
+toc()</code></pre>
+<pre><code>## 30.732 sec elapsed</code></pre>
+<pre class="r"><code>pattern = paste0(&quot;\\b(&quot;, paste(countries, collapse = &quot;|&quot;), &quot;)\\b&quot;)
+tic()
+countries_tibble &lt;- countries_tibble %&gt;%
+  group_by(pmid,authors) %&gt;%
+  mutate(country = str_extract(authors, pattern)) %&gt;%
   select(-authors)</code></pre>
-<pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
+<pre><code>## Adding missing grouping variables: `authors`</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+<pre><code>## 28.885 sec elapsed</code></pre>
 <pre class="r"><code>tic()
 countries_tibble = countries_tibble %&gt;%
   filter(country != &#39;&#39;) %&gt;%
-  distinct(pmid, country)</code></pre>
-<pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
-<pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+  distinct(pmid, country)
+toc()</code></pre>
+<pre><code>## 1.167 sec elapsed</code></pre>
 <pre class="r"><code>countries_tibble</code></pre>
-<pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
+<pre><code>## # A tibble: 249,182 × 3
+## # Groups:   pmid, authors [249,182]
+##    authors                                                         pmid  country
+##    &lt;chr&gt;                                                           &lt;chr&gt; &lt;chr&gt;  
+##  1 &quot;department of biochemistry, college of medicine and jnm hospi… 3283… india  
+##  2 &quot;department of infectious diseases, peking union medical colle… 3219… china  
+##  3 &quot;department of infectious diseases, peking union medical colle… 3219… china  
+##  4 &quot;université du québec à chicoutimi (uqac), département des sci… 3277… canada 
+##  5 &quot;centre de recherche, institut universitaire de cardiologie et… 3277… canada 
+##  6 &quot;université du québec à chicoutimi (uqac), département des sci… 3277… canada 
+##  7 &quot;department of anesthesiology, union hospital, tongji medical … 3273… china  
+##  8 &quot;department of anesthesiology, union hospital, tongji medical … 3273… china  
+##  9 &quot;department of immunology, semnan university of medical scienc… 3239… iran   
+## 10 &quot;department of bacteriology and virology, semnan university of… 3239… iran   
+## # ℹ 249,172 more rows</code></pre>
 <pre class="r"><code>tic()
 countries_tibble = left_join(countries_tibble,
                              final_table[,c(&#39;pmid&#39;,&#39;year_pub&#39;)],
-                             by = &#39;pmid&#39;)</code></pre>
-<pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
-<pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.001 sec elapsed</code></pre>
+                             by = &#39;pmid&#39;)
+toc()</code></pre>
+<pre><code>## 0.119 sec elapsed</code></pre>
 <pre class="r"><code>tic()
 countries_pub = countries_tibble %&gt;% 
   group_by(country, year_pub) %&gt;%
   summarize(n = length(unique(pmid))) %&gt;% 
   arrange(desc(n))</code></pre>
-<pre><code>## Error: object &#39;countries_tibble&#39; not found</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;country&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0 sec elapsed</code></pre>
+<pre><code>## 0.018 sec elapsed</code></pre>
 </div>
 </div>
 <div id="country-bar-plot-with-plotly" class="section level1"
@@ -665,8 +815,12 @@ library(kableExtra)</code></pre>
     layout(yaxis = list(title = &#39;Count&#39;,type = &#39;log&#39;), barmode = &#39;stack&#39;)
 }
 
-plot_top_n(25,2001)</code></pre>
-<pre><code>## Error in plot_top_n(25, 2001): object &#39;countries_pub&#39; not found</code></pre>
+plot_top_n(10,2001)</code></pre>
+<pre><code>## No trace type specified:
+##   Based on info supplied, a &#39;bar&#39; trace seems appropriate.
+##   Read more about this trace type -&gt; https://plotly.com/r/reference/#bar</code></pre>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-b36ab9ca6daf62684665" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-b36ab9ca6daf62684665">{"x":{"visdat":{"147eeeec14b2":["function () ","plotlyVisDat"]},"cur_data":"147eeeec14b2","attrs":{"147eeeec14b2":{"x":{},"y":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"yaxis":{"domain":[0,1],"automargin":true,"title":"Count","type":"log"},"barmode":"stack","xaxis":{"domain":[0,1],"automargin":true,"title":"year_pub","type":"category","categoryorder":"array","categoryarray":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"]},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["2020","2019","2018","2015","2017","2016","2014","2013","2009","2011","2008","2012","2007","2006","2010","2005","2004","2003","2002","2021","2001"],"y":[2058,137,127,120,115,114,96,71,51,45,43,42,39,32,26,25,21,10,4,3,2],"type":"bar","name":"australia","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2016","2018","2015","2017","2014","2013","2012","2006","2008","2004","2009","2010","2011","2007","2005","2003","2001","2002","2021"],"y":[2342,172,136,134,130,120,113,90,73,72,71,70,70,64,64,62,61,45,16,13,4],"type":"bar","name":"canada","marker":{"color":"rgba(228,156,113,1)","line":{"color":"rgba(228,156,113,1)"}},"textfont":{"color":"rgba(228,156,113,1)"},"error_y":{"color":"rgba(228,156,113,1)"},"error_x":{"color":"rgba(228,156,113,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2017","2016","2015","2014","2013","2010","2004","2005","2012","2009","2011","2006","2007","2008","2003","2021"],"y":[7894,739,593,568,532,516,393,317,222,186,182,172,171,165,164,156,145,102,25],"type":"bar","name":"china","marker":{"color":"rgba(201,152,157,1)","line":{"color":"rgba(201,152,157,1)"}},"textfont":{"color":"rgba(201,152,157,1)"},"error_y":{"color":"rgba(201,152,157,1)"},"error_x":{"color":"rgba(201,152,157,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2018","2019","2016","2017","2015","2014","2013","2009","2011","2007","2010","2012","2008","2005","2006","2004","2003","2001","2002","2021"],"y":[2639,158,157,148,135,130,127,86,57,54,46,44,43,41,39,36,32,17,12,12,4],"type":"bar","name":"france","marker":{"color":"rgba(175,154,200,1)","line":{"color":"rgba(175,154,200,1)"}},"textfont":{"color":"rgba(175,154,200,1)"},"error_y":{"color":"rgba(175,154,200,1)"},"error_x":{"color":"rgba(175,154,200,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2017","2016","2015","2014","2013","2006","2008","2011","2009","2007","2012","2010","2005","2004","2003","2002","2001","2021"],"y":[2108,177,171,165,151,146,127,80,70,59,59,55,53,48,46,36,35,31,19,18,1],"type":"bar","name":"germany","marker":{"color":"rgba(226,148,184,1)","line":{"color":"rgba(226,148,184,1)"}},"textfont":{"color":"rgba(226,148,184,1)"},"error_y":{"color":"rgba(226,148,184,1)"},"error_x":{"color":"rgba(226,148,184,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2016","2017","2014","2015","2013","2010","2011","2012","2008","2009","2006","2004","2007","2005","2021","2003","2001","2002"],"y":[3199,125,91,88,88,82,65,54,32,31,30,24,18,10,9,9,8,8,5,4,1],"type":"bar","name":"india","marker":{"color":"rgba(176,208,99,1)","line":{"color":"rgba(176,208,99,1)"}},"textfont":{"color":"rgba(176,208,99,1)"},"error_y":{"color":"rgba(176,208,99,1)"},"error_x":{"color":"rgba(176,208,99,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2016","2017","2015","2014","2013","2012","2011","2008","2005","2009","2007","2006","2010","2004","2003","2001","2002","2021"],"y":[5933,131,115,111,110,94,69,48,43,41,37,34,33,32,31,31,24,18,9,8,5],"type":"bar","name":"italy","marker":{"color":"rgba(227,217,62,1)","line":{"color":"rgba(227,217,62,1)"}},"textfont":{"color":"rgba(227,217,62,1)"},"error_y":{"color":"rgba(227,217,62,1)"},"error_x":{"color":"rgba(227,217,62,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2016","2015","2017","2014","2012","2013","2008","2011","2009","2010","2007","2005","2006","2003","2004","2002","2001","2021"],"y":[2014,110,98,87,79,76,63,44,44,38,34,31,25,19,18,18,17,14,10,8,5],"type":"bar","name":"spain","marker":{"color":"rgba(245,207,100,1)","line":{"color":"rgba(245,207,100,1)"}},"textfont":{"color":"rgba(245,207,100,1)"},"error_y":{"color":"rgba(245,207,100,1)"},"error_x":{"color":"rgba(245,207,100,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2015","2017","2018","2016","2014","2013","2009","2012","2011","2010","2008","2006","2007","2005","2004","2003","2001","2002","2021"],"y":[6058,287,252,229,206,201,175,125,101,90,89,87,85,81,74,72,68,56,22,20,10],"type":"bar","name":"united kingdom","marker":{"color":"rgba(219,192,155,1)","line":{"color":"rgba(219,192,155,1)"}},"textfont":{"color":"rgba(219,192,155,1)"},"error_y":{"color":"rgba(219,192,155,1)"},"error_x":{"color":"rgba(219,192,155,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2017","2015","2016","2014","2013","2010","2011","2012","2009","2008","2006","2007","2005","2004","2003","2001","2002","2021"],"y":[10670,803,753,749,739,729,632,608,570,555,554,538,505,465,411,395,370,228,158,130,20],"type":"bar","name":"united states","marker":{"color":"rgba(179,179,179,1)","line":{"color":"rgba(179,179,179,1)"}},"textfont":{"color":"rgba(179,179,179,1)"},"error_y":{"color":"rgba(179,179,179,1)"},"error_x":{"color":"rgba(179,179,179,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 

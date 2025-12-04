@@ -1042,22 +1042,11 @@ Find the last ten digits of the series, $1^{1} + 2^{2} + 3^{3} + ... + 1000^{100
 
 Try to vectorize exercices 1 and 2 from chapter 1, you can also compare it with apply/map functions. 
 
+
 ## Exercise 3
-
-2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
-
-What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
-
-## Exercise 4
 A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
 
 Find the largest palindrome made from the product of two 3-digit numbers.
-
-## Execrice 5
-
-$2^{15} = 32768$ and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
-
-What is the sum of the digits of the number $2^{1000}$?
 
 
 <a href="">Solutions</a>

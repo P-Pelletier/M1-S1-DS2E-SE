@@ -13,7 +13,7 @@
 
 <title>Exercice Chapter 1</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -335,6 +335,9 @@ div.tocify {
 <li>
   <a href="3_Arrays_Vectors.html">Arrays/Vectors</a>
 </li>
+<li>
+  <a href="5_Data_Analysis_R.html">Data Analysis (R)</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -389,7 +392,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below1(10000,3,5)
 ## [1] 23331668
 Sys.time() - t
-## Time difference of 0.004550934 secs</code></pre>
+## Time difference of 0.004807949 secs</code></pre>
 </div>
 </div>
 <div id="python" class="section level2" number="1.2">
@@ -411,7 +414,7 @@ t = time.time()
 get_sum_multiples_below1(10000,3,5)
 ## 23331668
 time.time() - t
-## 0.0016841888427734375</code></pre>
+## 0.0018248558044433594</code></pre>
 <pre class="python"><code># Python 
 
 def get_sum_multiples_below2(below,mutiple_1,multiple_2):
@@ -422,7 +425,7 @@ t = time.time()
 get_sum_multiples_below2(10000,3,5)
 ## 23331668
 time.time() - t
-## 0.001631021499633789</code></pre>
+## 0.0017499923706054688</code></pre>
 </div>
 </div>
 </div>
@@ -465,7 +468,7 @@ t &lt;- Sys.time()
 nth_prime(10001)
 ## [1] 104743
 Sys.time() - t
-## Time difference of 0.4211071 secs</code></pre>
+## Time difference of 0.606848 secs</code></pre>
 </div>
 </div>
 <div id="python-1" class="section level2" number="2.2">
@@ -498,7 +501,7 @@ t = time.time()
 nth_prime(10001)
 ## 104743
 time.time() - t
-## 0.08280515670776367</code></pre>
+## 0.07898306846618652</code></pre>
 </div>
 </div>
 </div>
@@ -559,7 +562,7 @@ for(i in seq(1901,2000)){
   nb_sundays = nb_sundays + year_result[2]
 }
 Sys.time() - t
-## Time difference of 0.006302834 secs
+## Time difference of 0.00628686 secs
 
 
 # results
@@ -610,7 +613,7 @@ for i in range(1901,2001):
 
 
 time.time() - t
-## 0.004143714904785156
+## 0.005012035369873047
 nb_sundays
 ## 171</code></pre>
 </div>

@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE,error=TRUE,collapse = T)
 
 <a href="3_Arrays_Vectors.html"> Go back to chapter 2</a>
 
-# Exercice 1
+# Exercise 1
 
 The series, $1^{1} + 2^{2} + 3^{3} + ... + 10^{10} = 10405071317$.
 
@@ -78,10 +78,10 @@ time.time() - t
 </div>
 
 
-# Exercice 2
+# Exercise 2
 
 
-## Exercice 1 
+## Exercise 1 
 
 If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
 
@@ -187,7 +187,7 @@ time.time() - t
 
 </div>
 
-## Exercice 2
+## Exercise 2
 
 By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
 
@@ -298,167 +298,7 @@ time.time() - t
 
 </div>
 
-# Exercice 3
-
-2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
-
-What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
-
-## R
-<div class = "r">
-```{r}
-# R
-
-
-smalles_multiple <- function(n){
-  dividers = seq(1,n)
-  i = 10
-  is_multiple = FALSE
-  while(is_multiple == FALSE){
-    modulos = i%%dividers
-    len_multiple = length(modulos[which(modulos == 0)])
-    if(len_multiple == length(dividers)){
-      is_multiple = TRUE
-    } else {
-      i = i + 1
-    }
-  }
-  print(i)
-}
-
-t = Sys.time()
-smalles_multiple(10)
-Sys.time() - t
-
-t = Sys.time()
-#smalles_multiple(20)
-Sys.time() - t
-
-
-
-smalles_multiple <- function(n){
-  dividers_all = seq(1,n)
-  multiple = 1
-  i = 10
-  for(j in seq(1,n,10)){
-    dividers = dividers_all[j:(j+9)]
-    is_multiple = FALSE
-    while(is_multiple == FALSE){
-      modulos = i%%dividers
-      len_multiple = length(modulos[which(modulos == 0)])
-      if(len_multiple == length(dividers)){
-        is_multiple = TRUE
-        multiple = i
-      } else {
-        i = i + multiple
-      }
-    }
-  }
-  print(i)
-}
-
-t = Sys.time()
-smalles_multiple(10)
-Sys.time() - t
-
-
-t = Sys.time()
-smalles_multiple(20)
-Sys.time() - t
-
-
-```
-
-
-</div>
-## Python
-
-<div class = "python">
-```{python}
-# Python
-
-def smalles_multiple(n):
-  dividers = np.arange(1,n+1)
-  i = 10
-  is_multiple = False
-  while is_multiple == False:
-    modulos = np.mod(i,dividers)
-    len_multiple = len(np.where(modulos == 0)[0])
-    if len_multiple == len(dividers):
-      is_multiple = True
-    else:
-      i += 1
-  print(i)
-
-
-t = time.time()
-smalles_multiple(10)
-time.time() - t
-
-t = time.time()
-#smalles_multiple(20)
-time.time() - t
-
-
-def smalles_multiple(n):
-  dividers_all = np.arange(1,n+1)
-  multiple = 1
-  i = 10
-  for j in range(0,n+1,10):
-    dividers = dividers_all[j:(j+10)]
-    is_multiple = False
-    while is_multiple == False:
-      modulos = np.mod(i,dividers)
-      len_multiple = len(np.where(modulos == 0)[0])
-      if len_multiple == len(dividers):
-        is_multiple = True
-        multiple = i
-      else:
-        i += multiple
-  print(i)
-
-
-t = time.time()
-smalles_multiple(10)
-time.time() - t
-
-
-t = time.time()
-smalles_multiple(20)
-time.time() - t
-
-
-
-
-
-```
-
-
-</div>
-
-
-# Exercice 4
-
-$2^{15}$=32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
-
-What is the sum of the digits of the number $2^{1000}$?
-
-## R
-<div class = "r">
-```{r}
-library(gmp)
-bigq = as.bigz(2**1000)
-sum(as.integer(stringr::str_split(as.character(bigq),'')[[1]]))
-```
-</div>
-
-## Python
-<div class = "python">
-```{python}
-np.sum(np.array(list(str(2**1000)),dtype=np.int))
-```
-</div>
-# Exercice 5
+# Exercise 3
  
 A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
 

@@ -273,12 +273,11 @@ countries_tibble  = countries_tibble %>%
          authors = tolower(authors)) 
 toc()
 
+pattern = paste0("\\b(", paste(countries, collapse = "|"), ")\\b")
 tic()
-countries_tibble = countries_tibble %>%
-  group_by(pmid, authors) %>%
-  mutate(country = ifelse(any(str_detect(authors, countries)),
-                          countries[str_detect(authors, countries)][1],
-                          "")) %>%
+countries_tibble <- countries_tibble %>%
+  group_by(pmid,authors) %>%
+  mutate(country = str_extract(authors, pattern)) %>%
   select(-authors)
 toc()
 
@@ -345,7 +344,7 @@ plot_top_n  = function(n_top,year){
     layout(yaxis = list(title = 'Count',type = 'log'), barmode = 'stack')
 }
 
-plot_top_n(25,2001)
+plot_top_n(10,2001)
 
 ```
 

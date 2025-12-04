@@ -13,7 +13,7 @@
 
 <title>exo chap 2</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -335,6 +335,9 @@ div.tocify {
 <li>
   <a href="3_Arrays_Vectors.html">Arrays/Vectors</a>
 </li>
+<li>
+  <a href="5_Data_Analysis_R.html">Data Analysis (R)</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -365,8 +368,8 @@ div.python pre { background-color: #e9f7f5
 div.r pre { background-color: #fff5fd; }
 </style>
 <p><a href="3_Arrays_Vectors.html"> Go back to chapter 2</a></p>
-<div id="exercice-1" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Exercice 1</h1>
+<div id="exercise-1" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Exercise 1</h1>
 <p>The series, <span class="math inline">\(1^{1} + 2^{2} + 3^{3} + ... +
 10^{10} = 10405071317\)</span>.</p>
 <p>Find the last ten digits of the series, <span
@@ -382,7 +385,11 @@ class="math inline">\(1^{1} + 2^{2} + 3^{3} + ... +
 
 # To manage very large numbers you have to use gmp
 library(gmp)
-## Error in library(gmp): there is no package called &#39;gmp&#39;
+## 
+## Attaching package: &#39;gmp&#39;
+## The following objects are masked from &#39;package:base&#39;:
+## 
+##     %*%, apply, crossprod, matrix, tcrossprod
 
 sum_n_power_last_digit &lt;- function(n, last_digit){
   sum_series = sum(as.bigz(seq(1, n))**(seq(1, n)))
@@ -393,9 +400,9 @@ sum_n_power_last_digit &lt;- function(n, last_digit){
 
 t = Sys.time()
 sum_n_power_last_digit(1000,10)
-## Error in as.bigz(seq(1, n)): could not find function &quot;as.bigz&quot;
+##  [1] &quot;9&quot; &quot;1&quot; &quot;1&quot; &quot;0&quot; &quot;8&quot; &quot;4&quot; &quot;6&quot; &quot;7&quot; &quot;0&quot; &quot;0&quot;
 Sys.time() - t
-## Time difference of 0.0002071857 secs</code></pre>
+## Time difference of 0.006847143 secs</code></pre>
 </div>
 </div>
 <div id="python" class="section level2" number="1.2">
@@ -429,14 +436,14 @@ t = time.time()
 sum_n_power_last_digit(1000,10)
 ## &#39;9110846700&#39;
 time.time() - t
-## 0.005807161331176758</code></pre>
+## 0.005251169204711914</code></pre>
 </div>
 </div>
 </div>
-<div id="exercice-2" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Exercice 2</h1>
-<div id="exercice-1-1" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Exercice 1</h2>
+<div id="exercise-2" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Exercise 2</h1>
+<div id="exercise-1-1" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Exercise 1</h2>
 <p>If we list all the natural numbers below 10 that are multiples of 3
 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.</p>
 <p>Find the sum of all the multiples of 3 or 5 below 10000.</p>
@@ -457,7 +464,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below1(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 0.252712 secs
+## Time difference of 0.3751411 secs
 
 
 
@@ -471,7 +478,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below2(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 0.7625329 secs
+## Time difference of 1.042213 secs
 
 
 
@@ -485,7 +492,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below3(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 0.008207798 secs</code></pre>
+## Time difference of 0.008667946 secs</code></pre>
 </div>
 </div>
 <div id="python-1" class="section level3" number="2.1.2">
@@ -506,7 +513,7 @@ t = time.time()
 get_sum_multiples_below1(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.030476093292236328
+## 0.02711319923400879
 
 
 def get_sum_multiples_below2(below,mutiple_1,multiple_2):
@@ -517,7 +524,7 @@ t = time.time()
 get_sum_multiples_below2(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.029362201690673828
+## 0.030152320861816406
 
 
 def get_sum_multiples_below3(below,mutiple_1,multiple_2):
@@ -529,7 +536,7 @@ t = time.time()
 get_sum_multiples_below3(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.043357133865356445
+## 0.04118084907531738
 
 
 
@@ -542,12 +549,12 @@ t = time.time()
 get_sum_multiples_below4(1000000,3,5)
 ## np.int64(233333166668)
 time.time() - t
-## 0.01799297332763672</code></pre>
+## 0.017243146896362305</code></pre>
 </div>
 </div>
 </div>
-<div id="exercice-2-1" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Exercice 2</h2>
+<div id="exercise-2-1" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Exercise 2</h2>
 <p>By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we
 can see that the 6th prime is 13.</p>
 <p>What is the 10 001st prime number?</p>
@@ -582,7 +589,7 @@ t &lt;- Sys.time()
 nth_prime(10001)
 ## [1] 104743
 Sys.time() - t
-## Time difference of 0.7483978 secs
+## Time difference of 0.7705019 secs
 
 
 nth_prime2 &lt;- function(nth){
@@ -603,7 +610,7 @@ t &lt;- Sys.time()
 nth_prime2(10001)
 ## [1] 104743
 Sys.time() - t
-## Time difference of 0.5397229 secs</code></pre>
+## Time difference of 0.5733528 secs</code></pre>
 </div>
 </div>
 <div id="python-2" class="section level3" number="2.2.2">
@@ -634,7 +641,7 @@ t = time.time()
 nth_prime(10001)
 ## 104743
 time.time() - t
-## 0.07934713363647461
+## 0.07542777061462402
 
 
 def nth_prime2(nth):
@@ -654,187 +661,19 @@ t = time.time()
 nth_prime2(10001)
 ## 104743
 time.time() - t
-## 0.17217111587524414</code></pre>
+## 0.1614389419555664</code></pre>
 </div>
 </div>
 </div>
 </div>
-<div id="exercice-3" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Exercice 3</h1>
-<p>2520 is the smallest number that can be divided by each of the
-numbers from 1 to 10 without any remainder.</p>
-<p>What is the smallest positive number that is evenly divisible by all
-of the numbers from 1 to 20?</p>
-<div id="r-3" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> R</h2>
-<div class="r">
-<pre class="r"><code># R
-
-
-smalles_multiple &lt;- function(n){
-  dividers = seq(1,n)
-  i = 10
-  is_multiple = FALSE
-  while(is_multiple == FALSE){
-    modulos = i%%dividers
-    len_multiple = length(modulos[which(modulos == 0)])
-    if(len_multiple == length(dividers)){
-      is_multiple = TRUE
-    } else {
-      i = i + 1
-    }
-  }
-  print(i)
-}
-
-t = Sys.time()
-smalles_multiple(10)
-## [1] 2520
-Sys.time() - t
-## Time difference of 0.005488157 secs
-
-t = Sys.time()
-#smalles_multiple(20)
-Sys.time() - t
-## Time difference of 0.0001430511 secs
-
-
-
-smalles_multiple &lt;- function(n){
-  dividers_all = seq(1,n)
-  multiple = 1
-  i = 10
-  for(j in seq(1,n,10)){
-    dividers = dividers_all[j:(j+9)]
-    is_multiple = FALSE
-    while(is_multiple == FALSE){
-      modulos = i%%dividers
-      len_multiple = length(modulos[which(modulos == 0)])
-      if(len_multiple == length(dividers)){
-        is_multiple = TRUE
-        multiple = i
-      } else {
-        i = i + multiple
-      }
-    }
-  }
-  print(i)
-}
-
-t = Sys.time()
-smalles_multiple(10)
-## [1] 2520
-Sys.time() - t
-## Time difference of 0.006192923 secs
-
-
-t = Sys.time()
-smalles_multiple(20)
-## [1] 232792560
-Sys.time() - t
-## Time difference of 0.127073 secs</code></pre>
-</div>
-</div>
-<div id="python-3" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Python</h2>
-<div class="python">
-<pre class="python"><code># Python
-
-def smalles_multiple(n):
-  dividers = np.arange(1,n+1)
-  i = 10
-  is_multiple = False
-  while is_multiple == False:
-    modulos = np.mod(i,dividers)
-    len_multiple = len(np.where(modulos == 0)[0])
-    if len_multiple == len(dividers):
-      is_multiple = True
-    else:
-      i += 1
-  print(i)
-
-
-t = time.time()
-smalles_multiple(10)
-## 2520
-time.time() - t
-## 0.0032989978790283203
-
-t = time.time()
-#smalles_multiple(20)
-time.time() - t
-## 0.0007238388061523438
-
-
-def smalles_multiple(n):
-  dividers_all = np.arange(1,n+1)
-  multiple = 1
-  i = 10
-  for j in range(0,n+1,10):
-    dividers = dividers_all[j:(j+10)]
-    is_multiple = False
-    while is_multiple == False:
-      modulos = np.mod(i,dividers)
-      len_multiple = len(np.where(modulos == 0)[0])
-      if len_multiple == len(dividers):
-        is_multiple = True
-        multiple = i
-      else:
-        i += multiple
-  print(i)
-
-
-t = time.time()
-smalles_multiple(10)
-## 2520
-time.time() - t
-## 0.003734111785888672
-
-
-t = time.time()
-smalles_multiple(20)
-## 232792560
-time.time() - t
-## 0.07904791831970215</code></pre>
-</div>
-</div>
-</div>
-<div id="exercice-4" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Exercice 4</h1>
-<p><span class="math inline">\(2^{15}\)</span>=32768 and the sum of its
-digits is 3 + 2 + 7 + 6 + 8 = 26.</p>
-<p>What is the sum of the digits of the number <span
-class="math inline">\(2^{1000}\)</span>?</p>
-<div id="r-4" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> R</h2>
-<div class="r">
-<pre class="r"><code>library(gmp)
-## Error in library(gmp): there is no package called &#39;gmp&#39;
-bigq = as.bigz(2**1000)
-## Error in as.bigz(2^1000): could not find function &quot;as.bigz&quot;
-sum(as.integer(stringr::str_split(as.character(bigq),&#39;&#39;)[[1]]))
-## Error: object &#39;bigq&#39; not found</code></pre>
-</div>
-</div>
-<div id="python-4" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Python</h2>
-<div class="python">
-<pre class="python"><code>np.sum(np.array(list(str(2**1000)),dtype=np.int))
-## AttributeError: module &#39;numpy&#39; has no attribute &#39;int&#39;.
-## `np.int` was a deprecated alias for the builtin `int`. To avoid this error in existing code, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
-## The aliases was originally deprecated in NumPy 1.20; for more details and guidance see the original release note at:
-##     https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations</code></pre>
-</div>
-</div>
-</div>
-<div id="exercice-5" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Exercice 5</h1>
+<div id="exercise-3" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Exercise 3</h1>
 <p>A palindromic number reads the same both ways. The largest palindrome
 made from the product of two 2-digit numbers is 9009 = 91 × 99.</p>
 <p>Find the largest palindrome made from the product of two 3-digit
 numbers.</p>
-<div id="python-5" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Python</h2>
+<div id="python-3" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Python</h2>
 <div class="python">
 <pre class="python"><code># Python
 #
@@ -845,7 +684,7 @@ palindromes = [x for x in products if str(x)==str(x)[::-1]]
 print(max(palindromes))
 ## 906609
 time.time() - t
-## 0.08629202842712402</code></pre>
+## 0.08906984329223633</code></pre>
 </div>
 <p><a href="3_Arrays_Vectors.html"> Go back to chapter 2</a></p>
 </div>
