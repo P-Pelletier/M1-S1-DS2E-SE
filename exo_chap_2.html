@@ -402,7 +402,7 @@ t = Sys.time()
 sum_n_power_last_digit(1000,10)
 ##  [1] &quot;9&quot; &quot;1&quot; &quot;1&quot; &quot;0&quot; &quot;8&quot; &quot;4&quot; &quot;6&quot; &quot;7&quot; &quot;0&quot; &quot;0&quot;
 Sys.time() - t
-## Time difference of 0.006847143 secs</code></pre>
+## Time difference of 0.00616312 secs</code></pre>
 </div>
 </div>
 <div id="python" class="section level2" number="1.2">
@@ -436,7 +436,7 @@ t = time.time()
 sum_n_power_last_digit(1000,10)
 ## &#39;9110846700&#39;
 time.time() - t
-## 0.005251169204711914</code></pre>
+## 0.0064089298248291016</code></pre>
 </div>
 </div>
 </div>
@@ -464,7 +464,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below1(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 0.3751411 secs
+## Time difference of 0.3575211 secs
 
 
 
@@ -478,7 +478,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below2(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 1.042213 secs
+## Time difference of 0.9244621 secs
 
 
 
@@ -492,7 +492,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below3(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 0.008667946 secs</code></pre>
+## Time difference of 0.00790906 secs</code></pre>
 </div>
 </div>
 <div id="python-1" class="section level3" number="2.1.2">
@@ -513,7 +513,7 @@ t = time.time()
 get_sum_multiples_below1(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.02711319923400879
+## 0.027149200439453125
 
 
 def get_sum_multiples_below2(below,mutiple_1,multiple_2):
@@ -524,7 +524,7 @@ t = time.time()
 get_sum_multiples_below2(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.030152320861816406
+## 0.029469966888427734
 
 
 def get_sum_multiples_below3(below,mutiple_1,multiple_2):
@@ -536,7 +536,7 @@ t = time.time()
 get_sum_multiples_below3(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.04118084907531738
+## 0.04050493240356445
 
 
 
@@ -549,7 +549,7 @@ t = time.time()
 get_sum_multiples_below4(1000000,3,5)
 ## np.int64(233333166668)
 time.time() - t
-## 0.017243146896362305</code></pre>
+## 0.018507003784179688</code></pre>
 </div>
 </div>
 </div>
@@ -564,8 +564,8 @@ can see that the 6th prime is 13.</p>
 <pre class="r"><code>
 
 nth_prime &lt;- function(nth){
-  primes = c(1,2)
-  i = 2
+  primes = c(2,3)
+  i = 3
   while(length(primes)&lt;nth){
     i &lt;- i+1
     is_prime = TRUE
@@ -589,7 +589,7 @@ t &lt;- Sys.time()
 nth_prime(10001)
 ## [1] 104743
 Sys.time() - t
-## Time difference of 0.7705019 secs
+## Time difference of 0.690654 secs
 
 
 nth_prime2 &lt;- function(nth){
@@ -610,7 +610,7 @@ t &lt;- Sys.time()
 nth_prime2(10001)
 ## [1] 104743
 Sys.time() - t
-## Time difference of 0.5733528 secs</code></pre>
+## Time difference of 0.6449301 secs</code></pre>
 </div>
 </div>
 <div id="python-2" class="section level3" number="2.2.2">
@@ -621,9 +621,9 @@ import numpy as np
 
 
 def nth_prime(nth):
-  primes = [1,2]
-  i = 2
-  while len(primes) &lt; nth+1:
+  primes = [2,3]
+  i = 3
+  while len(primes) &lt; nth:
     i+=1 
     is_prime = True
     for j in range(2,(int(np.sqrt(i))+1)):
@@ -641,7 +641,7 @@ t = time.time()
 nth_prime(10001)
 ## 104743
 time.time() - t
-## 0.07542777061462402
+## 0.07332205772399902
 
 
 def nth_prime2(nth):
@@ -661,7 +661,7 @@ t = time.time()
 nth_prime2(10001)
 ## 104743
 time.time() - t
-## 0.1614389419555664</code></pre>
+## 0.160552978515625</code></pre>
 </div>
 </div>
 </div>
@@ -684,7 +684,7 @@ palindromes = [x for x in products if str(x)==str(x)[::-1]]
 print(max(palindromes))
 ## 906609
 time.time() - t
-## 0.08906984329223633</code></pre>
+## 0.08322906494140625</code></pre>
 </div>
 <p><a href="3_Arrays_Vectors.html"> Go back to chapter 2</a></p>
 </div>

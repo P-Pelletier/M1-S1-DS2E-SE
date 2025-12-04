@@ -522,18 +522,18 @@ full_join, inner_join, anti_join)</td>
 
 
 library(tidyverse)
-## ── Attaching core tidyverse packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 2.0.0 ──
+## ── Attaching core tidyverse packages ───────────────────── tidyverse 2.0.0 ──
 ## ✔ forcats   1.0.1     ✔ readr     2.1.6
 ## ✔ ggplot2   4.0.1     ✔ stringr   1.6.0
 ## ✔ lubridate 1.9.4     ✔ tibble    3.3.0
 ## ✔ purrr     1.2.0     ✔ tidyr     1.3.1
-## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ── Conflicts ─────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
 covid_papers &lt;- read_csv(&quot;data/covid_papers.csv&quot;)
 ## Rows: 148916 Columns: 19
-## ── Column specification ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr  (17): _id, pmid, pmcid, doi, title, source, year_pub, month_pub, author...
 ## dbl   (1): cited
@@ -572,7 +572,7 @@ dim(slice_sample(covid_papers,prop = 0.001))
 t &lt;- Sys.time()
 doi_clean &lt;- filter(covid_papers,doi != &#39;null&#39;)
 Sys.time()-t
-## Time difference of 0.0151341 secs</code></pre>
+## Time difference of 0.01473498 secs</code></pre>
 <p><b> Using Pipes </b></p>
 <pre class="r"><code># R
 
@@ -584,12 +584,12 @@ dim(covid_papers %&gt;% slice_sample(prop = 0.001))
 t = Sys.time()
 doi_clean &lt;- covid_papers %&gt;% filter(doi != &#39;null&#39;)
 Sys.time() - t
-## Time difference of 0.01459908 secs
+## Time difference of 0.01439381 secs
 
 t = Sys.time()
 doi_clean &lt;- covid_papers[which(covid_papers$doi != &#39;null&#39;),]
 Sys.time() - t
-## Time difference of 0.015836 secs</code></pre>
+## Time difference of 0.01586604 secs</code></pre>
 </div>
 </div>
 <div id="select-columns" class="section level3" number="1.1.2">
@@ -1378,12 +1378,15 @@ cp_tibble %&gt;%
 cp_tibble %&gt;%
   group_by(PY) %&gt;%
   summarize(cur_group_rows()[c(1, n())])
-## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in dplyr 1.1.0.
+## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated
+## in dplyr 1.1.0.
 ## ℹ Please use `reframe()` instead.
-## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()` always returns an ungrouped data frame and adjust accordingly.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
-## `summarise()` has grouped output by &#39;PY&#39;. You can override using the `.groups`
-## argument.
+## ℹ When switching from `summarise()` to `reframe()`, remember that
+##   `reframe()` always returns an ungrouped data frame and adjust accordingly.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+## `summarise()` has grouped output by &#39;PY&#39;. You can override using the
+## `.groups` argument.
 ## # A tibble: 226 × 2
 ## # Groups:   PY [113]
 ##       PY `cur_group_rows()[c(1, n())]`
@@ -1772,7 +1775,7 @@ cp_tibble &lt;- cp_tibble %&gt;%
   mutate(across(where(is.character),
          toupper))
 Sys.time() - t
-## Time difference of 3.123862 secs</code></pre>
+## Time difference of 2.868414 secs</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -1798,7 +1801,7 @@ cp_datatable[, c(&#39;pubtype&#39;,&#39;mesh&#39;) := lapply(.SD, function(x){to
 t = Sys.time()
 for(j in  which(sapply(cp_datatable, class)==&#39;character&#39;)){set(cp_datatable, i=NULL, j=j, value=toupper(cp_datatable[[j]]))}
 Sys.time() - t 
-## Time difference of 2.688815 secs</code></pre>
+## Time difference of 2.698746 secs</code></pre>
 </div>
 </div>
 </div>
@@ -2639,7 +2642,8 @@ all_equal(x, x)
 ## ℹ Please use `all.equal()` instead.
 ## ℹ And manually order the rows/cols as needed
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
 ## [1] TRUE</code></pre>
 </div>
 </div>
@@ -3125,7 +3129,7 @@ library(tidyverse)
 
 covid_papers &lt;- read_csv(&quot;data/covid_papers.csv&quot;)
 ## Rows: 148916 Columns: 19
-## ── Column specification ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ─────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr  (17): _id, pmid, pmcid, doi, title, source, year_pub, month_pub, author...
 ## dbl   (1): cited

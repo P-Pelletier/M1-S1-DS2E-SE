@@ -199,8 +199,8 @@ What is the 10 001st prime number?
 
 
 nth_prime <- function(nth){
-  primes = c(1,2)
-  i = 2
+  primes = c(2,3)
+  i = 3
   while(length(primes)<nth){
     i <- i+1
     is_prime = TRUE
@@ -257,9 +257,9 @@ import numpy as np
 
 
 def nth_prime(nth):
-  primes = [1,2]
-  i = 2
-  while len(primes) < nth+1:
+  primes = [2,3]
+  i = 3
+  while len(primes) < nth:
     i+=1 
     is_prime = True
     for j in range(2,(int(np.sqrt(i))+1)):
