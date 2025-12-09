@@ -338,6 +338,9 @@ div.tocify {
 <li>
   <a href="5_Data_Analysis_R.html">Data Analysis (R)</a>
 </li>
+<li>
+  <a href="6_Data_Analysis_Py.html">Data Analysis (Python)</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -396,12 +399,12 @@ lst = list(range(2000000))
 t = time.time()
 arr_2 = arr*2
 time.time() - t
-## 0.0026159286499023438
+## 0.0056629180908203125
 
 t = time.time()
 lst_2 = [i*2  for i in lst]
 time.time() - t
-## 0.028296947479248047</code></pre>
+## 0.02380990982055664</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -413,7 +416,7 @@ vec = c(1:2000000)
 t = Sys.time()
 vec_2 = vec*2
 Sys.time() - t
-## Time difference of 0.002565861 secs
+## Time difference of 0.002490997 secs
 
 t = Sys.time()
 vec_2_loop &lt;- rep(0,length(vec))
@@ -421,7 +424,7 @@ for(i in 1:length(vec)){
   vec_2_loop[i] = vec[i]*2
     }
 Sys.time() - t
-## Time difference of 0.1148441 secs</code></pre>
+## Time difference of 0.1230299 secs</code></pre>
 </div>
 </div>
 </div>
@@ -606,10 +609,10 @@ seq(1, 4, length.out = 10)
 arr_rd = np.random.randn(4,5)
 
 arr_rd
-## array([[-0.06334556,  0.15612646,  0.3245847 , -0.12335807, -0.90163173],
-##        [-0.10072368,  1.7521096 ,  0.41533232, -0.22721459, -0.25995056],
-##        [ 0.56607346,  1.16950606,  1.35538268,  0.15483658,  0.54284892],
-##        [-0.30245236,  0.87499515, -0.41918795, -0.38744591,  0.68010039]])</code></pre>
+## array([[ 1.44713745,  1.76881301, -1.13179915,  1.7492439 , -0.55188378],
+##        [ 0.15159486, -0.15832235,  1.89989018,  0.1216051 ,  0.07381212],
+##        [ 0.17058236, -0.82778804,  0.05572679,  1.20780893, -1.13845303],
+##        [-0.15926532, -0.36389186,  0.39897386,  1.27243568,  1.45409684]])</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -620,11 +623,11 @@ arr_rd
 mat_rd &lt;- matrix(rnorm(4*5),4,5)
 
 mat_rd
-##            [,1]       [,2]        [,3]       [,4]      [,5]
-## [1,] -1.0236631 -0.8678108 -2.22976592  1.8359063 0.3749028
-## [2,] -1.6300676  0.2611638 -0.41679307  0.6076116 0.3804033
-## [3,] -2.1005179  0.2632078  1.23144732  1.0235421 0.2181274
-## [4,] -0.1388538  1.2878136 -0.09364823 -0.6870986 0.5026569</code></pre>
+##             [,1]       [,2]       [,3]       [,4]       [,5]
+## [1,]  0.55231367 -0.9550988  0.5189036 -1.6359965  1.4514582
+## [2,] -0.07893884 -1.4560429  1.5009158  0.2400688  1.8503309
+## [3,] -1.31231291  0.9559071 -1.0075326 -1.6355162  0.6282760
+## [4,] -0.26571254 -0.9040168 -0.2926223  0.8892248 -0.4756264</code></pre>
 </div>
 </div>
 </div>
@@ -889,8 +892,8 @@ mat[-2,]
 arr = np.random.randn(10)
 
 arr
-## array([ 1.83062049, -1.33325703, -0.28315262, -0.30992162, -0.81745784,
-##        -0.05986466, -0.74604558,  0.24223027,  1.97914076, -0.60053704])
+## array([ 0.69618015, -0.34470436,  0.8221909 , -0.24437368, -0.40029208,
+##        -0.46924486,  0.72705541,  0.7485351 ,  1.10600984, -0.50153672])
 arr.sort()
 </code></pre>
 <pre class="python"><code># Python 
@@ -898,10 +901,10 @@ arr.sort()
 arr = np.random.randn(4,3)
 
 arr
-## array([[ 1.62716302,  1.65462001,  3.90867188],
-##        [ 2.05396685,  0.89951461,  1.37247949],
-##        [ 0.42306453, -1.18659609, -1.54530245],
-##        [-0.36353702, -0.56471384,  0.67912573]])
+## array([[ 0.65734324,  0.06065345, -1.13574375],
+##        [ 0.07104949,  0.55813099, -1.23513254],
+##        [ 0.84235224,  0.72787564, -1.30403589],
+##        [-0.65329496,  1.14686865, -0.29489771]])
 arr.sort(1)
 </code></pre>
 </div>
@@ -913,27 +916,27 @@ arr.sort(1)
 arr &lt;- rnorm(10)
 
 arr
-##  [1]  0.75163649 -1.71421927 -0.21371399 -0.52568759  0.06685914  0.53579113
-##  [7] -0.04492025  0.88093611  1.46214230 -0.53304941
+##  [1] -0.67593158 -0.73633265  0.38406887 -1.26098952 -1.37190840  1.14224987
+##  [7]  1.93284812  0.01705454  0.10080382  0.05907232
 sort(arr)
-##  [1] -1.71421927 -0.53304941 -0.52568759 -0.21371399 -0.04492025  0.06685914
-##  [7]  0.53579113  0.75163649  0.88093611  1.46214230</code></pre>
+##  [1] -1.37190840 -1.26098952 -0.73633265 -0.67593158  0.01705454  0.05907232
+##  [7]  0.10080382  0.38406887  1.14224987  1.93284812</code></pre>
 <pre class="r"><code># R
 
 arr &lt;- matrix(rnorm(4*3),4,3)
 
 arr
-##              [,1]      [,2]       [,3]
-## [1,] -0.589735718 0.4043531  1.9333237
-## [2,] -0.482783738 0.5049102  1.6080763
-## [3,]  0.003023741 0.3566582  0.1157016
-## [4,] -1.246632934 0.1981322 -0.2708254
+##            [,1]       [,2]        [,3]
+## [1,] -1.4544046 -1.5981026  0.19678910
+## [2,]  0.1982220 -0.8879235 -0.48072347
+## [3,] -0.3740591 -0.3860557  0.02306385
+## [4,] -1.7672005  0.6132752 -1.67517865
 apply(arr,MARGIN = 2, FUN = sort)
-##              [,1]      [,2]       [,3]
-## [1,] -1.246632934 0.1981322 -0.2708254
-## [2,] -0.589735718 0.3566582  0.1157016
-## [3,] -0.482783738 0.4043531  1.6080763
-## [4,]  0.003023741 0.5049102  1.9333237</code></pre>
+##            [,1]       [,2]        [,3]
+## [1,] -1.7672005 -1.5981026 -1.67517865
+## [2,] -1.4544046 -0.8879235 -0.48072347
+## [3,] -0.3740591 -0.3860557  0.02306385
+## [4,]  0.1982220  0.6132752  0.19678910</code></pre>
 </div>
 </div>
 </div>
@@ -1044,13 +1047,13 @@ arr = np.arange(200000)
 t = time.time()
 results = [(i if i%2==0 else 0) for i in arr]
 time.time() - t
-## 0.010684967041015625
+## 0.009911775588989258
 
 
 t = time.time()
 results = np.where(arr%2!=0,0,arr)
 time.time() - t
-## 0.0020799636840820312</code></pre>
+## 0.0020639896392822266</code></pre>
 <pre class="python"><code># Python 
 
 arr = np.arange(20000000)
@@ -1059,13 +1062,13 @@ arr = np.arange(20000000)
 t = time.time()
 results = [(i if i%2==0 else 0) for i in arr]
 time.time() - t
-## 0.8267402648925781
+## 0.8374919891357422
 
 
 t = time.time()
 results = np.where(arr%2!=0,0,arr)
 time.time() - t
-## 0.07656407356262207</code></pre>
+## 0.09730315208435059</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -1084,13 +1087,13 @@ for(i in 1:length(vec)){
   }
 }
 Sys.time() - t
-## Time difference of 0.02145219 secs
+## Time difference of 0.02371502 secs
 
 
 t &lt;- Sys.time()
 results &lt;- ifelse(vec%%2!=0,vec,0)
 Sys.time() - t
-## Time difference of 0.002763033 secs</code></pre>
+## Time difference of 0.002569914 secs</code></pre>
 <pre class="r"><code># R
 
 vec &lt;- seq(1,20000000)
@@ -1105,13 +1108,13 @@ for(i in 1:length(vec)){
   }
 }
 Sys.time() - t
-## Time difference of 1.741693 secs
+## Time difference of 1.770628 secs
 
 
 t &lt;- Sys.time()
 results &lt;- ifelse(vec%%2!=0,vec,0)
 Sys.time() - t
-## Time difference of 0.4159532 secs
+## Time difference of 0.41432 secs
 
 
 ## other way using which
@@ -1119,7 +1122,7 @@ Sys.time() - t
 t &lt;- Sys.time()
 vec[which(vec%%2==0)] = 0
 Sys.time() - t 
-## Time difference of 0.1791792 secs</code></pre>
+## Time difference of 0.176425 secs</code></pre>
 </div>
 </div>
 </div>
@@ -1540,7 +1543,7 @@ arr_1
 
 # by row, by columns you need to tranpose the array
 map(np.sum,arr_1)
-## &lt;map object at 0x11d6022f0&gt;
+## &lt;map object at 0x142e26260&gt;
 list(map(np.sum,arr_1))
 ## [np.int64(28), np.int64(32), np.int64(36), np.int64(40)]
 np.fromiter(map(sum,arr_1), dtype = int)
@@ -1567,20 +1570,26 @@ store by colmuns.</p>
 <pre class="python"><code># Python
 
 import pandas as pd
-## ModuleNotFoundError: No module named &#39;pandas&#39;
 
 arr_1 = np.arange(1,17).reshape([4,4], order = &#39;F&#39;)
 
 #transform the array into a DataFrame
 df_1 = pd.DataFrame(arr_1)
-## NameError: name &#39;pd&#39; is not defined
 df_1
-## NameError: name &#39;df_1&#39; is not defined
+##    0  1   2   3
+## 0  1  5   9  13
+## 1  2  6  10  14
+## 2  3  7  11  15
+## 3  4  8  12  16
 
 
 # Apply the function by column
 df_1.apply(sum)
-## NameError: name &#39;df_1&#39; is not defined</code></pre>
+## 0    10
+## 1    26
+## 2    42
+## 3    58
+## dtype: int64</code></pre>
 </div>
 </div>
 </div>

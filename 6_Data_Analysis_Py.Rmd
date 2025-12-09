@@ -15,7 +15,7 @@ div.r pre { background-color: #fff5fd; }
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,error=TRUE,collapse = T)
 library(reticulate)
-
+py_require('pandas')
 #  md_document:
 #    variant: markdown_github
 #
@@ -45,8 +45,7 @@ library(reticulate)
 
 
 
-# Tibbles and data.tables
-## Introduction
+# Introduction
 
 <div class = "python">
 
@@ -157,9 +156,9 @@ covid_papers.sort_values('year_pub',ascending=False)
 ```{python,echo = T,collapse = TRUE}
 # Python
 
-covid_papers.agg({'cited':sum})
+covid_papers.agg({'cited':'sum'})
 
-covid_papers.agg({'cited':[sum,np.std]})
+covid_papers.agg({'cited':['sum','std']})
 ```
 
 </div>
@@ -194,7 +193,7 @@ covid_papers.title.map(lambda x: str(x).lower())
 covid_papers.groupby('year_pub').language.nunique()
 # By several groups
 
-covid_papers.groupby('year_pub').agg({'cited':sum})
+covid_papers.groupby('year_pub').agg({'cited':'sum'})
 
 
 # first obs for each group 
@@ -236,7 +235,7 @@ covid_papers.groupby('source').apply(lambda df: df.iloc[-5:])
 
 <div class = "python">
 
-```{python,echo = T,collapse = TRUE,results = 'hide'}
+```{python,echo = T,collapse = TRUE}
 # Python
 
 covid_papers.groupby(['source','year_pub']).ngroups
@@ -289,10 +288,10 @@ covid_papers.groupby(['source','year_pub']).agg({'cited':np.mean,'V1':'count'})
 # Python
 # Summarise several columns
 
-covid_papers.agg({var:func for var, func in zip(['cited','year_pub'],[np.mean]*2)})
+covid_papers.agg({var:func for var, func in zip(['cited','year_pub'],['mean']*2)})
 
 # Summarise several columns by group
-covid_papers.groupby(['source','year_pub']).agg({var:func for var, func in zip(['cited','year_pub'],[np.mean]*2)})
+covid_papers.groupby(['source','year_pub']).agg({var:func for var, func in zip(['cited','year_pub'],['mean']*2)})
 
 ## using patterns (regex)
 
@@ -303,7 +302,7 @@ covid_papers.groupby(['source','year_pub']).agg({var:func for var, func in zip(c
 
 # Summarise with more than one function by group
 
-covid_papers.groupby(['source']).agg({var:func for var, func in zip(['year_pub','cited'],[np.mean,np.median]*len(cols))})
+covid_papers.groupby(['source']).agg({'year_pub': 'mean','cited': 'median'})
 
 
 ```
@@ -326,18 +325,11 @@ def tobinary(x):
         
 # Modify several columns (dropping the others)
 
-covid_papers.agg({var:func for var, func in zip(['oa','has_data'],[tobinary]*2)})
+covid_papers.agg(dict.fromkeys(['oa','has_data'],tobinary))
 
 # Modify several columns (keeping the others)
 for var in ['oa','has_data']:
     covid_papers = covid_papers.assign(var = tobinary)
-
-# Modify columns using a condition
-
-for var in ['oa','has_data']:
-    if covid_papers[var].dtypes == 'O':
-        covid_papers = covid_papers.assign(var = tobinary)
-
 
 ```
 
@@ -391,6 +383,8 @@ pubtype_cp
 
 pubtype_cp =  pubtype_cp[['V2','pubtype']].groupby(['V2','pubtype']).size().to_frame('n').reset_index()
 pubtype_cp_i = pubtype_cp[['V2','pubtype']].groupby(['V2','pubtype']).size().to_frame('n')
+
+pubtype_cp_i
 ```
 
 </div>
@@ -404,7 +398,7 @@ pubtype_cp_i = pubtype_cp[['V2','pubtype']].groupby(['V2','pubtype']).size().to_
 pubtype_cp_i.unstack().fillna(0)
 casted_pubtype_cp = pubtype_cp.pivot(index="V2", columns="pubtype", values="n").fillna(0)
 
-casted_pubtype_cp.shape
+casted_pubtype_cp
 ```
 
 </div>
@@ -679,6 +673,41 @@ covid_papers.to_csv("data/covid_papers.csv")
 
 # Exercise 
 
-Translate last chapter's exercice in Python using pandas.
+```{r,echo=F}
+library(downloadthis)
+download_link(
+  link = "https://github.com/P-Pelletier/M1-ETIC-MPE/raw/gh-pages/data/data.zip",
+  button_label = "Download Data",
+  button_type = "danger",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
 
-<a href="exo_4_py.html">solution with pandas (python)</a>
+Using first ```dplyr``` and the ```tidyverse```, Use ```table_1.csv```, ```table_2.csv``` and ```loc_cities.csv```, we will need information from the three datasets. 
+
+- Import datasets
+
+- Remove articles with no pmid and no DOI, and all articles before 1975
+
+- Merge the two datasets, pmid is unique for each paper
+
+- Create a new variable with the number of authors for each paper
+
+- plot distribution for the log(number of authors +1)
+
+- How many papers contains 'deep learning' or 'machine learning' and 'neural network' (also with a 's' for neural networks) in their title ? Create a binary variable to save this information. What is the mean of authors for ML papers and non#ML papers ?
+
+- Transform has_data and oa into binary variable also, what is the share of ML paper that are oa
+
+- Clean up pubtype, for simplicity just get the first type
+
+- What is the pub type with the highest mean/sd of citation for each type of publication ? (use cited and the cleaned pub_type)
+
+- What are the most representative country by year ? In another tibble, keep only pmid and authors, and get the country for each author from the loc_cities.csv. You may want to separate rows for each authors to get all countries involved in the paper. If an author have multiple affiliations, take the first one. 
+
+- Select the top 25 of countries involved in coronavirus research since 2001, plot the evolution on a bar chart with plot_ly
+
+
+<a href="">solution with pandas (python)</a>

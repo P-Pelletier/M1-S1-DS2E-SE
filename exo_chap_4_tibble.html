@@ -346,6 +346,9 @@ div.tocify {
 <li>
   <a href="5_Data_Analysis_R.html">Data Analysis (R)</a>
 </li>
+<li>
+  <a href="6_Data_Analysis_Py.html">Data Analysis (Python)</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -386,7 +389,7 @@ library(tictoc)
 tic()
 table_1 = read_csv(file = &#39;data/table_1.csv&#39;)</code></pre>
 <pre><code>## Rows: 148916 Columns: 7
-## ── Column specification ─────────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (7): pmid, doi, title, source, language, pubtype, pubmodel
 ## 
@@ -394,7 +397,7 @@ table_1 = read_csv(file = &#39;data/table_1.csv&#39;)</code></pre>
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>table_2 = read_csv(file = &#39;data/table_2.csv&#39;)</code></pre>
 <pre><code>## Rows: 148916 Columns: 6
-## ── Column specification ─────────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (5): pmid, authors, year_pub, has_data, oa
 ## dbl (1): cited
@@ -403,7 +406,7 @@ table_1 = read_csv(file = &#39;data/table_1.csv&#39;)</code></pre>
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>cities = read_csv(file = &#39;data/cities_loc.csv&#39;)</code></pre>
 <pre><code>## Rows: 13751 Columns: 4
-## ── Column specification ─────────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (2): city, country
 ## dbl (2): lng, lat
@@ -411,7 +414,7 @@ table_1 = read_csv(file = &#39;data/table_1.csv&#39;)</code></pre>
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.681 sec elapsed</code></pre>
+<pre><code>## 0.544 sec elapsed</code></pre>
 </div>
 </div>
 <div id="clean" class="section level1" number="2">
@@ -428,7 +431,7 @@ table_1 = table_1 %&gt;%
 table_2 = table_2 %&gt;%
   filter(pmid != &#39;null&#39; &amp; year_pub &gt; 1975)
 toc()</code></pre>
-<pre><code>## 0.017 sec elapsed</code></pre>
+<pre><code>## 0.018 sec elapsed</code></pre>
 </div>
 </div>
 <div id="merge" class="section level1" number="3">
@@ -439,7 +442,7 @@ toc()</code></pre>
 tic()
 final_table = inner_join(table_1, table_2, by = &#39;pmid&#39;)
 toc()</code></pre>
-<pre><code>## 0.037 sec elapsed</code></pre>
+<pre><code>## 0.038 sec elapsed</code></pre>
 <pre class="r"><code>final_table = na.omit(final_table)
 final_table</code></pre>
 <pre><code>## # A tibble: 108,721 × 12
@@ -470,7 +473,7 @@ final_table = final_table %&gt;%
   rowwise() %&gt;%
   mutate(nb_aut = dim(str_match_all(authors, &#39;&lt;AUTHOR&gt;&#39;)[[1]])[1]) 
 toc()</code></pre>
-<pre><code>## 1.445 sec elapsed</code></pre>
+<pre><code>## 2.196 sec elapsed</code></pre>
 <pre class="r"><code>final_table = final_table %&gt;% 
   filter(nb_aut &gt; 0)
 
@@ -521,7 +524,7 @@ final_table = final_table %&gt;%
          has_data = ifelse(has_data == &#39;Y&#39;, 1, 0),
          oa = ifelse(oa == &#39;Y&#39;, 1, 0))
 toc()</code></pre>
-<pre><code>## 2.61 sec elapsed</code></pre>
+<pre><code>## 2.141 sec elapsed</code></pre>
 <pre class="r"><code>sum(final_table$ML)</code></pre>
 <pre><code>## [1] 222</code></pre>
 <pre class="r"><code>sum(final_table$oa)</code></pre>
@@ -562,7 +565,7 @@ tic()
 final_table = final_table %&gt;%
   mutate(pub_type = str_match_all(pubtype, &#39;\\[\\&quot;(.*?)\\&quot;&#39;)[[1]][2])
 toc()</code></pre>
-<pre><code>## 1.347 sec elapsed</code></pre>
+<pre><code>## 1.383 sec elapsed</code></pre>
 <pre class="r"><code>final_table %&gt;% 
   select(pubtype,pub_type)</code></pre>
 <pre><code>## # A tibble: 107,103 × 2
@@ -648,7 +651,7 @@ countries_tibble = final_table %&gt;%
   select(pmid,authors) %&gt;% 
   separate_rows(authors, sep = &#39;&lt;AUTHOR&gt;&#39;)
 toc()</code></pre>
-<pre><code>## 2.914 sec elapsed</code></pre>
+<pre><code>## 2.799 sec elapsed</code></pre>
 <pre class="r"><code>countries_tibble %&gt;% 
   select(authors)</code></pre>
 <pre><code>## # A tibble: 725,396 × 1
@@ -670,7 +673,7 @@ countries_tibble = countries_tibble %&gt;%
   rowwise() %&gt;% 
   filter(authors !=&quot;&quot; &amp; !str_detect(authors, &#39;&lt;AFFILIATION&gt;None&#39;))
 toc()</code></pre>
-<pre><code>## 7.703 sec elapsed</code></pre>
+<pre><code>## 9.149 sec elapsed</code></pre>
 <pre class="r"><code>countries_tibble %&gt;% 
   select(authors)</code></pre>
 <pre><code>## # A tibble: 476,357 × 1
@@ -694,7 +697,7 @@ countries_tibble = countries_tibble %&gt;%
   mutate(authors = unlist(str_split(authors, &#39;&lt;AFFILIATION&gt;&#39;))[2]) %&gt;% 
   filter(!duplicated(pmid, authors))
 toc()</code></pre>
-<pre><code>## 8.565 sec elapsed</code></pre>
+<pre><code>## 9.286 sec elapsed</code></pre>
 <pre class="r"><code>countries_tibble %&gt;% 
   select(authors)</code></pre>
 <pre><code>## Adding missing grouping variables: `pmid`</code></pre>
@@ -723,7 +726,7 @@ countries_tibble  = countries_tibble %&gt;%
          authors = str_replace_all(authors, &#39; Korea&#39;, &#39;South Korea&#39;),
          authors = tolower(authors)) 
 toc()</code></pre>
-<pre><code>## 33.804 sec elapsed</code></pre>
+<pre><code>## 33.08 sec elapsed</code></pre>
 <pre class="r"><code>pattern = paste0(&quot;\\b(&quot;, paste(countries, collapse = &quot;|&quot;), &quot;)\\b&quot;)
 tic()
 countries_tibble &lt;- countries_tibble %&gt;%
@@ -732,13 +735,13 @@ countries_tibble &lt;- countries_tibble %&gt;%
   select(-authors)</code></pre>
 <pre><code>## Adding missing grouping variables: `authors`</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 28.954 sec elapsed</code></pre>
+<pre><code>## 29.639 sec elapsed</code></pre>
 <pre class="r"><code>tic()
 countries_tibble = countries_tibble %&gt;%
   filter(country != &#39;&#39;) %&gt;%
   distinct(pmid, country)
 toc()</code></pre>
-<pre><code>## 1.162 sec elapsed</code></pre>
+<pre><code>## 1.045 sec elapsed</code></pre>
 <pre class="r"><code>countries_tibble</code></pre>
 <pre><code>## # A tibble: 249,182 × 3
 ## # Groups:   pmid, authors [249,182]
@@ -760,7 +763,7 @@ countries_tibble = left_join(countries_tibble,
                              final_table[,c(&#39;pmid&#39;,&#39;year_pub&#39;)],
                              by = &#39;pmid&#39;)
 toc()</code></pre>
-<pre><code>## 0.12 sec elapsed</code></pre>
+<pre><code>## 0.121 sec elapsed</code></pre>
 <pre class="r"><code>tic()
 countries_pub = countries_tibble %&gt;% 
   group_by(country, year_pub) %&gt;%
@@ -769,7 +772,7 @@ countries_pub = countries_tibble %&gt;%
 <pre><code>## `summarise()` has grouped output by &#39;country&#39;. You can override using the
 ## `.groups` argument.</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.121 sec elapsed</code></pre>
+<pre><code>## 0.018 sec elapsed</code></pre>
 </div>
 </div>
 <div id="country-bar-plot-with-plotly" class="section level1"
@@ -819,8 +822,8 @@ plot_top_n(10,2001)</code></pre>
 <pre><code>## No trace type specified:
 ##   Based on info supplied, a &#39;bar&#39; trace seems appropriate.
 ##   Read more about this trace type -&gt; https://plotly.com/r/reference/#bar</code></pre>
-<div class="plotly html-widget html-fill-item" id="htmlwidget-9f7ed459fde99c2af187" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-9f7ed459fde99c2af187">{"x":{"visdat":{"151f76cc2e3e5":["function () ","plotlyVisDat"]},"cur_data":"151f76cc2e3e5","attrs":{"151f76cc2e3e5":{"x":{},"y":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"yaxis":{"domain":[0,1],"automargin":true,"title":"Count","type":"log"},"barmode":"stack","xaxis":{"domain":[0,1],"automargin":true,"title":"year_pub","type":"category","categoryorder":"array","categoryarray":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"]},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["2020","2019","2018","2015","2017","2016","2014","2013","2009","2011","2008","2012","2007","2006","2010","2005","2004","2003","2002","2021","2001"],"y":[2058,137,127,120,115,114,96,71,51,45,43,42,39,32,26,25,21,10,4,3,2],"type":"bar","name":"australia","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2016","2018","2015","2017","2014","2013","2012","2006","2008","2004","2009","2010","2011","2007","2005","2003","2001","2002","2021"],"y":[2342,172,136,134,130,120,113,90,73,72,71,70,70,64,64,62,61,45,16,13,4],"type":"bar","name":"canada","marker":{"color":"rgba(228,156,113,1)","line":{"color":"rgba(228,156,113,1)"}},"textfont":{"color":"rgba(228,156,113,1)"},"error_y":{"color":"rgba(228,156,113,1)"},"error_x":{"color":"rgba(228,156,113,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2017","2016","2015","2014","2013","2010","2004","2005","2012","2009","2011","2006","2007","2008","2003","2021"],"y":[7894,739,593,568,532,516,393,317,222,186,182,172,171,165,164,156,145,102,25],"type":"bar","name":"china","marker":{"color":"rgba(201,152,157,1)","line":{"color":"rgba(201,152,157,1)"}},"textfont":{"color":"rgba(201,152,157,1)"},"error_y":{"color":"rgba(201,152,157,1)"},"error_x":{"color":"rgba(201,152,157,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2018","2019","2016","2017","2015","2014","2013","2009","2011","2007","2010","2012","2008","2005","2006","2004","2003","2001","2002","2021"],"y":[2639,158,157,148,135,130,127,86,57,54,46,44,43,41,39,36,32,17,12,12,4],"type":"bar","name":"france","marker":{"color":"rgba(175,154,200,1)","line":{"color":"rgba(175,154,200,1)"}},"textfont":{"color":"rgba(175,154,200,1)"},"error_y":{"color":"rgba(175,154,200,1)"},"error_x":{"color":"rgba(175,154,200,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2017","2016","2015","2014","2013","2006","2008","2011","2009","2007","2012","2010","2005","2004","2003","2002","2001","2021"],"y":[2108,177,171,165,151,146,127,80,70,59,59,55,53,48,46,36,35,31,19,18,1],"type":"bar","name":"germany","marker":{"color":"rgba(226,148,184,1)","line":{"color":"rgba(226,148,184,1)"}},"textfont":{"color":"rgba(226,148,184,1)"},"error_y":{"color":"rgba(226,148,184,1)"},"error_x":{"color":"rgba(226,148,184,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2016","2017","2014","2015","2013","2010","2011","2012","2008","2009","2006","2004","2007","2005","2021","2003","2001","2002"],"y":[3199,125,91,88,88,82,65,54,32,31,30,24,18,10,9,9,8,8,5,4,1],"type":"bar","name":"india","marker":{"color":"rgba(176,208,99,1)","line":{"color":"rgba(176,208,99,1)"}},"textfont":{"color":"rgba(176,208,99,1)"},"error_y":{"color":"rgba(176,208,99,1)"},"error_x":{"color":"rgba(176,208,99,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2016","2017","2015","2014","2013","2012","2011","2008","2005","2009","2007","2006","2010","2004","2003","2001","2002","2021"],"y":[5933,131,115,111,110,94,69,48,43,41,37,34,33,32,31,31,24,18,9,8,5],"type":"bar","name":"italy","marker":{"color":"rgba(227,217,62,1)","line":{"color":"rgba(227,217,62,1)"}},"textfont":{"color":"rgba(227,217,62,1)"},"error_y":{"color":"rgba(227,217,62,1)"},"error_x":{"color":"rgba(227,217,62,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2016","2015","2017","2014","2012","2013","2008","2011","2009","2010","2007","2005","2006","2003","2004","2002","2001","2021"],"y":[2014,110,98,87,79,76,63,44,44,38,34,31,25,19,18,18,17,14,10,8,5],"type":"bar","name":"spain","marker":{"color":"rgba(245,207,100,1)","line":{"color":"rgba(245,207,100,1)"}},"textfont":{"color":"rgba(245,207,100,1)"},"error_y":{"color":"rgba(245,207,100,1)"},"error_x":{"color":"rgba(245,207,100,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2015","2017","2018","2016","2014","2013","2009","2012","2011","2010","2008","2006","2007","2005","2004","2003","2001","2002","2021"],"y":[6058,287,252,229,206,201,175,125,101,90,89,87,85,81,74,72,68,56,22,20,10],"type":"bar","name":"united kingdom","marker":{"color":"rgba(219,192,155,1)","line":{"color":"rgba(219,192,155,1)"}},"textfont":{"color":"rgba(219,192,155,1)"},"error_y":{"color":"rgba(219,192,155,1)"},"error_x":{"color":"rgba(219,192,155,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2017","2015","2016","2014","2013","2010","2011","2012","2009","2008","2006","2007","2005","2004","2003","2001","2002","2021"],"y":[10670,803,753,749,739,729,632,608,570,555,554,538,505,465,411,395,370,228,158,130,20],"type":"bar","name":"united states","marker":{"color":"rgba(179,179,179,1)","line":{"color":"rgba(179,179,179,1)"}},"textfont":{"color":"rgba(179,179,179,1)"},"error_y":{"color":"rgba(179,179,179,1)"},"error_x":{"color":"rgba(179,179,179,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-b4606242fe8d259a2ee1" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-b4606242fe8d259a2ee1">{"x":{"visdat":{"524d7b44d7de":["function () ","plotlyVisDat"]},"cur_data":"524d7b44d7de","attrs":{"524d7b44d7de":{"x":{},"y":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"yaxis":{"domain":[0,1],"automargin":true,"title":"Count","type":"log"},"barmode":"stack","xaxis":{"domain":[0,1],"automargin":true,"title":"year_pub","type":"category","categoryorder":"array","categoryarray":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"]},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["2020","2019","2018","2015","2017","2016","2014","2013","2009","2011","2008","2012","2007","2006","2010","2005","2004","2003","2002","2021","2001"],"y":[2058,137,127,120,115,114,96,71,51,45,43,42,39,32,26,25,21,10,4,3,2],"type":"bar","name":"australia","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2016","2018","2015","2017","2014","2013","2012","2006","2008","2004","2009","2010","2011","2007","2005","2003","2001","2002","2021"],"y":[2342,172,136,134,130,120,113,90,73,72,71,70,70,64,64,62,61,45,16,13,4],"type":"bar","name":"canada","marker":{"color":"rgba(228,156,113,1)","line":{"color":"rgba(228,156,113,1)"}},"textfont":{"color":"rgba(228,156,113,1)"},"error_y":{"color":"rgba(228,156,113,1)"},"error_x":{"color":"rgba(228,156,113,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2017","2016","2015","2014","2013","2010","2004","2005","2012","2009","2011","2006","2007","2008","2003","2021"],"y":[7894,739,593,568,532,516,393,317,222,186,182,172,171,165,164,156,145,102,25],"type":"bar","name":"china","marker":{"color":"rgba(201,152,157,1)","line":{"color":"rgba(201,152,157,1)"}},"textfont":{"color":"rgba(201,152,157,1)"},"error_y":{"color":"rgba(201,152,157,1)"},"error_x":{"color":"rgba(201,152,157,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2018","2019","2016","2017","2015","2014","2013","2009","2011","2007","2010","2012","2008","2005","2006","2004","2003","2001","2002","2021"],"y":[2639,158,157,148,135,130,127,86,57,54,46,44,43,41,39,36,32,17,12,12,4],"type":"bar","name":"france","marker":{"color":"rgba(175,154,200,1)","line":{"color":"rgba(175,154,200,1)"}},"textfont":{"color":"rgba(175,154,200,1)"},"error_y":{"color":"rgba(175,154,200,1)"},"error_x":{"color":"rgba(175,154,200,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2017","2016","2015","2014","2013","2006","2008","2011","2009","2007","2012","2010","2005","2004","2003","2002","2001","2021"],"y":[2108,177,171,165,151,146,127,80,70,59,59,55,53,48,46,36,35,31,19,18,1],"type":"bar","name":"germany","marker":{"color":"rgba(226,148,184,1)","line":{"color":"rgba(226,148,184,1)"}},"textfont":{"color":"rgba(226,148,184,1)"},"error_y":{"color":"rgba(226,148,184,1)"},"error_x":{"color":"rgba(226,148,184,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2016","2017","2014","2015","2013","2010","2011","2012","2008","2009","2006","2004","2007","2005","2021","2003","2001","2002"],"y":[3199,125,91,88,88,82,65,54,32,31,30,24,18,10,9,9,8,8,5,4,1],"type":"bar","name":"india","marker":{"color":"rgba(176,208,99,1)","line":{"color":"rgba(176,208,99,1)"}},"textfont":{"color":"rgba(176,208,99,1)"},"error_y":{"color":"rgba(176,208,99,1)"},"error_x":{"color":"rgba(176,208,99,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2016","2017","2015","2014","2013","2012","2011","2008","2005","2009","2007","2006","2010","2004","2003","2001","2002","2021"],"y":[5933,131,115,111,110,94,69,48,43,41,37,34,33,32,31,31,24,18,9,8,5],"type":"bar","name":"italy","marker":{"color":"rgba(227,217,62,1)","line":{"color":"rgba(227,217,62,1)"}},"textfont":{"color":"rgba(227,217,62,1)"},"error_y":{"color":"rgba(227,217,62,1)"},"error_x":{"color":"rgba(227,217,62,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2016","2015","2017","2014","2012","2013","2008","2011","2009","2010","2007","2005","2006","2003","2004","2002","2001","2021"],"y":[2014,110,98,87,79,76,63,44,44,38,34,31,25,19,18,18,17,14,10,8,5],"type":"bar","name":"spain","marker":{"color":"rgba(245,207,100,1)","line":{"color":"rgba(245,207,100,1)"}},"textfont":{"color":"rgba(245,207,100,1)"},"error_y":{"color":"rgba(245,207,100,1)"},"error_x":{"color":"rgba(245,207,100,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2015","2017","2018","2016","2014","2013","2009","2012","2011","2010","2008","2006","2007","2005","2004","2003","2001","2002","2021"],"y":[6058,287,252,229,206,201,175,125,101,90,89,87,85,81,74,72,68,56,22,20,10],"type":"bar","name":"united kingdom","marker":{"color":"rgba(219,192,155,1)","line":{"color":"rgba(219,192,155,1)"}},"textfont":{"color":"rgba(219,192,155,1)"},"error_y":{"color":"rgba(219,192,155,1)"},"error_x":{"color":"rgba(219,192,155,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2020","2019","2018","2017","2015","2016","2014","2013","2010","2011","2012","2009","2008","2006","2007","2005","2004","2003","2001","2002","2021"],"y":[10670,803,753,749,739,729,632,608,570,555,554,538,505,465,411,395,370,228,158,130,20],"type":"bar","name":"united states","marker":{"color":"rgba(179,179,179,1)","line":{"color":"rgba(179,179,179,1)"}},"textfont":{"color":"rgba(179,179,179,1)"},"error_y":{"color":"rgba(179,179,179,1)"},"error_x":{"color":"rgba(179,179,179,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 

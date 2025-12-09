@@ -338,6 +338,9 @@ div.tocify {
 <li>
   <a href="5_Data_Analysis_R.html">Data Analysis (R)</a>
 </li>
+<li>
+  <a href="6_Data_Analysis_Py.html">Data Analysis (Python)</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -1793,19 +1796,26 @@ package Pandas is also view deeper in following chapters.</p>
 <pre class="python"><code># Python
 
 import pandas
-## ModuleNotFoundError: No module named &#39;pandas&#39;
 
 df = pandas.DataFrame(arr)
-## NameError: name &#39;pandas&#39; is not defined
 df
-## NameError: name &#39;df&#39; is not defined
+##     0   1
+## 0  12  14
+## 1   2   5
+## 2   3   6
+## 3   7   8
 
 vec = [1,2,3,4,5,6]
 
 df = pandas.DataFrame({&#39;vec&#39;:vec,&#39;vec1&#39;:range(2,8)})
-## NameError: name &#39;pandas&#39; is not defined
 df
-## NameError: name &#39;df&#39; is not defined</code></pre>
+##    vec  vec1
+## 0    1     2
+## 1    2     3
+## 2    3     4
+## 3    4     5
+## 4    5     6
+## 5    6     7</code></pre>
 </div>
 <div class="python">
 <pre class="python"><code># Python
@@ -1813,21 +1823,30 @@ df
 # access element of a Pandas Data Frame
 
 df[&#39;vec&#39;] 
-## NameError: name &#39;df&#39; is not defined</code></pre>
+## 0    1
+## 1    2
+## 2    3
+## 3    4
+## 4    5
+## 5    6
+## Name: vec, dtype: int64</code></pre>
 <pre class="python"><code># modify
 vec2 = range(3,9)
 df[&#39;vec2&#39;] = vec2 # add values from other vector
-## NameError: name &#39;df&#39; is not defined
 a
 ## {1, 2, 3, 12, 14}</code></pre>
 <pre class="python"><code># mutable
 
 df2 = df
-## NameError: name &#39;df&#39; is not defined
 df[&#39;vec&#39;][0] = 30
-## NameError: name &#39;df&#39; is not defined
 df2
-## NameError: name &#39;df2&#39; is not defined</code></pre>
+##    vec  vec1  vec2
+## 0   30     2     3
+## 1    2     3     4
+## 2    3     4     5
+## 3    4     5     6
+## 4    5     6     7
+## 5    6     7     8</code></pre>
 </div>
 <div
 style="border:1px solid; padding:10px; margin-bottom:10px; border-radius: 10px; background-color: #f9f9f9;">
@@ -1838,12 +1857,12 @@ dictionary with two columns: “Name” and “Age”.</p>
 Click here to see the solution
 </summary>
 <pre class="python"><code>import pandas as pd
-## ModuleNotFoundError: No module named &#39;pandas&#39;
 data = {&quot;Name&quot;: [&quot;Alice&quot;, &quot;Bob&quot;], &quot;Age&quot;: [25, 24]}
 df = pd.DataFrame(data)
-## NameError: name &#39;pd&#39; is not defined
 print(df)
-## NameError: name &#39;df&#39; is not defined</code></pre>
+##     Name  Age
+## 0  Alice   25
+## 1    Bob   24</code></pre>
 </details>
 <p>
  
@@ -1855,9 +1874,10 @@ that contains the square of ‘Age’.</p>
 Click here to see the solution
 </summary>
 <pre class="python"><code>df[&quot;Squared_Age&quot;] = df[&quot;Age&quot;] ** 2
-## NameError: name &#39;df&#39; is not defined
 print(df)
-## NameError: name &#39;df&#39; is not defined</code></pre>
+##     Name  Age  Squared_Age
+## 0  Alice   25          625
+## 1    Bob   24          576</code></pre>
 </details>
 </div>
 <p>
@@ -2006,7 +2026,7 @@ while total &lt; 1:
     total += rnd
   
 total
-## 1.1974010619550657</code></pre>
+## 2.2298422954199593</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -2036,7 +2056,7 @@ while(total &lt; 1){
 }
   
 total
-## [1] 2.406492</code></pre>
+## [1] 1.269597</code></pre>
 </div>
 </div>
 </div>
@@ -2102,7 +2122,7 @@ for val in lst:
   if val &gt; 2:
     results.append(val)
 time.time()-t
-## 0.0019488334655761719
+## 0.0019719600677490234
 
 results
 ## [3, 4]
@@ -2111,7 +2131,7 @@ t = time.time()
 # this loop their will produce the same output than a using List comprehension.
 results = [val for val in lst if val&gt;2]
 time.time()-t
-## 0.0012340545654296875
+## 0.0012302398681640625
 
 results
 ## [3, 4]</code></pre>
@@ -2129,7 +2149,7 @@ for val in st:
   if val &gt; 2:
     results.add(val)
 time.time()-t
-## 0.003161191940307617
+## 0.002038717269897461
 
 results
 ## {3, 4}
@@ -2139,7 +2159,7 @@ t = time.time()
 # this loop their will produce the same output than a using Set comprehension.
 results = {val for val in st if val&gt;2}
 time.time()-t
-## 0.0012917518615722656
+## 0.0018050670623779297
 
 results
 ## {3, 4}</code></pre>
@@ -2157,7 +2177,7 @@ for val in dct:
   if dct[val] &gt; 2:
     results.update({str(val): dct[val]})
 time.time()-t
-## 0.0019850730895996094
+## 0.001931905746459961
 
 results
 ## {&#39;c&#39;: 3, &#39;d&#39;: 4}
@@ -2166,7 +2186,7 @@ t = time.time()
 # this loop their will produce the same output than a using Dict comprehension.
 results = {str(val): dct[val] for val in dct if dct[val]&gt;2}
 time.time()-t
-## 0.001348733901977539
+## 0.0013203620910644531
 
 results
 ## {&#39;c&#39;: 3, &#39;d&#39;: 4}</code></pre>
@@ -2245,7 +2265,7 @@ t = time.time()
 clean_sum(seq = seq)
 ## 1560
 time.time() - t
-## 0.0013308525085449219
+## 0.0015287399291992188
 
 
 def clean_sum2(seq):
@@ -2256,7 +2276,7 @@ t = time.time()
 clean_sum2(seq = seq)
 ## 1560
 time.time() - t
-## 0.0014617443084716797</code></pre>
+## 0.0013041496276855469</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -2279,7 +2299,7 @@ t = Sys.time()
 clean_sum(seq = seq)
 ## [1] 1560
 Sys.time() - t
-## Time difference of 0.001373053 secs
+## Time difference of 0.005135059 secs
 
 
 
@@ -2292,7 +2312,7 @@ t &lt;- Sys.time()
 clean_sum(seq = seq)
 ## [1] 1560
 Sys.time() - t
-## Time difference of 0.000305891 secs</code></pre>
+## Time difference of 0.0008330345 secs</code></pre>
 </div>
 </div>
 </div>

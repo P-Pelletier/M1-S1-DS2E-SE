@@ -35,8 +35,7 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-6.7.2/js/script.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -338,6 +337,9 @@ div.tocify {
 <li>
   <a href="5_Data_Analysis_R.html">Data Analysis (R)</a>
 </li>
+<li>
+  <a href="6_Data_Analysis_Py.html">Data Analysis (Python)</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -367,23 +369,30 @@ div.python pre { background-color: #e9f7f5
 <style>
 div.r pre { background-color: #fff5fd; }
 </style>
-<div id="tibbles-and-data.tables" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Tibbles and
-data.tables</h1>
-<div id="introduction" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Introduction</h2>
+<div id="introduction" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
 <div class="python">
 <pre class="python"><code># Python
 import pandas as pd
-## ModuleNotFoundError: No module named &#39;pandas&#39;
 import re
 covid_papers = pd.read_csv(&quot;data/covid_papers.csv&quot;)
-## NameError: name &#39;pd&#39; is not defined
 covid_papers
-## NameError: name &#39;covid_papers&#39; is not defined
+##                              _id        pmid       pmcid  ... cited has_data oa
+## 0       5f69d6fa65a250f0edc4ee5c  32837036.0  PMC7424135  ...     0        N  Y
+## 1       5f69d6fa65a250f0edc4ee5d  32196410.0  PMC7170333  ...    61        N  Y
+## 2       5f69d6fa65a250f0edc4ee5e  32778421.0  PMC7402212  ...     0        N  Y
+## 3       5f69d6fa65a250f0edc4ee5f  32730205.0  PMC7382925  ...     0        N  Y
+## 4       5f69d6fa65a250f0edc4ee60         NaN         NaN  ...     0        N  N
+## ...                          ...         ...         ...  ...   ...      ... ..
+## 148911  5f69f29165a250f0edc7340b  31314321.0  PMC7121204  ...     0        N  Y
+## 148912  5f69f29165a250f0edc7340c  31314312.0  PMC7123335  ...     0        N  Y
+## 148913  5f69f29165a250f0edc7340d  32091757.0  PMC7124085  ...     0        N  Y
+## 148914  5f69f29165a250f0edc7340e  28590697.0  PMC7193726  ...     0        N  Y
+## 148915  5f69f29165a250f0edc7340f  28590695.0  PMC7193709  ...     0        N  Y
+## 
+## [148916 rows x 19 columns]
 covid_papers.sample(frac = 0.001).shape
-## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
-<pre><code>## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+## (149, 19)</code></pre>
 </div>
 <ul>
 <li>Select columns</li>
@@ -392,11 +401,48 @@ covid_papers.sample(frac = 0.001).shape
 <pre class="python"><code># Python
 
 covid_papers.doi
-## NameError: name &#39;covid_papers&#39; is not defined
+## 0               10.1007/s12291-020-00919-0
+## 1            10.1080/22221751.2020.1746199
+## 2               10.1016/j.jiph.2020.07.011
+## 3               10.1016/j.ijsu.2020.07.032
+## 4         10.20944/preprints202008.0312.v1
+##                         ...               
+## 148911                                 NaN
+## 148912                                 NaN
+## 148913                                 NaN
+## 148914                                 NaN
+## 148915                                 NaN
+## Name: doi, Length: 148916, dtype: object
 covid_papers[[&#39;doi&#39;,&#39;title&#39;]]
-## NameError: name &#39;covid_papers&#39; is not defined
+##                                      doi                                              title
+## 0             10.1007/s12291-020-00919-0  The Pathophysiology, Diagnosis and Treatment o...
+## 1          10.1080/22221751.2020.1746199  Hypothesis for potential pathogenesis of SARS-...
+## 2             10.1016/j.jiph.2020.07.011  The outbreak of the novel severe acute respira...
+## 3             10.1016/j.ijsu.2020.07.032  A comparative overview of COVID-19, MERS and S...
+## 4       10.20944/preprints202008.0312.v1  Virion Structure and Mechanism of Propagation ...
+## ...                                  ...                                                ...
+## 148911                               NaN      BMT Settings, Infection and Infection Control
+## 148912                               NaN  Early and Acute Complications and the Principl...
+## 148913                               NaN                                   Viral Infections
+## 148914                               NaN  International Collaboration for Global Public ...
+## 148915                               NaN           Resource Allocation and Priority Setting
+## 
+## [148916 rows x 2 columns]
 covid_papers.drop([&#39;doi&#39;,&#39;creation&#39;],axis = 1)
-## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+##                              _id        pmid       pmcid  ... cited has_data  oa
+## 0       5f69d6fa65a250f0edc4ee5c  32837036.0  PMC7424135  ...     0        N   Y
+## 1       5f69d6fa65a250f0edc4ee5d  32196410.0  PMC7170333  ...    61        N   Y
+## 2       5f69d6fa65a250f0edc4ee5e  32778421.0  PMC7402212  ...     0        N   Y
+## 3       5f69d6fa65a250f0edc4ee5f  32730205.0  PMC7382925  ...     0        N   Y
+## 4       5f69d6fa65a250f0edc4ee60         NaN         NaN  ...     0        N   N
+## ...                          ...         ...         ...  ...   ...      ...  ..
+## 148911  5f69f29165a250f0edc7340b  31314321.0  PMC7121204  ...     0        N   Y
+## 148912  5f69f29165a250f0edc7340c  31314312.0  PMC7123335  ...     0        N   Y
+## 148913  5f69f29165a250f0edc7340d  32091757.0  PMC7124085  ...     0        N   Y
+## 148914  5f69f29165a250f0edc7340e  28590697.0  PMC7193726  ...     0        N   Y
+## 148915  5f69f29165a250f0edc7340f  28590695.0  PMC7193709  ...     0        N   Y
+## 
+## [148916 rows x 16 columns]</code></pre>
 </div>
 <ul>
 <li>using regular expression</li>
@@ -440,9 +486,35 @@ covid_papers.drop_duplicates(subset=[&#39;V1&#39;, &#39;title&#39;])</code></pre
 <div class="python">
 <pre class="python"><code># Python
 covid_papers.sort_values(&#39;year_pub&#39;)
-## NameError: name &#39;covid_papers&#39; is not defined
+##                               V1          V2          V3  ... cited has_data oa
+## 148865  5f69f28f65a250f0edc733dd         NaN  PMC5613494  ...     0        N  Y
+## 148799  5f69f28c65a250f0edc7339b         NaN  PMC5639501  ...     0        N  Y
+## 148793  5f69f28b65a250f0edc73395  29919123.0  PMC5100527  ...     0        N  Y
+## 148888  5f69f29065a250f0edc733f4  29917937.0  PMC5082205  ...     0        N  Y
+## 148867  5f69f28f65a250f0edc733df  29918028.0  PMC5086967  ...     0        N  Y
+## ...                          ...         ...         ...  ...   ...      ... ..
+## 138520  5f69f09565a250f0edc70b74         NaN  PMC7120167  ...     0        N  Y
+## 139464  5f69f0c265a250f0edc70f24         NaN  PMC7123719  ...     0        N  Y
+## 142783  5f69f16265a250f0edc71c1b         NaN  PMC7121730  ...     0        N  Y
+## 145952  5f69f1fb65a250f0edc7287c         NaN  PMC7153414  ...     0        N  Y
+## 147551  5f69f24a65a250f0edc72ebb         NaN  PMC7123278  ...     0        N  Y
+## 
+## [148872 rows x 18 columns]
 covid_papers.sort_values(&#39;year_pub&#39;,ascending=False)
-## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+##                               V1          V2          V3  ... cited has_data oa
+## 118345  5f69ecb165a250f0edc6bca5  32835130.0  PMC7332907  ...     0        N  Y
+## 92675   5f69e7a965a250f0edc6585f         NaN  PMC7258713  ...     0        N  Y
+## 125910  5f69ee2465a250f0edc6da32  32904425.0  PMC7455151  ...     0        N  Y
+## 50368   5f69dfcb65a250f0edc5b31c  32834290.0  PMC7396951  ...     0        N  Y
+## 16091   5f69d9b565a250f0edc52d37  32921917.0         NaN  ...     0        N  N
+## ...                          ...         ...         ...  ...   ...      ... ..
+## 138520  5f69f09565a250f0edc70b74         NaN  PMC7120167  ...     0        N  Y
+## 139464  5f69f0c265a250f0edc70f24         NaN  PMC7123719  ...     0        N  Y
+## 142783  5f69f16265a250f0edc71c1b         NaN  PMC7121730  ...     0        N  Y
+## 145952  5f69f1fb65a250f0edc7287c         NaN  PMC7153414  ...     0        N  Y
+## 147551  5f69f24a65a250f0edc72ebb         NaN  PMC7123278  ...     0        N  Y
+## 
+## [148872 rows x 18 columns]</code></pre>
 </div>
 <ul>
 <li>Summarise</li>
@@ -450,11 +522,14 @@ covid_papers.sort_values(&#39;year_pub&#39;,ascending=False)
 <div class="python">
 <pre class="python"><code># Python
 
-covid_papers.agg({&#39;cited&#39;:sum})
-## NameError: name &#39;covid_papers&#39; is not defined
+covid_papers.agg({&#39;cited&#39;:&#39;sum&#39;})
+## cited    1241806
+## dtype: int64
 
-covid_papers.agg({&#39;cited&#39;:[sum,np.std]})
-## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+covid_papers.agg({&#39;cited&#39;:[&#39;sum&#39;,&#39;std&#39;]})
+##             cited
+## sum  1.241806e+06
+## std  3.883440e+01</code></pre>
 </div>
 <ul>
 <li>Modifying</li>
@@ -463,13 +538,37 @@ covid_papers.agg({&#39;cited&#39;:[sum,np.std]})
 <pre class="python"><code># Python
 covid_papers.assign(oa = covid_papers.oa.map(lambda oa: 1 if  oa==&#39;Y&#39; else 0),
  log_cited = np.log(covid_papers.cited+1))
-## NameError: name &#39;covid_papers&#39; is not defined
+##                               V1          V2  ... oa log_cited
+## 0       5f69d6fa65a250f0edc4ee5c  32837036.0  ...  1  0.000000
+## 1       5f69d6fa65a250f0edc4ee5d  32196410.0  ...  1  4.127134
+## 2       5f69d6fa65a250f0edc4ee5e  32778421.0  ...  1  0.000000
+## 3       5f69d6fa65a250f0edc4ee5f  32730205.0  ...  1  0.000000
+## 4       5f69d6fa65a250f0edc4ee60         NaN  ...  0  0.000000
+## ...                          ...         ...  ... ..       ...
+## 148911  5f69f29165a250f0edc7340b  31314321.0  ...  1  0.000000
+## 148912  5f69f29165a250f0edc7340c  31314312.0  ...  1  0.000000
+## 148913  5f69f29165a250f0edc7340d  32091757.0  ...  1  0.000000
+## 148914  5f69f29165a250f0edc7340e  28590697.0  ...  1  0.000000
+## 148915  5f69f29165a250f0edc7340f  28590695.0  ...  1  0.000000
+## 
+## [148872 rows x 19 columns]
 
 np.where( covid_papers.oa==&#39;Y&#39;,1,0) 
-## NameError: name &#39;covid_papers&#39; is not defined
+## array([1, 1, 1, ..., 1, 1, 1], shape=(148872,))
 
 covid_papers.title.map(lambda x: str(x).lower())
-## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+## 0         the pathophysiology, diagnosis and treatment o...
+## 1         hypothesis for potential pathogenesis of sars-...
+## 2         the outbreak of the novel severe acute respira...
+## 3         a comparative overview of covid-19, mers and s...
+## 4         virion structure and mechanism of propagation ...
+##                                 ...                        
+## 148911        bmt settings, infection and infection control
+## 148912    early and acute complications and the principl...
+## 148913                                     viral infections
+## 148914    international collaboration for global public ...
+## 148915             resource allocation and priority setting
+## Name: title, Length: 148872, dtype: object</code></pre>
 </div>
 <ul>
 <li>Grouping</li>
@@ -478,29 +577,77 @@ covid_papers.title.map(lambda x: str(x).lower())
 <pre class="python"><code># Python
 
 covid_papers.groupby(&#39;year_pub&#39;).language.nunique()
-## NameError: name &#39;covid_papers&#39; is not defined
+## year_pub
+## 1820.0     1
+## 1821.0     1
+## 1830.0     1
+## 1832.0     1
+## 1833.0     1
+##           ..
+## 2017.0    12
+## 2018.0     8
+## 2019.0    10
+## 2020.0    21
+## 2021.0     2
+## Name: language, Length: 137, dtype: int64
 # By several groups
 
-covid_papers.groupby(&#39;year_pub&#39;).agg({&#39;cited&#39;:sum})
-## NameError: name &#39;covid_papers&#39; is not defined
+covid_papers.groupby(&#39;year_pub&#39;).agg({&#39;cited&#39;:&#39;sum&#39;})
+##            cited
+## year_pub        
+## 1820.0         0
+## 1821.0         0
+## 1830.0         0
+## 1832.0         0
+## 1833.0         0
+## ...          ...
+## 2017.0     24850
+## 2018.0     17139
+## 2019.0     10151
+## 2020.0    147528
+## 2021.0         2
+## 
+## [137 rows x 1 columns]
 
 
 # first obs for each group 
 
 covid_papers.groupby(&#39;source&#39;).first()
-## NameError: name &#39;covid_papers&#39; is not defined
+##                               V1          V2          V3  ... cited has_data  oa
+## source                                                    ...                   
+## AGR     5f69dfd965a250f0edc5b44c         NaN        None  ...     0        N   N
+## CBA     5f69e54965a250f0edc626c8         NaN        None  ...     0        N   N
+## CTX     5f69ebc365a250f0edc6a9dc         NaN        None  ...     0        N   N
+## ETH     5f69e80565a250f0edc65f8e         NaN        None  ...     0        N   N
+## HIR     5f69e5dd65a250f0edc63360         NaN        None  ...     0        N   N
+## MED     5f69d6fa65a250f0edc4ee5c  32837036.0  PMC7424135  ...     0        N   Y
+## PAT     5f69e34f65a250f0edc5fdbb         NaN        None  ...     0        N   N
+## PMC     5f69d6fa65a250f0edc4ee61         NaN  PMC7480804  ...     0        N   Y
+## PPR     5f69d6fa65a250f0edc4ee60         NaN        None  ...     0        N   N
+## 
+## [9 rows x 17 columns]
 
 covid_papers.groupby(&#39;source&#39;).last()
-## NameError: name &#39;covid_papers&#39; is not defined
+##                               V1          V2          V3  ... cited has_data  oa
+## source                                                    ...                   
+## AGR     5f69f16f65a250f0edc71d24         NaN        None  ...     0        N   N
+## CBA     5f69f0cf65a250f0edc7103d         NaN        None  ...     0        N   N
+## CTX     5f69f00f65a250f0edc700b7         NaN        None  ...     0        N   N
+## ETH     5f69ee9365a250f0edc6e2d7         NaN        None  ...     0        N   N
+## HIR     5f69e5dd65a250f0edc63360         NaN        None  ...     0        N   N
+## MED     5f69f29165a250f0edc7340f  28590695.0  PMC7193709  ...     0        N   Y
+## PAT     5f69f1e565a250f0edc726c3         NaN        None  ...     0        N   N
+## PMC     5f69f29065a250f0edc733f1         NaN  PMC2297516  ...     0        N   N
+## PPR     5f69eaec65a250f0edc698de         NaN        None  ...     0        N   N
+## 
+## [9 rows x 17 columns]
 
 # Add a column with number of observations for each group
 
-covid_papers[&#39;grp_count&#39;] = covid_papers.groupby(&#39;source&#39;)[&#39;source&#39;].transform(&#39;count&#39;)
-## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+covid_papers[&#39;grp_count&#39;] = covid_papers.groupby(&#39;source&#39;)[&#39;source&#39;].transform(&#39;count&#39;)</code></pre>
 </div>
-</div>
-<div id="more-complex-use-of-by" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> More complex use of
+<div id="more-complex-use-of-by" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> More complex use of
 by</h2>
 <ul>
 <li>Select specific row by group</li>
@@ -518,7 +665,8 @@ covid_papers.groupby(&#39;source&#39;).apply(lambda df: df.iloc[-5:])</code></pr
 <div class="python">
 <pre class="python"><code># Python
 
-covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).ngroups</code></pre>
+covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).ngroups
+## 301</code></pre>
 </div>
 <ul>
 <li>Get row number of observation by group</li>
@@ -527,7 +675,19 @@ covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).ngroups</code></pre>
 <pre class="python"><code># Python
 
 covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).size()
-## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+## source  year_pub
+## AGR     1987.0          2
+##         1991.0          1
+##         1993.0          1
+##         1994.0          1
+##         1995.0         10
+##                     ...  
+## PPR     2016.0          6
+##         2017.0         15
+##         2018.0         24
+##         2019.0         34
+##         2020.0      13726
+## Length: 301, dtype: int64</code></pre>
 </div>
 <ul>
 <li>Grouping sets (multiple by at once)</li>
@@ -537,11 +697,26 @@ covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).size()
 
 
 covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).agg({&#39;cited&#39;:np.mean,&#39;V1&#39;:&#39;count&#39;})
-## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+## &lt;string&gt;:4: FutureWarning: The provided callable &lt;function mean at 0x111a5aa20&gt; is currently using SeriesGroupBy.mean. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;mean&quot; instead.
+##                      cited     V1
+## source year_pub                  
+## AGR    1987.0     0.500000      2
+##        1991.0     1.000000      1
+##        1993.0     3.000000      1
+##        1994.0     0.000000      1
+##        1995.0    11.600000     10
+## ...                    ...    ...
+## PPR    2016.0     0.000000      6
+##        2017.0     0.533333     15
+##        2018.0     0.541667     24
+##        2019.0     0.147059     34
+##        2020.0     0.120866  13726
+## 
+## [301 rows x 2 columns]</code></pre>
 </div>
 </div>
-<div id="more-complex-manipulation" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> More Complex
+<div id="more-complex-manipulation" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> More Complex
 manipulation</h2>
 <ul>
 <li>Using multiple Variables</li>
@@ -550,26 +725,65 @@ manipulation</h2>
 <pre class="python"><code># Python
 # Summarise several columns
 
-covid_papers.agg({var:func for var, func in zip([&#39;cited&#39;,&#39;year_pub&#39;],[np.mean]*2)})
-## NameError: name &#39;covid_papers&#39; is not defined
+covid_papers.agg({var:func for var, func in zip([&#39;cited&#39;,&#39;year_pub&#39;],[&#39;mean&#39;]*2)})
+## cited          8.341434
+## year_pub    2015.348434
+## dtype: float64
 
 # Summarise several columns by group
-covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).agg({var:func for var, func in zip([&#39;cited&#39;,&#39;year_pub&#39;],[np.mean]*2)})
-## NameError: name &#39;covid_papers&#39; is not defined
+covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).agg({var:func for var, func in zip([&#39;cited&#39;,&#39;year_pub&#39;],[&#39;mean&#39;]*2)})
+##                      cited  year_pub
+## source year_pub                     
+## AGR    1987.0     0.500000    1987.0
+##        1991.0     1.000000    1991.0
+##        1993.0     3.000000    1993.0
+##        1994.0     0.000000    1994.0
+##        1995.0    11.600000    1995.0
+## ...                    ...       ...
+## PPR    2016.0     0.000000    2016.0
+##        2017.0     0.533333    2017.0
+##        2018.0     0.541667    2018.0
+##        2019.0     0.147059    2019.0
+##        2020.0     0.120866    2020.0
+## 
+## [301 rows x 2 columns]
 
 ## using patterns (regex)
 
 cols = list(filter(lambda x: x.startswith(&quot;V&quot;),covid_papers.columns.tolist()))
-## NameError: name &#39;covid_papers&#39; is not defined
 
 
 covid_papers.groupby([&#39;source&#39;,&#39;year_pub&#39;]).agg({var:func for var, func in zip(cols,[&#39;count&#39;]*len(cols))})
-## NameError: name &#39;covid_papers&#39; is not defined
+##                     V1  V2  V3
+## source year_pub               
+## AGR    1987.0        2   0   0
+##        1991.0        1   0   0
+##        1993.0        1   0   0
+##        1994.0        1   0   0
+##        1995.0       10   0   0
+## ...                ...  ..  ..
+## PPR    2016.0        6   0   0
+##        2017.0       15   0   0
+##        2018.0       24   0   0
+##        2019.0       34   0   0
+##        2020.0    13726   0   0
+## 
+## [301 rows x 3 columns]
 
 # Summarise with more than one function by group
 
-covid_papers.groupby([&#39;source&#39;]).agg({var:func for var, func in zip([&#39;year_pub&#39;,&#39;cited&#39;],[np.mean,np.median]*len(cols))})
-## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+covid_papers.groupby([&#39;source&#39;]).agg({&#39;year_pub&#39;: &#39;mean&#39;,&#39;cited&#39;: &#39;median&#39;})
+##            year_pub  cited
+## source                    
+## AGR     2003.371429    2.0
+## CBA     2004.014870    0.0
+## CTX     2001.333333    0.0
+## ETH     2004.666667    0.0
+## HIR     2004.000000    0.0
+## MED     2015.179733    0.0
+## PAT     2005.511289    0.0
+## PMC     2013.610694    0.0
+## PPR     2019.988194    0.0</code></pre>
 </div>
 <ul>
 <li>Modify Multiples Variables</li>
@@ -584,20 +798,26 @@ def tobinary(x):
         
 # Modify several columns (dropping the others)
 
-covid_papers.agg({var:func for var, func in zip([&#39;oa&#39;,&#39;has_data&#39;],[tobinary]*2)})
-## NameError: name &#39;covid_papers&#39; is not defined
+covid_papers.agg(dict.fromkeys([&#39;oa&#39;,&#39;has_data&#39;],tobinary))
+## &lt;string&gt;:4: FutureWarning: using &lt;function tobinary at 0x1164d0c20&gt; in Series.agg cannot aggregate and has been deprecated. Use Series.transform to keep behavior unchanged.
+##         oa  has_data
+## 0        1         0
+## 1        1         0
+## 2        1         0
+## 3        1         0
+## 4        0         0
+## ...     ..       ...
+## 148911   1         0
+## 148912   1         0
+## 148913   1         0
+## 148914   1         0
+## 148915   1         0
+## 
+## [148872 rows x 2 columns]
 
 # Modify several columns (keeping the others)
 for var in [&#39;oa&#39;,&#39;has_data&#39;]:
-    covid_papers = covid_papers.assign(var = tobinary)
-## NameError: name &#39;covid_papers&#39; is not defined
-
-# Modify columns using a condition
-
-for var in [&#39;oa&#39;,&#39;has_data&#39;]:
-    if covid_papers[var].dtypes == &#39;O&#39;:
-        covid_papers = covid_papers.assign(var = tobinary)
-## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+    covid_papers = covid_papers.assign(var = tobinary)</code></pre>
 </div>
 <ul>
 <li>More complex expression</li>
@@ -606,13 +826,26 @@ for var in [&#39;oa&#39;,&#39;has_data&#39;]:
 <pre class="python"><code># Python
 
 grp_size = covid_papers.groupby(&#39;year_pub&#39;).size().to_frame()
-## NameError: name &#39;covid_papers&#39; is not defined
 grp_size.columns = [&#39;share_en&#39;]
-## NameError: name &#39;grp_size&#39; is not defined
 
 covid_papers.assign(is_en = np.where(covid_papers.language == &#39;eng&#39;,1,0),
 oa = tobinary).groupby(&#39;year_pub&#39;).agg(share_en= (&#39;is_en&#39;,sum)).div(grp_size).sort_values(&#39;share_en&#39;)
-## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+## &lt;string&gt;:3: FutureWarning: The provided callable &lt;built-in function sum&gt; is currently using SeriesGroupBy.sum. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;sum&quot; instead.
+##           share_en
+## year_pub          
+## 1956.0    0.666667
+## 1964.0    0.750000
+## 1966.0    0.750000
+## 1967.0    0.785714
+## 2020.0    0.796331
+## ...            ...
+## 1935.0    1.000000
+## 1968.0    1.000000
+## 1936.0    1.000000
+## 1965.0    1.000000
+## 1820.0    1.000000
+## 
+## [137 rows x 1 columns]</code></pre>
 </div>
 </div>
 </div>
@@ -629,28 +862,54 @@ in order to have one row for each article’s pubtype.</p>
 <div class="python">
 <pre class="python"><code># Python
 covid_papers.pubtype.loc[1]
-## NameError: name &#39;covid_papers&#39; is not defined
+## &#39;{&quot;pubType&quot;: [&quot;review-article&quot;, &quot;Journal Article&quot;]}&#39;
 
 def clean_pubtype(str_):
   return re.sub(&#39;[{]|[}]|pubType|: |[[]|[]]&#39;,&#39;&#39;,str_)
 
 
 clean_pubtype(covid_papers.pubtype.loc[1])
-## NameError: name &#39;covid_papers&#39; is not defined
+## &lt;string&gt;:3: FutureWarning: Possible nested set at position 20
+## &#39;&quot;&quot;&quot;review-article&quot;, &quot;Journal Article&quot;&#39;
 
 covid_papers[&#39;pubtype&#39;] = covid_papers.pubtype.map(lambda pt: clean_pubtype(str(pt)))
-## NameError: name &#39;covid_papers&#39; is not defined
 pubtype_cp = covid_papers.assign(pubtype = covid_papers.pubtype.str.split(&#39;&quot;, &quot;&#39;)).explode(&#39;pubtype&#39;)
-## NameError: name &#39;covid_papers&#39; is not defined
 pubtype_cp[&#39;pubtype&#39;] = pubtype_cp.pubtype.map(lambda pubtype: re.sub(&#39;&quot;&#39;,&#39;&#39;,(pubtype)))
-## NameError: name &#39;pubtype_cp&#39; is not defined
 pubtype_cp
-## NameError: name &#39;pubtype_cp&#39; is not defined
+##                               V1          V2          V3  ... oa grp_count var
+## 0       5f69d6fa65a250f0edc4ee5c  32837036.0  PMC7424135  ...  Y    113919   0
+## 0       5f69d6fa65a250f0edc4ee5c  32837036.0  PMC7424135  ...  Y    113919   0
+## 0       5f69d6fa65a250f0edc4ee5c  32837036.0  PMC7424135  ...  Y    113919   0
+## 1       5f69d6fa65a250f0edc4ee5d  32196410.0  PMC7170333  ...  Y    113919   0
+## 1       5f69d6fa65a250f0edc4ee5d  32196410.0  PMC7170333  ...  Y    113919   0
+## ...                          ...         ...         ...  ... ..       ...  ..
+## 148913  5f69f29165a250f0edc7340d  32091757.0  PMC7124085  ...  Y    113919   0
+## 148914  5f69f29165a250f0edc7340e  28590697.0  PMC7193726  ...  Y    113919   0
+## 148914  5f69f29165a250f0edc7340e  28590697.0  PMC7193726  ...  Y    113919   0
+## 148915  5f69f29165a250f0edc7340f  28590695.0  PMC7193709  ...  Y    113919   0
+## 148915  5f69f29165a250f0edc7340f  28590695.0  PMC7193709  ...  Y    113919   0
+## 
+## [308408 rows x 20 columns]
 
 pubtype_cp =  pubtype_cp[[&#39;V2&#39;,&#39;pubtype&#39;]].groupby([&#39;V2&#39;,&#39;pubtype&#39;]).size().to_frame(&#39;n&#39;).reset_index()
-## NameError: name &#39;pubtype_cp&#39; is not defined
 pubtype_cp_i = pubtype_cp[[&#39;V2&#39;,&#39;pubtype&#39;]].groupby([&#39;V2&#39;,&#39;pubtype&#39;]).size().to_frame(&#39;n&#39;)
-## NameError: name &#39;pubtype_cp&#39; is not defined</code></pre>
+
+pubtype_cp_i
+##                              n
+## V2         pubtype            
+## 2142.0     Journal Article   1
+##            research-article  1
+## 2145.0     Journal Article   1
+##            research-article  1
+## 12235.0    Journal Article   1
+## ...                         ..
+## 32931118.0 Letter            1
+## 32931136.0 Letter            1
+## 32931146.0 Journal Article   1
+## 32931161.0 Journal Article   1
+## 32931162.0 Journal Article   1
+## 
+## [258374 rows x 1 columns]</code></pre>
 </div>
 <div id="cast-data-from-long-to-wide" class="section level2"
 number="2.1">
@@ -659,12 +918,40 @@ to wide)</h2>
 <div class="python">
 <pre class="python"><code># Python
 pubtype_cp_i.unstack().fillna(0)
-## NameError: name &#39;pubtype_cp_i&#39; is not defined
+##               n                          ...                                 
+## pubtype     AIM Adaptive Clinical Trial  ... review-article systematic-review
+## V2                                       ...                                 
+## 2142.0      0.0                     0.0  ...            0.0               0.0
+## 2145.0      0.0                     0.0  ...            0.0               0.0
+## 12235.0     0.0                     0.0  ...            0.0               0.0
+## 30881.0     0.0                     0.0  ...            0.0               0.0
+## 36849.0     0.0                     0.0  ...            0.0               0.0
+## ...         ...                     ...  ...            ...               ...
+## 32931118.0  0.0                     0.0  ...            0.0               0.0
+## 32931136.0  0.0                     0.0  ...            0.0               0.0
+## 32931146.0  0.0                     0.0  ...            0.0               0.0
+## 32931161.0  0.0                     0.0  ...            0.0               0.0
+## 32931162.0  0.0                     0.0  ...            0.0               0.0
+## 
+## [113919 rows x 118 columns]
 casted_pubtype_cp = pubtype_cp.pivot(index=&quot;V2&quot;, columns=&quot;pubtype&quot;, values=&quot;n&quot;).fillna(0)
-## NameError: name &#39;pubtype_cp&#39; is not defined
 
-casted_pubtype_cp.shape
-## NameError: name &#39;casted_pubtype_cp&#39; is not defined</code></pre>
+casted_pubtype_cp
+## pubtype     AIM  Adaptive Clinical Trial  ...  review-article  systematic-review
+## V2                                        ...                                   
+## 2142.0      0.0                      0.0  ...             0.0                0.0
+## 2145.0      0.0                      0.0  ...             0.0                0.0
+## 12235.0     0.0                      0.0  ...             0.0                0.0
+## 30881.0     0.0                      0.0  ...             0.0                0.0
+## 36849.0     0.0                      0.0  ...             0.0                0.0
+## ...         ...                      ...  ...             ...                ...
+## 32931118.0  0.0                      0.0  ...             0.0                0.0
+## 32931136.0  0.0                      0.0  ...             0.0                0.0
+## 32931146.0  0.0                      0.0  ...             0.0                0.0
+## 32931161.0  0.0                      0.0  ...             0.0                0.0
+## 32931162.0  0.0                      0.0  ...             0.0                0.0
+## 
+## [113919 rows x 118 columns]</code></pre>
 </div>
 </div>
 <div id="melt-data-from-wide-to-long" class="section level2"
@@ -675,11 +962,36 @@ to long)</h2>
 <pre class="python"><code># Python
 
 casted_pubtype_cp.stack()
-## NameError: name &#39;casted_pubtype_cp&#39; is not defined
+## V2          pubtype                
+## 2142.0      AIM                        0.0
+##             Adaptive Clinical Trial    0.0
+##             Address                    0.0
+##             Addresses                  0.0
+##             Autobiography              0.0
+##                                       ... 
+## 32931162.0  report                     0.0
+##             research-article           0.0
+##             retraction                 0.0
+##             review-article             0.0
+##             systematic-review          0.0
+## Length: 13442442, dtype: float64
 
 
 casted_pubtype_cp.stack().to_frame(&#39;n&#39;).reset_index()
-## NameError: name &#39;casted_pubtype_cp&#39; is not defined</code></pre>
+##                   V2                  pubtype    n
+## 0             2142.0                      AIM  0.0
+## 1             2142.0  Adaptive Clinical Trial  0.0
+## 2             2142.0                  Address  0.0
+## 3             2142.0                Addresses  0.0
+## 4             2142.0            Autobiography  0.0
+## ...              ...                      ...  ...
+## 13442437  32931162.0                   report  0.0
+## 13442438  32931162.0         research-article  0.0
+## 13442439  32931162.0               retraction  0.0
+## 13442440  32931162.0           review-article  0.0
+## 13442441  32931162.0        systematic-review  0.0
+## 
+## [13442442 rows x 3 columns]</code></pre>
 </div>
 </div>
 <div id="split" class="section level2" number="2.3">
@@ -697,12 +1009,35 @@ vector/column</h2>
 <div class="python">
 <pre class="python"><code># Python
 covid_papers[[&#39;doi1&#39;,&#39;doi2&#39;]] = covid_papers.doi.str.split(&quot;/&quot;,expand=True).loc[:,:1]
-## NameError: name &#39;covid_papers&#39; is not defined
 covid_papers[[&#39;doi&#39;,&#39;doi1&#39;,&#39;doi2&#39;]]
-## NameError: name &#39;covid_papers&#39; is not defined
+##                                      doi      doi1                     doi2
+## 0             10.1007/s12291-020-00919-0   10.1007       s12291-020-00919-0
+## 1          10.1080/22221751.2020.1746199   10.1080    22221751.2020.1746199
+## 2             10.1016/j.jiph.2020.07.011   10.1016       j.jiph.2020.07.011
+## 3             10.1016/j.ijsu.2020.07.032   10.1016       j.ijsu.2020.07.032
+## 4       10.20944/preprints202008.0312.v1  10.20944  preprints202008.0312.v1
+## ...                                  ...       ...                      ...
+## 148911                               NaN       NaN                      NaN
+## 148912                               NaN       NaN                      NaN
+## 148913                               NaN       NaN                      NaN
+## 148914                               NaN       NaN                      NaN
+## 148915                               NaN       NaN                      NaN
+## 
+## [148872 rows x 3 columns]
 
 covid_papers.doi.str.split(&#39;/&#39;).explode()
-## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+## 0                       10.1007
+## 0            s12291-020-00919-0
+## 1                       10.1080
+## 1         22221751.2020.1746199
+## 2                       10.1016
+##                   ...          
+## 148911                      NaN
+## 148912                      NaN
+## 148913                      NaN
+## 148914                      NaN
+## 148915                      NaN
+## Name: doi, Length: 279799, dtype: object</code></pre>
 </div>
 </div>
 </div>
@@ -715,13 +1050,12 @@ covid_papers.doi.str.split(&#39;/&#39;).explode()
 <div class="python">
 <pre class="python"><code># Python
 covid_papers = covid_papers.set_index(&#39;V2&#39;)
-## NameError: name &#39;covid_papers&#39; is not defined
 
 covid_papers.loc[32837036,&#39;doi&#39;]
-## NameError: name &#39;covid_papers&#39; is not defined
+## &#39;10.1007/s12291-020-00919-0&#39;
 
 covid_papers.iloc[2,5]
-## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+## np.float64(2020.0)</code></pre>
 </div>
 </div>
 <div id="joinbind-data-sets" class="section level1" number="4">
@@ -735,12 +1069,10 @@ sets</h1>
 df1 = pd.DataFrame({&#39;Id&#39;: [&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;C&#39;],
                     &#39;X1&#39;: [1,3,5,7],
                     &#39;X2&#39;: [&#39;x2&#39;,&#39;x4&#39;,&#39;x6&#39;,&#39;x8&#39;]}).set_index(&#39;Id&#39;)
-## NameError: name &#39;pd&#39; is not defined
 
 df2 = pd.DataFrame({&#39;Id&#39;: [&#39;A&#39;,&#39;B&#39;,&#39;B&#39;,&#39;D&#39;],
                     &#39;Y1&#39;: [1,3,5,7],
-                    &#39;Y2&#39;: [&#39;y1&#39;,&#39;y3&#39;,&#39;y5&#39;,&#39;y7&#39;]}).set_index(&#39;Id&#39;)
-## NameError: name &#39;pd&#39; is not defined</code></pre>
+                    &#39;Y2&#39;: [&#39;y1&#39;,&#39;y3&#39;,&#39;y5&#39;,&#39;y7&#39;]}).set_index(&#39;Id&#39;)</code></pre>
 </div>
 <ul>
 <li>Join matching rows from y to x</li>
@@ -749,10 +1081,22 @@ df2 = pd.DataFrame({&#39;Id&#39;: [&#39;A&#39;,&#39;B&#39;,&#39;B&#39;,&#39;D&#3
 <pre class="python"><code># Python
 
 df1.join(df2)
-## NameError: name &#39;df1&#39; is not defined
+##     X1  X2   Y1   Y2
+## Id                  
+## A    1  x2  1.0   y1
+## B    3  x4  3.0   y3
+## B    3  x4  5.0   y5
+## C    5  x6  NaN  NaN
+## C    7  x8  NaN  NaN
 
 pd.merge(df1, df2, how= &#39;left&#39;, on = &#39;Id&#39;)
-## NameError: name &#39;pd&#39; is not defined</code></pre>
+##     X1  X2   Y1   Y2
+## Id                  
+## A    1  x2  1.0   y1
+## B    3  x4  3.0   y3
+## B    3  x4  5.0   y5
+## C    5  x6  NaN  NaN
+## C    7  x8  NaN  NaN</code></pre>
 </div>
 <ul>
 <li>Join matching rows from x to y</li>
@@ -761,11 +1105,21 @@ pd.merge(df1, df2, how= &#39;left&#39;, on = &#39;Id&#39;)
 <pre class="python"><code># Python
 
 df2.join(df1)
-## NameError: name &#39;df2&#39; is not defined
+##     Y1  Y2   X1   X2
+## Id                  
+## A    1  y1  1.0   x2
+## B    3  y3  3.0   x4
+## B    5  y5  3.0   x4
+## D    7  y7  NaN  NaN
 
 
 pd.merge(df1, df2, how= &#39;right&#39;, on = &#39;Id&#39;)
-## NameError: name &#39;pd&#39; is not defined</code></pre>
+##      X1   X2  Y1  Y2
+## Id                  
+## A   1.0   x2   1  y1
+## B   3.0   x4   3  y3
+## B   3.0   x4   5  y5
+## D   NaN  NaN   7  y7</code></pre>
 </div>
 <ul>
 <li>Join matching rows from both x and y</li>
@@ -774,7 +1128,11 @@ pd.merge(df1, df2, how= &#39;right&#39;, on = &#39;Id&#39;)
 <pre class="python"><code># Python
 
 pd.merge(df1, df2, how= &#39;inner&#39;, on = &#39;Id&#39;)
-## NameError: name &#39;pd&#39; is not defined</code></pre>
+##     X1  X2  Y1  Y2
+## Id                
+## A    1  x2   1  y1
+## B    3  x4   3  y3
+## B    3  x4   5  y5</code></pre>
 </div>
 <ul>
 <li>Join keeping all the rows</li>
@@ -783,7 +1141,14 @@ pd.merge(df1, df2, how= &#39;inner&#39;, on = &#39;Id&#39;)
 <pre class="python"><code># Python
 
 pd.merge(df1, df2, how= &#39;outer&#39;, on = &#39;Id&#39;)
-## NameError: name &#39;pd&#39; is not defined</code></pre>
+##      X1   X2   Y1   Y2
+## Id                    
+## A   1.0   x2  1.0   y1
+## B   3.0   x4  3.0   y3
+## B   3.0   x4  5.0   y5
+## C   5.0   x6  NaN  NaN
+## C   7.0   x8  NaN  NaN
+## D   NaN  NaN  7.0   y7</code></pre>
 </div>
 <ul>
 <li>Return rows from x matching y</li>
@@ -792,7 +1157,10 @@ pd.merge(df1, df2, how= &#39;outer&#39;, on = &#39;Id&#39;)
 <pre class="python"><code># Python
 
 df1[df1.index == df2.index]
-## NameError: name &#39;df1&#39; is not defined</code></pre>
+##     X1  X2
+## Id        
+## A    1  x2
+## B    3  x4</code></pre>
 </div>
 <ul>
 <li>Return rows from x not matching y</li>
@@ -800,7 +1168,10 @@ df1[df1.index == df2.index]
 <div class="python">
 <pre class="python"><code># Python
 df1[df1.index != df2.index]
-## NameError: name &#39;df1&#39; is not defined</code></pre>
+##     X1  X2
+## Id        
+## C    5  x6
+## C    7  x8</code></pre>
 </div>
 </div>
 <div id="bind" class="section level2" number="4.2">
@@ -814,15 +1185,20 @@ df1[df1.index != df2.index]
 df1 = pd.DataFrame({&#39;Id&#39;: [&#39;A&#39;,&#39;B&#39;,&#39;C&#39;],
                     &#39;X1&#39;: [1,3,5],
                     &#39;X2&#39;: [&#39;x2&#39;,&#39;x4&#39;,&#39;x6&#39;]}).set_index(&#39;Id&#39;)
-## NameError: name &#39;pd&#39; is not defined
 
 df2 = pd.DataFrame({&#39;Id&#39;: [&#39;A&#39;,&#39;B&#39;,&#39;C&#39;],
                     &#39;Y1&#39;: [1,3,5],
                     &#39;Y2&#39;: [&#39;y1&#39;,&#39;y3&#39;,&#39;y5&#39;]}).set_index(&#39;Id&#39;)
-## NameError: name &#39;pd&#39; is not defined
 
 pd.concat([df1,df2])
-## NameError: name &#39;pd&#39; is not defined</code></pre>
+##      X1   X2   Y1   Y2
+## Id                    
+## A   1.0   x2  NaN  NaN
+## B   3.0   x4  NaN  NaN
+## C   5.0   x6  NaN  NaN
+## A   NaN  NaN  1.0   y1
+## B   NaN  NaN  3.0   y3
+## C   NaN  NaN  5.0   y5</code></pre>
 </div>
 <ul>
 <li>Bind columns</li>
@@ -831,9 +1207,12 @@ pd.concat([df1,df2])
 <pre class="python"><code># Python
 
 df3 = pd.concat([df1,df2],axis =1)
-## NameError: name &#39;pd&#39; is not defined
 df3
-## NameError: name &#39;df3&#39; is not defined</code></pre>
+##     X1  X2  Y1  Y2
+## Id                
+## A    1  x2   1  y1
+## B    3  x4   3  y3
+## C    5  x6   5  y5</code></pre>
 </div>
 </div>
 </div>
@@ -847,10 +1226,18 @@ df3
 
 
 df3.shift(periods = 1)
-## NameError: name &#39;df3&#39; is not defined
+##      X1    X2   Y1    Y2
+## Id                      
+## A   NaN  None  NaN  None
+## B   1.0    x2  1.0    y1
+## C   3.0    x4  3.0    y3
 
 df3.shift(periods = 1, axis= 1)
-## NameError: name &#39;df3&#39; is not defined</code></pre>
+##     X1  X2  Y1  Y2
+## Id                
+## A  NaN   1  x2   1
+## B  NaN   3  x4   3
+## C  NaN   5  x6   5</code></pre>
 </div>
 </div>
 <div id="readwrite-data" class="section level1" number="6">
@@ -864,10 +1251,22 @@ df3.shift(periods = 1, axis= 1)
 <pre class="python"><code># Python
 
 covid_papers = pd.read_csv(&quot;data/covid_papers.csv&quot;)
-## NameError: name &#39;pd&#39; is not defined
 
 covid_papers
-## NameError: name &#39;covid_papers&#39; is not defined</code></pre>
+##                              _id        pmid       pmcid  ... cited has_data oa
+## 0       5f69d6fa65a250f0edc4ee5c  32837036.0  PMC7424135  ...     0        N  Y
+## 1       5f69d6fa65a250f0edc4ee5d  32196410.0  PMC7170333  ...    61        N  Y
+## 2       5f69d6fa65a250f0edc4ee5e  32778421.0  PMC7402212  ...     0        N  Y
+## 3       5f69d6fa65a250f0edc4ee5f  32730205.0  PMC7382925  ...     0        N  Y
+## 4       5f69d6fa65a250f0edc4ee60         NaN         NaN  ...     0        N  N
+## ...                          ...         ...         ...  ...   ...      ... ..
+## 148911  5f69f29165a250f0edc7340b  31314321.0  PMC7121204  ...     0        N  Y
+## 148912  5f69f29165a250f0edc7340c  31314312.0  PMC7123335  ...     0        N  Y
+## 148913  5f69f29165a250f0edc7340d  32091757.0  PMC7124085  ...     0        N  Y
+## 148914  5f69f29165a250f0edc7340e  28590697.0  PMC7193726  ...     0        N  Y
+## 148915  5f69f29165a250f0edc7340f  28590695.0  PMC7193709  ...     0        N  Y
+## 
+## [148916 rows x 19 columns]</code></pre>
 </div>
 </div>
 <div id="write" class="section level2" number="6.2">
@@ -884,8 +1283,39 @@ covid_papers.to_csv(&quot;data/covid_papers.csv&quot;)</code></pre>
 </div>
 <div id="exercise" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Exercise</h1>
-<p>Translate last chapter’s exercice in Python using pandas.</p>
-<p><a href="exo_4_py.html">solution with pandas (python)</a></p>
+<a href="https://github.com/P-Pelletier/M1-ETIC-MPE/raw/gh-pages/data/data.zip">
+<button class="btn btn-danger"><i class="fa fa-save"></i> Download Data</button>
+</a>
+<p>Using first <code>dplyr</code> and the <code>tidyverse</code>, Use
+<code>table_1.csv</code>, <code>table_2.csv</code> and
+<code>loc_cities.csv</code>, we will need information from the three
+datasets.</p>
+<ul>
+<li><p>Import datasets</p></li>
+<li><p>Remove articles with no pmid and no DOI, and all articles before
+1975</p></li>
+<li><p>Merge the two datasets, pmid is unique for each paper</p></li>
+<li><p>Create a new variable with the number of authors for each
+paper</p></li>
+<li><p>plot distribution for the log(number of authors +1)</p></li>
+<li><p>How many papers contains ‘deep learning’ or ‘machine learning’
+and ‘neural network’ (also with a ‘s’ for neural networks) in their
+title ? Create a binary variable to save this information. What is the
+mean of authors for ML papers and non#ML papers ?</p></li>
+<li><p>Transform has_data and oa into binary variable also, what is the
+share of ML paper that are oa</p></li>
+<li><p>Clean up pubtype, for simplicity just get the first type</p></li>
+<li><p>What is the pub type with the highest mean/sd of citation for
+each type of publication ? (use cited and the cleaned pub_type)</p></li>
+<li><p>What are the most representative country by year ? In another
+tibble, keep only pmid and authors, and get the country for each author
+from the loc_cities.csv. You may want to separate rows for each authors
+to get all countries involved in the paper. If an author have multiple
+affiliations, take the first one.</p></li>
+<li><p>Select the top 25 of countries involved in coronavirus research
+since 2001, plot the evolution on a bar chart with plot_ly</p></li>
+</ul>
+<p><a href="">solution with pandas (python)</a></p>
 </div>
 
 

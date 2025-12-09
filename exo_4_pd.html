@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Dplyr</title>
+
+<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">M1 S1 DS2E/SE</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="2_Basics.html">Basics</a>
+</li>
+<li>
+  <a href="3_Arrays_Vectors.html">Arrays/Vectors</a>
+</li>
+<li>
+  <a href="5_Data_Analysis_R.html">Data Analysis (R)</a>
+</li>
+<li>
+  <a href="6_Data_Analysis_Py.html">Data Analysis (Python)</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/P-Pelletier/">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Dplyr</h1>
+
+</div>
+
+
+<style>
+div.python pre { background-color: #e9f7f5
+; }
+</style>
+<style>
+div.r pre { background-color: #fff5fd; }
+</style>
+<p><a href="5_Data_Analysis_R.html">Go back to chapter 4</a></p>
+<div id="import-datasets" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Import datasets</h1>
+<div class="python">
+<pre class="python"><code>import pandas as pd
+import numpy as np
+import time
+import re
+import seaborn as sns
+import plotly.express as px
+
+t = time.time()
+table_1 = pd.read_csv(&#39;data/table_1.csv&#39;)
+table_2 = pd.read_csv(&#39;data/table_2.csv&#39;)
+cities = pd.read_csv(&#39;data/cities_loc.csv&#39;)
+time.time() - t</code></pre>
+<pre><code>## 0.8723258972167969</code></pre>
+<div id="clean" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Clean</h1>
+<p>Remove articles with no pmid and no DOI, and all articles before
+1975</p>
+<div class="python">
+<pre class="python"><code>t = time.time()
+table_1 = table_1.dropna(subset = [&#39;pmid&#39;, &#39;doi&#39;])
+time.time() - t</code></pre>
+<pre><code>## 0.009827852249145508</code></pre>
+<pre class="python"><code>t = time.time()
+table_2 = table_2[table_2.year_pub &gt; 1975].dropna(subset = [&#39;pmid&#39;]) 
+time.time() - t</code></pre>
+<pre><code>## 0.010169029235839844</code></pre>
+</div>
+</div>
+<div id="merge" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Merge</h1>
+<p>Merge the two datasets, pmid is unique for each paper</p>
+<div class="python">
+<pre class="python"><code>t = time.time()
+final_table = table_1.merge(table_2, how = &#39;inner&#39;, on = &#39;pmid&#39;)
+time.time() - t</code></pre>
+<pre><code>## 0.019883155822753906</code></pre>
+<pre class="python"><code>final_table</code></pre>
+<pre><code>##               pmid                             doi  ... oa cited
+## 0       32837036.0      10.1007/s12291-020-00919-0  ...  Y     0
+## 1       32196410.0   10.1080/22221751.2020.1746199  ...  Y    61
+## 2       32778421.0      10.1016/j.jiph.2020.07.011  ...  Y     0
+## 3       32730205.0      10.1016/j.ijsu.2020.07.032  ...  Y     0
+## 4       32394467.0               10.1002/jcp.29785  ...  Y     1
+## ...            ...                             ...  ... ..   ...
+## 108717  10808380.0       10.1007/s11606-000-0019-1  ...  Y     0
+## 108718  22696127.0       10.1007/s13244-012-0153-4  ...  Y     2
+## 108719   3368329.0       10.1093/nar/16.suppl.r315  ...  N    90
+## 108720  25412402.0  10.1002/14651858.cd000011.pub4  ...  N   222
+## 108721  21994484.0       10.1007/s13225-011-0088-y  ...  Y    44
+## 
+## [108722 rows x 12 columns]</code></pre>
+</div>
+</div>
+<div id="number-of-authors" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Number of authors</h1>
+<p>Create a new variable with the number of authors for each paper</p>
+<div class="python">
+<pre class="python"><code>t = time.time()
+final_table = final_table.assign(nb_aut = final_table.authors.map(lambda aut: len(re.findall(&#39;&lt;AUTHOR&gt;&#39;,str(aut)))))
+time.time() - t </code></pre>
+<pre><code>## 0.08714509010314941</code></pre>
+<pre class="python"><code>print(final_table[[&#39;pmid&#39;,&#39;nb_aut&#39;]])</code></pre>
+<pre><code>##               pmid  nb_aut
+## 0       32837036.0       1
+## 1       32196410.0       4
+## 2       32778421.0       4
+## 3       32730205.0       7
+## 4       32394467.0       6
+## ...            ...     ...
+## 108717  10808380.0       0
+## 108718  22696127.0       1
+## 108719   3368329.0       5
+## 108720  25412402.0      16
+## 108721  21994484.0       1
+## 
+## [108722 rows x 2 columns]</code></pre>
+<pre class="python"><code>t = time.time()
+final_table = final_table[final_table.nb_aut &gt; 0]
+time.time() - t</code></pre>
+<pre><code>## 0.008265018463134766</code></pre>
+</div>
+</div>
+<div id="plot-distribution" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> plot distribution</h1>
+<p>plot distribution for the log(number of authors +1)</p>
+<div class="python">
+<pre class="python"><code>sns.distplot(np.log(final_table.nb_aut +1), hist = False, kde = True,
+                 kde_kws = {&#39;linewidth&#39;: 3})</code></pre>
+<p><img src="exo_4_pd_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+</div>
+<div id="search-for-dlmlnn-in-title" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Search for DL/ML/NN in
+title</h1>
+<p>How many papers contains ‘deep learning’ or ‘machine learning’ and
+‘neural network’ (also with a ‘s’ for neural networks) in their title ?
+Create a binary variable to save this information. What is the mean of
+authors for ML papers and non-ML papers ? Transform has_data and oa into
+binary variable also, what is the share of ML paper that are oa ?</p>
+<div class="python">
+<pre class="python"><code>t = time.time()
+final_table[[&#39;title&#39;]] = final_table.title.str.lower()</code></pre>
+<pre><code>## ValueError: Columns must be same length as key</code></pre>
+<pre class="python"><code>final_table = final_table.assign(
+    ML = np.where(final_table.title.str.contains(&#39;deep learning|machine learning|neural networks?&#39;),1,0),
+    has_data = np.where(final_table.has_data == &#39;Y&#39;,1,0),
+    oa = np.where(final_table.oa == &#39;Y&#39;,1,0))
+time.time() - t</code></pre>
+<pre><code>## 0.0971231460571289</code></pre>
+<pre class="python"><code>final_table</code></pre>
+<pre><code>##               pmid                             doi  ... nb_aut ML
+## 0       32837036.0      10.1007/s12291-020-00919-0  ...      1  0
+## 1       32196410.0   10.1080/22221751.2020.1746199  ...      4  0
+## 2       32778421.0      10.1016/j.jiph.2020.07.011  ...      4  0
+## 3       32730205.0      10.1016/j.ijsu.2020.07.032  ...      7  0
+## 4       32394467.0               10.1002/jcp.29785  ...      6  0
+## ...            ...                             ...  ...    ... ..
+## 108712   7704896.0     10.1128/cmr.8.1.87-112.1995  ...      9  0
+## 108718  22696127.0       10.1007/s13244-012-0153-4  ...      1  0
+## 108719   3368329.0       10.1093/nar/16.suppl.r315  ...      5  0
+## 108720  25412402.0  10.1002/14651858.cd000011.pub4  ...     16  0
+## 108721  21994484.0       10.1007/s13225-011-0088-y  ...      1  0
+## 
+## [107104 rows x 14 columns]</code></pre>
+<pre class="python"><code>np.sum(final_table.ML)</code></pre>
+<pre><code>## np.int64(118)</code></pre>
+<pre class="python"><code>np.sum(final_table.oa)</code></pre>
+<pre><code>## np.int64(77847)</code></pre>
+<pre class="python"><code>np.sum(final_table.has_data)</code></pre>
+<pre><code>## np.int64(23980)</code></pre>
+<pre class="python"><code>final_table.groupby(&#39;ML&#39;).agg({&#39;nb_aut&#39;:np.mean,
+                               &#39;oa&#39;:np.mean})</code></pre>
+<pre><code>## &lt;string&gt;:2: FutureWarning:
+## 
+## The provided callable &lt;function mean at 0x111a5aa20&gt; is currently using SeriesGroupBy.mean. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;mean&quot; instead.
+## 
+##       nb_aut        oa
+## ML                    
+## 0   5.772484  0.726675
+## 1   6.169492  0.872881</code></pre>
+</div>
+</div>
+<div id="clean-up-pub_type" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Clean up pub_type</h1>
+<p>Clean up pub_type, for simplicity just get the first type</p>
+<div class="python">
+<pre class="python"><code>t = time.time()
+final_table[&#39;pub_type&#39;] = final_table.pubtype.map(lambda pubtype: re.findall(&#39;\[\&quot;(.*?)\&quot;&#39;,pubtype)[0])
+time.time() - t</code></pre>
+<pre><code>## 0.033644914627075195</code></pre>
+<pre class="python"><code>final_table[[&#39;pubtype&#39;,&#39;pub_type&#39;]]</code></pre>
+<pre><code>##                                                   pubtype                          pub_type
+## 0       {&quot;pubType&quot;: [&quot;review-article&quot;, &quot;Review&quot;, &quot;Jour...                    review-article
+## 1       {&quot;pubType&quot;: [&quot;review-article&quot;, &quot;Journal Articl...                    review-article
+## 2       {&quot;pubType&quot;: [&quot;review-article&quot;, &quot;Review&quot;, &quot;Jour...                    review-article
+## 3       {&quot;pubType&quot;: [&quot;review-article&quot;, &quot;Review&quot;, &quot;Jour...                    review-article
+## 4       {&quot;pubType&quot;: [&quot;review-article&quot;, &quot;Review&quot;, &quot;Jour...                    review-article
+## ...                                                   ...                               ...
+## 108712  {&quot;pubType&quot;: [&quot;Research Support, Non-U.S. Gov&#39;t...  Research Support, Non-U.S. Gov&#39;t
+## 108718       {&quot;pubType&quot;: [&quot;calendar&quot;, &quot;Journal Article&quot;]}                          calendar
+## 108719  {&quot;pubType&quot;: [&quot;Comparative Study&quot;, &quot;Research Su...                 Comparative Study
+## 108720  {&quot;pubType&quot;: [&quot;Meta-Analysis&quot;, &quot;Research Suppor...                     Meta-Analysis
+## 108721  {&quot;pubType&quot;: [&quot;research-article&quot;, &quot;Journal Arti...                  research-article
+## 
+## [107104 rows x 2 columns]</code></pre>
+</div>
+</div>
+<div id="highest-meansd-of-citation" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Highest mean/sd of
+citation</h1>
+<p>What is the pub type with the highest mean/sd of citation ? (use
+cited and the cleaned pub_type)</p>
+<div class="python">
+<pre class="python"><code>final_table.groupby(&#39;pub_type&#39;).agg({&#39;cited&#39;:np.mean}).sort_values(&#39;cited&#39;,ascending = False)</code></pre>
+<pre><code>## &lt;string&gt;:1: FutureWarning:
+## 
+## The provided callable &lt;function mean at 0x111a5aa20&gt; is currently using SeriesGroupBy.mean. In a future version of pandas, the provided callable will be used directly. To keep current behavior pass the string &quot;mean&quot; instead.
+## 
+##                                                         cited
+## pub_type                                                     
+## Consensus Development Conference                    94.128205
+## Research Support, American Recovery and Reinves...  64.416667
+## Research Support, U.S. Gov&#39;t, P.H.S.                53.980543
+## Research Support, N.I.H., Intramural                48.481308
+## Clinical Trial, Phase II                            35.285714
+## ...                                                       ...
+## Webcast                                              0.000000
+## Addresses                                            0.000000
+## Technical Report                                     0.000000
+## Twin Study                                           0.000000
+## Portrait                                             0.000000
+## 
+## [83 rows x 1 columns]</code></pre>
+<pre class="python"><code>final_table.groupby(&#39;pub_type&#39;).agg({&#39;cited&#39;:lambda x : np.std(x,ddof = 1)}).sort_values(&#39;cited&#39;,ascending = False)</code></pre>
+<pre><code>##                                            cited
+## pub_type                                        
+## Consensus Development Conference      392.044048
+## Research Support, N.I.H., Intramural  144.450609
+## Research Support, U.S. Gov&#39;t, P.H.S.   97.102551
+## editorial                              90.848164
+## Clinical Conference                    84.303766
+## ...                                          ...
+## Equivalence Trial                            NaN
+## Personal Narratives                          NaN
+## Twin Study                                   NaN
+## Validation Studies                           NaN
+## obituary                                     NaN
+## 
+## [83 rows x 1 columns]</code></pre>
+</div>
+</div>
+<div id="most-representative-countres-by-year" class="section level1"
+number="9">
+<h1><span class="header-section-number">9</span> Most representative
+countres by year ?</h1>
+<p>Which are the most representative countres by year ? Store this
+information in an other tibble by keep only pmid and authors, get the
+country for each author from the loc_cities.csv. You may want to
+separate rows for each authors to get all countries involved in the
+paper,if an authors have multiple affiliations, take the first one.</p>
+<div class="python">
+<pre class="python"><code>countries = list(cities.country.str.lower().drop_duplicates())
+
+countries_pd = final_table[[&#39;pmid&#39;, &#39;authors&#39;]]
+
+t = time.time()
+countries_pd = countries_pd.assign(
+    authors=countries_pd.authors.str.split(&#39;&lt;AUTHOR&gt;&#39;)).explode(&#39;authors&#39;)
+time.time() - t</code></pre>
+<pre><code>## 0.15427803993225098</code></pre>
+<pre class="python"><code>countries_pd</code></pre>
+<pre><code>##               pmid                                            authors
+## 0       32837036.0                                                   
+## 0       32837036.0   Das SK Subir Kumar Das&lt;AFFILIATION&gt;Department...
+## 1       32196410.0                                                   
+## 1       32196410.0   Lin L Ling Lin&lt;AFFILIATION&gt;Department of Infe...
+## 1       32196410.0   Lu L Lianfeng Lu&lt;AFFILIATION&gt;Department of In...
+## ...            ...                                                ...
+## 108720  25412402.0   Jedraszewski D Dawn Jedraszewski&lt;AFFILIATION&gt;...
+## 108720  25412402.0               Cotoi C Chris Cotoi&lt;AFFILIATION&gt;None
+## 108720  25412402.0          Haynes RB R Brian Haynes&lt;AFFILIATION&gt;None
+## 108721  21994484.0                                                   
+## 108721  21994484.0   Jaklitsch WM Walter M Jaklitsch&lt;AFFILIATION&gt;D...
+## 
+## [725407 rows x 2 columns]</code></pre>
+</div>
+<div class="python">
+<pre class="python"><code>t = time.time()
+countries_pd = countries_pd[(countries_pd.authors != &#39;&#39;)
+                                &amp; (-countries_pd.authors.str.contains(&#39;&lt;AFFILIATION&gt;None&#39;))]
+time.time() - t</code></pre>
+<pre><code>## 0.11714792251586914</code></pre>
+<pre class="python"><code>t = time.time()
+countries_pd = countries_pd.assign(
+    authors = countries_pd.authors.map(lambda aff: aff.split(&#39;&lt;AFFILIATION&gt;&#39;)[1])).drop_duplicates(subset=[&#39;pmid&#39;, &#39;authors&#39;])
+time.time() - t</code></pre>
+<pre><code>## 0.21316909790039062</code></pre>
+<pre class="python"><code>countries_pd</code></pre>
+<pre><code>##               pmid                                            authors
+## 0       32837036.0  Department of Biochemistry, College of Medicin...
+## 1       32196410.0  Department of Infectious Diseases, Peking Unio...
+## 1       32196410.0  Department of Infectious Diseases, Peking Unio...
+## 2       32778421.0  Université du Québec à Chicoutimi (UQAC), Dépa...
+## 2       32778421.0  Centre de recherche, Institut universitaire de...
+## ...            ...                                                ...
+## 108709  18843651.0  Department of Anesthesiology, Pharmacology and...
+## 108712   7704896.0  Department of Biomedicine, University of Pisa,...
+## 108719   3368329.0    National Institute of Genetics, Mishima, Japan.
+## 108720  25412402.0  Department of Clinical Epidemiology and Biosta...
+## 108721  21994484.0  Department of Systematic and Evolutionary Bota...
+## 
+## [291657 rows x 2 columns]</code></pre>
+</div>
+<div class="python">
+<pre class="python"><code>t = time.time()
+for abr, name in zip([&#39; USA&#39;, &#39; UK&#39;, &#39; Korea&#39;], [&#39;United States&#39;, &#39;United Kingdom&#39;, &#39;South Korea&#39;]):
+    countries_pd.authors = countries_pd.authors.map(lambda aff: re.sub(abr,name,aff))
+    
+countries_pd.authors = countries_pd.authors.str.lower()
+time.time() - t</code></pre>
+<pre><code>## 0.3144378662109375</code></pre>
+</div>
+<div class="python">
+<pre class="python"><code>t = time.time()
+countries_pd = countries_pd[countries_pd.authors.map(lambda aff: any([country in aff for country in countries]))]
+countries_matched = countries_pd.authors.map(lambda aff: [country for country in countries if country in aff][0])
+countries_pd = countries_pd.assign(country = countries_matched).drop(&#39;authors&#39;, axis = 1)
+time.time() - t</code></pre>
+<pre><code>## 8.62853193283081</code></pre>
+</div>
+<div class="python">
+<pre class="python"><code>t = time.time()
+countries_pd = countries_pd[countries_pd.country != &#39;&#39;].drop_duplicates(subset=[&#39;pmid&#39;, &#39;country&#39;])
+time.time() - t</code></pre>
+<pre><code>## 0.01684403419494629</code></pre>
+<pre class="python"><code>countries_pd</code></pre>
+<pre><code>##               pmid  country
+## 0       32837036.0    india
+## 1       32196410.0    china
+## 2       32778421.0   canada
+## 3       32730205.0    china
+## 4       32394467.0     iran
+## ...            ...      ...
+## 108709  18843651.0   canada
+## 108712   7704896.0    italy
+## 108719   3368329.0    japan
+## 108720  25412402.0   canada
+## 108721  21994484.0  austria
+## 
+## [111479 rows x 2 columns]</code></pre>
+<pre class="python"><code>t = time.time()
+countries_year = countries_pd.merge(final_table[[&#39;pmid&#39;,&#39;year_pub&#39;]], how = &#39;left&#39;, on = &#39;pmid&#39;)
+time.time() - t</code></pre>
+<pre><code>## 0.0062940120697021484</code></pre>
+<pre class="python"><code>countries_year</code></pre>
+<pre><code>##               pmid  country  year_pub
+## 0       32837036.0    india    2020.0
+## 1       32196410.0    china    2020.0
+## 2       32778421.0   canada    2020.0
+## 3       32730205.0    china    2020.0
+## 4       32394467.0     iran    2020.0
+## ...            ...      ...       ...
+## 111474  18843651.0   canada    2008.0
+## 111475   7704896.0    italy    1995.0
+## 111476   3368329.0    japan    1988.0
+## 111477  25412402.0   canada    2014.0
+## 111478  21994484.0  austria    2011.0
+## 
+## [111479 rows x 3 columns]</code></pre>
+<pre class="python"><code>countries_year = countries_year.groupby([&#39;country&#39;, &#39;year_pub&#39;]).agg(n = (&#39;pmid&#39;, len)).sort_values(&#39;n&#39;, ascending = False)
+countries_year = countries_year.reset_index()
+countries_year</code></pre>
+<pre><code>##              country  year_pub      n
+## 0      united states    2020.0  11668
+## 1              china    2020.0   7888
+## 2     united kingdom    2020.0   6262
+## 3              italy    2020.0   5910
+## 4              india    2020.0   3297
+## ...              ...       ...    ...
+## 1904          mexico    2003.0      1
+## 1905          mexico    2005.0      1
+## 1906          mexico    2010.0      1
+## 1907      micronesia    2014.0      1
+## 1908         lebanon    2014.0      1
+## 
+## [1909 rows x 3 columns]</code></pre>
+</div>
+</div>
+<div id="country-bar-plot-with-plotly" class="section level1"
+number="10">
+<h1><span class="header-section-number">10</span> Country bar plot with
+plotly</h1>
+<p>Select the top 25 of countries involved in coronavirus research since
+2001, plot the evolution on a bar chart with plot_ly</p>
+<div class="python">
+<pre class="python"><code>wide_countries = countries_year.pivot(index=&quot;year_pub&quot;, columns=&quot;country&quot;, values=&quot;n&quot;).reset_index()
+wide_countries = wide_countries[wide_countries.year_pub &gt; 2000]
+
+countries_to_plot = list(wide_countries.fillna(0).drop(&#39;year_pub&#39;,axis = 1).apply(sum).sort_values(ascending=False).head(10).index)
+
+fig = px.bar(wide_countries, x=&quot;year_pub&quot;, y=countries_to_plot)
+fig.update_yaxes(type=&quot;log&quot;)</code></pre>
+<div>                        <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.3.0.min.js" integrity="sha256-bO3dS6yCpk9aK4gUpNELtCiDeSYvGYnK7jFI58NQnHI=" crossorigin="anonymous"></script>                <div id="48f78a1f-9812-4af4-9f24-5e23cc2695dd" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("48f78a1f-9812-4af4-9f24-5e23cc2695dd")) {                    Plotly.newPlot(                        "48f78a1f-9812-4af4-9f24-5e23cc2695dd",                        [{"hovertemplate":"variable=united states\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"united states","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"united states","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAABAZEAAAAAAAMBgQAAAAAAAAG5AAAAAAABweEAAAAAAAHB5QAAAAAAAIH5AAAAAAABAe0AAAAAAAIiAQAAAAAAAUIFAAAAAAACQgkAAAAAAAFiCQAAAAAAAgIJAAAAAAACQhEAAAAAAAPCFQAAAAAAAWIlAAAAAAAD4iEAAAAAAAACJQAAAAAAACIlAAAAAAADYikAAAAAAAMrGQAAAAAAAADVA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=china\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"china","marker":{"color":"#EF553B","pattern":{"shape":""}},"name":"china","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAA+H8AAAAAAAD4fwAAAAAAQFlAAAAAAADgZ0AAAAAAAMBnQAAAAAAAQGVAAAAAAACgY0AAAAAAAEBiQAAAAAAAYGVAAAAAAAAgbEAAAAAAAOBkQAAAAAAAAGZAAAAAAADwc0AAAAAAAFB4QAAAAAAACIBAAAAAAABogEAAAAAAALCBQAAAAAAAcIJAAAAAAAAYh0AAAAAAANC+QAAAAAAAADlA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=united kingdom\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"united kingdom","marker":{"color":"#00cc96","pattern":{"shape":""}},"name":"united kingdom","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAANkAAAAAAAAA2QAAAAAAAgE1AAAAAAADAUUAAAAAAAEBSQAAAAAAAgFVAAAAAAACAU0AAAAAAAEBWQAAAAAAAAFpAAAAAAAAAVkAAAAAAAIBXQAAAAAAAAFdAAAAAAADAX0AAAAAAAABnQAAAAAAAcHBAAAAAAACgakAAAAAAAABuQAAAAAAA4GpAAAAAAABgckAAAAAAAHa4QAAAAAAAACRA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=italy\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"italy","marker":{"color":"#ab63fa","pattern":{"shape":""}},"name":"italy","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAJEAAAAAAAAAgQAAAAAAAADJAAAAAAAAAOEAAAAAAAIBBQAAAAAAAAD5AAAAAAAAAQEAAAAAAAIBCQAAAAAAAgEBAAAAAAAAAP0AAAAAAAIBEQAAAAAAAgEVAAAAAAAAASEAAAAAAAMBRQAAAAAAAwFdAAAAAAABAXEAAAAAAAEBbQAAAAAAAgFxAAAAAAACAYEAAAAAAABa3QAAAAAAAABRA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=india\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"india","marker":{"color":"#FFA15A","pattern":{"shape":""}},"name":"india","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAEEAAAAAAAADwPwAAAAAAABRAAAAAAAAAIkAAAAAAAAAgQAAAAAAAACRAAAAAAAAAIkAAAAAAAAA4QAAAAAAAADJAAAAAAACAQEAAAAAAAAA\u002fQAAAAAAAAD5AAAAAAAAAS0AAAAAAAIBVQAAAAAAAAFFAAAAAAAAAV0AAAAAAAABXQAAAAAAAwFdAAAAAAABAYEAAAAAAAMKpQAAAAAAAACBA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=france\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"france","marker":{"color":"#19d3f3","pattern":{"shape":""}},"name":"france","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAJkAAAAAAAAAqQAAAAAAAADFAAAAAAAAAQEAAAAAAAIBDQAAAAAAAAEJAAAAAAAAAR0AAAAAAAABEQAAAAAAAAExAAAAAAACARUAAAAAAAIBKQAAAAAAAAEZAAAAAAADAVUAAAAAAACBgQAAAAAAAwGBAAAAAAAAAYkAAAAAAAABhQAAAAAAAwGNAAAAAAACAY0AAAAAAALSkQAAAAAAAABBA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=canada\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"canada","marker":{"color":"#FF6692","pattern":{"shape":""}},"name":"canada","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAMEAAAAAAAAAqQAAAAAAAgEZAAAAAAACAUUAAAAAAAIBOQAAAAAAAAFJAAAAAAAAAT0AAAAAAAMBRQAAAAAAAgFFAAAAAAABAUEAAAAAAAIBPQAAAAAAAgFJAAAAAAABAVkAAAAAAAEBdQAAAAAAAgGBAAAAAAACAYUAAAAAAAIBeQAAAAAAAIGFAAAAAAADAZUAAAAAAAHaiQAAAAAAAABBA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=germany\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"germany","marker":{"color":"#B6E880","pattern":{"shape":""}},"name":"germany","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAM0AAAAAAAAA2QAAAAAAAAD9AAAAAAACAQUAAAAAAAABCQAAAAAAAgFFAAAAAAACASkAAAAAAAIBNQAAAAAAAgEtAAAAAAAAAR0AAAAAAAIBNQAAAAAAAAEhAAAAAAAAAVEAAAAAAACBgQAAAAAAA4GJAAAAAAABAY0AAAAAAAMBkQAAAAAAAgGVAAAAAAADAZkAAAAAAANSgQAAAAAAAAPA\u002f"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=australia\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"australia","marker":{"color":"#FF97FF","pattern":{"shape":""}},"name":"australia","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAAEAAAAAAAAAUQAAAAAAAACRAAAAAAAAANkAAAAAAAAA6QAAAAAAAgEBAAAAAAACAQ0AAAAAAAABGQAAAAAAAgElAAAAAAAAAO0AAAAAAAABHQAAAAAAAAEVAAAAAAAAAUkAAAAAAAIBYQAAAAAAAgF5AAAAAAACAXkAAAAAAAMBcQAAAAAAAYGBAAAAAAABAYUAAAAAAAHagQAAAAAAAAAhA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=spain\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"spain","marker":{"color":"#FECB52","pattern":{"shape":""}},"name":"spain","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAIEAAAAAAAAAmQAAAAAAAADFAAAAAAAAALEAAAAAAAAAyQAAAAAAAADJAAAAAAAAAM0AAAAAAAABDQAAAAAAAAD9AAAAAAAAAOUAAAAAAAABBQAAAAAAAAEZAAAAAAAAARkAAAAAAAIBPQAAAAAAAAFRAAAAAAAAAVkAAAAAAAEBTQAAAAAAAgFhAAAAAAACAW0AAAAAAANyfQAAAAAAAABRA"},"yaxis":"y","type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"year_pub"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"value"},"type":"log"},"legend":{"title":{"text":"variable"},"tracegroupgap":0},"margin":{"t":60},"barmode":"relative"},                        {"responsive": true}                    )                };            </script>        </div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

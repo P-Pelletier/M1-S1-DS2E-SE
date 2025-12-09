@@ -1,0 +1,297 @@
+---
+title: "Dplyr"
+---
+
+
+<style>
+div.python pre { background-color: #e9f7f5
+; }
+</style>
+
+<style>
+div.r pre { background-color: #fff5fd; }
+</style>
+
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,error=TRUE, warnings = F)
+library(reticulate)
+py_require('pandas')
+py_require('numpy')
+py_require('seaborn')
+py_require('plotly')
+```
+
+
+<a href="5_Data_Analysis_R.html">Go back to chapter 4</a> 
+
+# Import datasets
+
+
+<div class = "python">
+
+```{python}
+import pandas as pd
+import numpy as np
+import time
+import re
+import seaborn as sns
+import plotly.express as px
+
+t = time.time()
+table_1 = pd.read_csv('data/table_1.csv')
+table_2 = pd.read_csv('data/table_2.csv')
+cities = pd.read_csv('data/cities_loc.csv')
+time.time() - t
+```
+
+
+
+# Clean
+
+Remove articles with no pmid and no DOI, and all articles before 1975
+
+<div class = "python">
+
+```{python}
+t = time.time()
+table_1 = table_1.dropna(subset = ['pmid', 'doi'])
+time.time() - t
+
+t = time.time()
+table_2 = table_2[table_2.year_pub > 1975].dropna(subset = ['pmid']) 
+time.time() - t
+```
+
+</div>
+
+# Merge
+
+Merge the two datasets, pmid is unique for each paper
+
+
+<div class = "python">
+
+```{python}
+t = time.time()
+final_table = table_1.merge(table_2, how = 'inner', on = 'pmid')
+time.time() - t
+
+final_table
+```
+
+</div>
+
+
+
+# Number of authors
+
+Create a new variable with the number of authors for each paper
+
+
+
+<div class = "python">
+
+```{python}
+t = time.time()
+final_table = final_table.assign(nb_aut = final_table.authors.map(lambda aut: len(re.findall('<AUTHOR>',str(aut)))))
+time.time() - t 
+print(final_table[['pmid','nb_aut']])
+
+t = time.time()
+final_table = final_table[final_table.nb_aut > 0]
+time.time() - t
+```
+
+</div>
+
+
+#  plot distribution
+
+plot distribution for the log(number of authors +1)
+
+
+<div class = "python">
+
+```{python}
+sns.distplot(np.log(final_table.nb_aut +1), hist = False, kde = True,
+                 kde_kws = {'linewidth': 3})
+```
+
+</div>
+
+
+
+# Search for DL/ML/NN in title
+
+ How many papers contains 'deep learning' or 'machine learning' and 'neural network' (also with a 's' for neural networks) in their title ? Create a binary variable to save this information. What is the mean of authors for ML papers and non-ML papers ? Transform has_data and oa into binary variable also, what is the share of ML paper that are oa ?
+
+
+<div class = "python">
+
+```{python}
+t = time.time()
+final_table[['title']] = final_table.title.str.lower()
+final_table = final_table.assign(
+    ML = np.where(final_table.title.str.contains('deep learning|machine learning|neural networks?'),1,0),
+    has_data = np.where(final_table.has_data == 'Y',1,0),
+    oa = np.where(final_table.oa == 'Y',1,0))
+time.time() - t
+
+final_table
+```
+
+```{python}
+np.sum(final_table.ML)
+np.sum(final_table.oa)
+np.sum(final_table.has_data)
+
+final_table.groupby('ML').agg({'nb_aut':np.mean,
+                               'oa':np.mean})
+```
+
+</div>
+
+# Clean up pub_type
+
+ Clean up pub_type, for simplicity just get the first type
+
+
+
+<div class = "python">
+
+```{python}
+t = time.time()
+final_table['pub_type'] = final_table.pubtype.map(lambda pubtype: re.findall('\[\"(.*?)\"',pubtype)[0])
+time.time() - t
+
+final_table[['pubtype','pub_type']]
+```
+
+</div>
+
+
+# Highest mean/sd of citation
+
+What is the pub type with the highest mean/sd of citation ? (use cited and the cleaned pub_type)
+
+
+<div class = "python">
+
+```{python}
+final_table.groupby('pub_type').agg({'cited':np.mean}).sort_values('cited',ascending = False)
+final_table.groupby('pub_type').agg({'cited':lambda x : np.std(x,ddof = 1)}).sort_values('cited',ascending = False)
+```
+
+</div>
+
+# Most representative countres by year ?
+
+ Which are the most representative countres by year ? Store this information in an other tibble by keep only pmid and authors, get the country for each author from the loc_cities.csv. You may want to separate rows for each authors to get all countries involved in the paper,if an authors have multiple affiliations, take the first one. 
+
+<div class = "python">
+
+```{python}
+countries = list(cities.country.str.lower().drop_duplicates())
+
+countries_pd = final_table[['pmid', 'authors']]
+
+t = time.time()
+countries_pd = countries_pd.assign(
+    authors=countries_pd.authors.str.split('<AUTHOR>')).explode('authors')
+time.time() - t
+countries_pd
+```
+
+</div>
+
+
+
+<div class = "python">
+
+```{python}
+t = time.time()
+countries_pd = countries_pd[(countries_pd.authors != '')
+                                & (-countries_pd.authors.str.contains('<AFFILIATION>None'))]
+time.time() - t
+
+
+t = time.time()
+countries_pd = countries_pd.assign(
+    authors = countries_pd.authors.map(lambda aff: aff.split('<AFFILIATION>')[1])).drop_duplicates(subset=['pmid', 'authors'])
+time.time() - t
+
+countries_pd
+```
+
+</div>
+
+<div class = "python">
+
+```{python}
+t = time.time()
+for abr, name in zip([' USA', ' UK', ' Korea'], ['United States', 'United Kingdom', 'South Korea']):
+    countries_pd.authors = countries_pd.authors.map(lambda aff: re.sub(abr,name,aff))
+    
+countries_pd.authors = countries_pd.authors.str.lower()
+time.time() - t
+```
+
+</div>
+
+<div class = "python">
+
+```{python}
+t = time.time()
+countries_pd = countries_pd[countries_pd.authors.map(lambda aff: any([country in aff for country in countries]))]
+countries_matched = countries_pd.authors.map(lambda aff: [country for country in countries if country in aff][0])
+countries_pd = countries_pd.assign(country = countries_matched).drop('authors', axis = 1)
+time.time() - t
+```
+
+</div>
+
+<div class = "python">
+
+```{python}
+t = time.time()
+countries_pd = countries_pd[countries_pd.country != ''].drop_duplicates(subset=['pmid', 'country'])
+time.time() - t
+countries_pd
+
+t = time.time()
+countries_year = countries_pd.merge(final_table[['pmid','year_pub']], how = 'left', on = 'pmid')
+time.time() - t
+countries_year
+
+
+countries_year = countries_year.groupby(['country', 'year_pub']).agg(n = ('pmid', len)).sort_values('n', ascending = False)
+countries_year = countries_year.reset_index()
+countries_year
+```
+
+</div>
+
+#  Country bar plot with plotly
+
+ Select the top 25 of countries involved in coronavirus research since 2001, plot the evolution on a bar chart with plot_ly
+
+
+
+<div class = "python">
+
+```{python, warning= F}
+wide_countries = countries_year.pivot(index="year_pub", columns="country", values="n").reset_index()
+wide_countries = wide_countries[wide_countries.year_pub > 2000]
+
+countries_to_plot = list(wide_countries.fillna(0).drop('year_pub',axis = 1).apply(sum).sort_values(ascending=False).head(10).index)
+
+fig = px.bar(wide_countries, x="year_pub", y=countries_to_plot)
+fig.update_yaxes(type="log")
+```
+
+</div>
+
