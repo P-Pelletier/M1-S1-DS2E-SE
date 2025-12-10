@@ -341,6 +341,9 @@ div.tocify {
 <li>
   <a href="6_Data_Analysis_Py.html">Data Analysis (Python)</a>
 </li>
+<li>
+  <a href="7_Best_practices.html">Best Pratices</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -405,7 +408,7 @@ t = Sys.time()
 sum_n_power_last_digit(1000,10)
 ##  [1] &quot;9&quot; &quot;1&quot; &quot;1&quot; &quot;0&quot; &quot;8&quot; &quot;4&quot; &quot;6&quot; &quot;7&quot; &quot;0&quot; &quot;0&quot;
 Sys.time() - t
-## Time difference of 0.007644892 secs</code></pre>
+## Time difference of 0.008686066 secs</code></pre>
 </div>
 </div>
 <div id="python" class="section level2" number="1.2">
@@ -439,7 +442,7 @@ t = time.time()
 sum_n_power_last_digit(1000,10)
 ## &#39;9110846700&#39;
 time.time() - t
-## 0.005502223968505859</code></pre>
+## 0.0056819915771484375</code></pre>
 </div>
 </div>
 </div>
@@ -467,7 +470,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below1(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 0.406179 secs
+## Time difference of 0.4065418 secs
 
 
 
@@ -481,7 +484,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below2(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 1.111013 secs
+## Time difference of 1.117711 secs
 
 
 
@@ -495,7 +498,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below3(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 0.01062107 secs</code></pre>
+## Time difference of 0.008708954 secs</code></pre>
 </div>
 </div>
 <div id="python-1" class="section level3" number="2.1.2">
@@ -516,7 +519,7 @@ t = time.time()
 get_sum_multiples_below1(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.026551008224487305
+## 0.025700807571411133
 
 
 def get_sum_multiples_below2(below,mutiple_1,multiple_2):
@@ -527,7 +530,7 @@ t = time.time()
 get_sum_multiples_below2(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.028681039810180664
+## 0.028688907623291016
 
 
 def get_sum_multiples_below3(below,mutiple_1,multiple_2):
@@ -539,7 +542,7 @@ t = time.time()
 get_sum_multiples_below3(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.042594194412231445
+## 0.04091191291809082
 
 
 
@@ -552,7 +555,7 @@ t = time.time()
 get_sum_multiples_below4(1000000,3,5)
 ## np.int64(233333166668)
 time.time() - t
-## 0.01729726791381836</code></pre>
+## 0.01642894744873047</code></pre>
 </div>
 </div>
 </div>
@@ -592,7 +595,7 @@ t &lt;- Sys.time()
 nth_prime(10001)
 ## [1] 104743
 Sys.time() - t
-## Time difference of 0.7806571 secs
+## Time difference of 0.7728629 secs
 
 
 nth_prime2 &lt;- function(nth){
@@ -613,7 +616,7 @@ t &lt;- Sys.time()
 nth_prime2(10001)
 ## [1] 104743
 Sys.time() - t
-## Time difference of 0.577193 secs</code></pre>
+## Time difference of 0.582736 secs</code></pre>
 </div>
 </div>
 <div id="python-2" class="section level3" number="2.2.2">
@@ -644,7 +647,7 @@ t = time.time()
 nth_prime(10001)
 ## 104743
 time.time() - t
-## 0.07468414306640625
+## 0.07397699356079102
 
 
 def nth_prime2(nth):
@@ -664,7 +667,7 @@ t = time.time()
 nth_prime2(10001)
 ## 104743
 time.time() - t
-## 0.16130566596984863</code></pre>
+## 0.16478991508483887</code></pre>
 </div>
 </div>
 </div>
@@ -687,7 +690,7 @@ palindromes = [x for x in products if str(x)==str(x)[::-1]]
 print(max(palindromes))
 ## 906609
 time.time() - t
-## 0.09068489074707031</code></pre>
+## 0.08670210838317871</code></pre>
 </div>
 <p><a href="3_Arrays_Vectors.html"> Go back to chapter 2</a></p>
 </div>

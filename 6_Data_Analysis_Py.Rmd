@@ -710,4 +710,4 @@ Using first ```dplyr``` and the ```tidyverse```, Use ```table_1.csv```, ```table
 - Select the top 25 of countries involved in coronavirus research since 2001, plot the evolution on a bar chart with plot_ly
 
 
-<a href="">solution with pandas (python)</a>
+<a href="exo_4_pd.html">solution with pandas (python)</a>

@@ -134,7 +134,7 @@ sns.distplot(np.log(final_table.nb_aut +1), hist = False, kde = True,
 
 ```{python}
 t = time.time()
-final_table[['title']] = final_table.title.str.lower()
+final_table['title'] = final_table.title.str.lower()
 final_table = final_table.assign(
     ML = np.where(final_table.title.str.contains('deep learning|machine learning|neural networks?'),1,0),
     has_data = np.where(final_table.has_data == 'Y',1,0),
@@ -198,7 +198,8 @@ final_table.groupby('pub_type').agg({'cited':lambda x : np.std(x,ddof = 1)}).sor
 countries = list(cities.country.str.lower().drop_duplicates())
 
 countries_pd = final_table[['pmid', 'authors']]
-
+print(countries_pd['authors'][0])
+print(countries_pd['authors'][1])
 t = time.time()
 countries_pd = countries_pd.assign(
     authors=countries_pd.authors.str.split('<AUTHOR>')).explode('authors')
@@ -246,9 +247,10 @@ time.time() - t
 
 ```{python}
 t = time.time()
-countries_pd = countries_pd[countries_pd.authors.map(lambda aff: any([country in aff for country in countries]))]
-countries_matched = countries_pd.authors.map(lambda aff: [country for country in countries if country in aff][0])
+countries_matched = countries_pd.authors.map(lambda aff: [country for country in countries if country in aff])
 countries_pd = countries_pd.assign(country = countries_matched).drop('authors', axis = 1)
+countries_pd['country'] = countries_pd.country.map(lambda x: x[0] if x else '')
+countries_pd
 time.time() - t
 ```
 
