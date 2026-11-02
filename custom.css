@@ -1,0 +1,438 @@
+/* ==========================================================================
+   M1 S1 DS2E/SE
+   Modern theme on top of Bootstrap 5 / bslib "flatly"
+   ========================================================================== */
+
+:root {
+  --accent: #18BC9C;          /* flatly green (links, highlights) */
+  --accent-ink: #128a72;      /* darker green for text (contrast) */
+  --accent-soft: #e3f7f2;
+  --heading: #2C3E50;         /* flatly navy (navbar, headings) */
+  --ink: #2b2b2b;
+  --muted: #6b6b6b;
+  --line: #e3e8ec;
+  --surface: #f7f9fa;
+  --code-r: #fff5fd;
+  --code-py: #e9f7f5;
+  --code-exo: #eef2f3;
+  --radius: 12px;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 4px 16px rgba(0, 0, 0, .04);
+}
+
+html { scroll-padding-top: 80px; }
+
+body {
+  color: var(--ink);
+  background: #fff;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.main-container { max-width: 1320px; padding-top: 1.5rem; }
+
+/* Reading width: keep paragraphs comfortable */
+.main-container .section > p,
+.main-container .section > ul,
+.main-container .section > ol { max-width: 78ch; }
+
+a { color: var(--accent-ink); text-underline-offset: 3px; }
+a:hover { color: var(--heading); }
+
+/* --------------------------------------------------------------------------
+   Navbar
+   -------------------------------------------------------------------------- */
+.navbar {
+  background: linear-gradient(90deg, #22313f 0%, var(--heading) 100%) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .12);
+  padding-top: .35rem;
+  padding-bottom: .35rem;
+}
+/* FA v4 shim class loses to bslib's .fa font-family: force the brands font */
+.navbar .fa.fa-github { font-family: "Font Awesome 6 Brands" !important; font-weight: 400 !important; }
+.navbar-brand { font-weight: 700; letter-spacing: -.01em; color: #fff !important; }
+.navbar .nav-link,
+.navbar .navbar-nav > li > a { color: rgba(255, 255, 255, .92) !important; }
+.navbar .navbar-toggle {
+  border: 1px solid rgba(255, 255, 255, .5);
+  border-radius: 8px;
+  background: transparent;
+  padding: .5rem .6rem;
+}
+/* bs3compat turns the last .icon-bar into a 30px toggler icon: draw it white */
+.navbar .navbar-toggle .icon-bar {
+  background-color: transparent !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.95%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+.navbar .nav-link {
+  border-radius: 8px;
+  padding: .4rem .8rem !important;
+  margin: 0 .1rem;
+  transition: background .15s ease;
+}
+.navbar .nav-link:hover { background: rgba(255, 255, 255, .14); }
+.navbar .nav-item.active > .nav-link,
+.navbar .nav-link.active {
+  background: rgba(0, 0, 0, .18);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Headings
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading);
+  font-weight: 700;
+  letter-spacing: -.015em;
+  line-height: 1.25;
+}
+
+h1.title {
+  font-size: 2.6rem;
+  text-align: left;
+  margin: .5rem 0 .25rem;
+  padding-bottom: 1rem;
+  border-bottom: 4px solid var(--accent);
+  display: inline-block;
+}
+h4.author { color: var(--muted); font-weight: 500; font-size: 1rem; margin-top: .75rem; }
+#header { margin-bottom: 2rem; }
+
+h1:not(.title) {
+  font-size: 1.9rem;
+  margin: 3.5rem 0 1.25rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid var(--line);
+}
+h2 { font-size: 1.45rem; margin: 2.5rem 0 1rem; }
+h3 { font-size: 1.2rem;  margin: 2rem 0 .75rem; }
+h4, h5, h6 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; }
+
+/* Section numbers in a softer tone */
+.header-section-number {
+  color: var(--accent-ink);
+  font-weight: 600;
+  margin-right: .35em;
+}
+
+/* --------------------------------------------------------------------------
+   Floating table of contents
+   -------------------------------------------------------------------------- */
+#TOC {
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  border: none;
+  background: transparent;
+  font-size: .875rem;
+  padding: .25rem 0;
+  scrollbar-width: thin;
+}
+@media (min-width: 768px) {
+  #TOC.tocify { width: 100% !important; max-height: calc(100vh - 100px); }
+}
+.tocify, .tocify .tocify-header, .tocify .tocify-subheader { border: none !important; }
+.tocify ul, .tocify li { margin: 0; }
+.tocify .list-group-item,
+.tocify .tocify-item {
+  border: none !important;
+  border-left: 2px solid var(--line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--muted) !important;
+  padding: .3rem .75rem .3rem 1rem !important;
+  line-height: 1.4;
+  text-indent: 0 !important;
+  transition: color .15s ease, border-color .15s ease, background .15s ease;
+}
+.tocify .tocify-subheader .tocify-item { padding-left: 1.75rem !important; font-size: .82rem; }
+.tocify .tocify-subheader .tocify-subheader .tocify-item { padding-left: 2.5rem !important; }
+.tocify .tocify-item:hover {
+  color: var(--ink) !important;
+  border-left-color: #c9d3db !important;
+  background: var(--surface) !important;
+}
+.tocify .list-group-item.active,
+.tocify .tocify-item.active {
+  color: var(--heading) !important;
+  font-weight: 600;
+  border-left-color: var(--accent) !important;
+  background: var(--accent-soft) !important;
+}
+.tocify .toc-section-number { color: var(--accent-ink); margin-right: .25em; }
+
+/* --------------------------------------------------------------------------
+   Code
+   -------------------------------------------------------------------------- */
+/* No ligatures: students must see `!=`, `<=`, `->` as typed */
+pre, code {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+
+p code, li code, td code {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  padding: .1em .4em;
+  border-radius: 6px;
+  font-size: .875em;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+pre {
+  position: relative;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  background: var(--surface);
+  padding: 1rem 1.15rem !important;
+  font-size: .85rem;
+  line-height: 1.6;
+  box-shadow: var(--shadow);
+  margin: 1rem 0 1.25rem;
+  overflow-x: auto !important;   /* pandoc sets pre.sourceCode to visible */
+}
+div.sourceCode { margin: 0; background: transparent; }
+pre code { background: transparent; color: inherit; padding: 0; }
+
+/* Language tinted blocks (classes used in the .Rmd files) */
+/* R / Python side by side (.row > .col-md-6): keep a gutter between columns */
+.section div.row { --bs-gutter-x: 1.25rem; }
+div.r pre      { background: var(--code-r) !important;  border-left: 4px solid #c2185b !important; }
+div.python pre { background: var(--code-py) !important; border-left: 4px solid var(--accent) !important; }
+div.exo pre    { background: var(--code-exo) !important; border-left: 4px solid #607d8b !important; }
+
+/* Output lines (## ...) slightly muted */
+pre code .co { font-style: italic; }
+
+/* Copy button (added by _extras.html) */
+.copy-btn {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+  font: 500 .72rem/1 Inter, system-ui, sans-serif;
+  padding: .35rem .6rem;
+  border-radius: 7px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, .9);
+  color: var(--muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .15s ease, color .15s ease, border-color .15s ease;
+}
+pre:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
+.copy-btn:hover { color: var(--accent-ink); border-color: var(--accent); }
+.copy-btn.copied { color: #2a9d8f; border-color: #2a9d8f; opacity: 1; }
+@media (hover: none) { .copy-btn { opacity: 1; } }
+
+/* --------------------------------------------------------------------------
+   Exercise boxes (inline-styled divs in the .Rmd files)
+   -------------------------------------------------------------------------- */
+div[style*="border:1px solid"][style*="border-radius: 10px"] {
+  border: 1px solid var(--line) !important;
+  border-left: 5px solid var(--accent) !important;
+  border-radius: var(--radius) !important;
+  background: linear-gradient(180deg, #f6fbfa 0%, #fff 100%) !important;
+  padding: 1.25rem 1.5rem !important;
+  margin: 1.5rem 0 2rem !important;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+div[style*="border:1px solid"][style*="border-radius: 10px"]::before {
+  content: "✎ Exercises";
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  padding: .25rem .6rem;
+  border-radius: 999px;
+  margin-bottom: .75rem;
+}
+div[style*="border:1px solid"][style*="border-radius: 10px"] > p:first-of-type { margin-top: 0; }
+
+/* Solutions (<details>) */
+details {
+  margin: .5rem 0 1rem;
+  border-radius: 10px;
+}
+details > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  cursor: pointer;
+  list-style: none;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--accent-ink);
+  padding: .4rem .85rem;
+  border: 1px solid #a9e4d6;
+  border-radius: 999px;
+  background: #fff;
+  transition: background .15s ease, color .15s ease;
+  user-select: none;
+}
+details > summary::-webkit-details-marker { display: none; }
+details > summary::before {
+  content: "▸";
+  transition: transform .15s ease;
+}
+details[open] > summary::before { transform: rotate(90deg); }
+details > summary:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+details[open] > summary { background: var(--accent-soft); }
+details[open] > summary:hover { background: var(--accent); }
+details[open] > pre:first-of-type,
+details[open] > div:first-of-type { margin-top: .75rem; }
+
+/* --------------------------------------------------------------------------
+   Tables
+   -------------------------------------------------------------------------- */
+.main-container table:not(.dataTable) {
+  display: block;            /* wide pandas DataFrames scroll instead of overflowing */
+  max-width: 100%;
+  overflow-x: auto;
+  width: fit-content;
+  min-width: 50%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 1rem 0 1.5rem;
+  font-size: .9rem;
+}
+.main-container table:not(.dataTable) th {
+  background: var(--surface);
+  color: var(--heading);
+  font-weight: 600;
+  border-bottom: 1px solid var(--line) !important;
+  padding: .6rem 1rem;
+}
+.main-container table:not(.dataTable) td {
+  padding: .5rem 1rem;
+  border-top: 1px solid var(--line);
+  border-bottom: none;
+}
+.main-container table:not(.dataTable) tbody tr:first-child td { border-top: none; }
+.main-container table:not(.dataTable) tbody tr:hover td { background: #f6fbfa; }
+
+/* --------------------------------------------------------------------------
+   Misc
+   -------------------------------------------------------------------------- */
+/* Long bare URLs and inline formulas must never widen the page on phones */
+.main-container p, .main-container li, .main-container a { overflow-wrap: anywhere; }
+span.math.inline { display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; }
+.math.display { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+
+/* htmlwidgets (plotly...) are knitted at a fixed width: fit them to the column */
+.html-widget { max-width: 100% !important; }
+
+/* Contents toggle, only shown on phones (added by _extras.html) */
+#toc-toggle { display: none; }
+
+img { max-width: 100%; height: auto; border-radius: 8px; }
+
+blockquote {
+  border-left: 4px solid var(--accent);
+  background: var(--surface);
+  padding: .75rem 1.25rem;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  color: var(--muted);
+}
+
+hr { border-color: var(--line); opacity: 1; }
+
+::selection { background: #c6efe5; }
+
+/* Reading progress bar + back to top (added by _extras.html) */
+#read-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: var(--accent);
+  z-index: 2000;
+  transition: width .1s linear;
+}
+#back-to-top {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--heading);
+  color: #fff;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 14px rgba(44, 62, 80, .3);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity .2s ease, transform .2s ease, background .15s ease;
+  z-index: 1500;
+}
+#back-to-top.show { opacity: 1; pointer-events: auto; transform: none; }
+#back-to-top:hover { background: var(--accent); }
+
+/* --------------------------------------------------------------------------
+   Small screens
+   -------------------------------------------------------------------------- */
+@media (max-width: 767.98px) {
+  #TOC {
+    position: static !important;
+    top: auto;
+    max-height: none;
+    margin: 0 0 1.5rem !important;   /* rmarkdown adds a 25px top margin */
+    padding: .5rem 0;
+    background: var(--surface);
+    border-radius: 0 0 var(--radius) var(--radius);
+  }
+  /* The TOC sits above the title on phones: collapsed behind a button */
+  #toc-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: .25rem 0 0;
+    padding: .8rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--heading);
+    font-weight: 600;
+    font-size: .95rem;
+  }
+  #toc-toggle::after { content: "▾"; transition: transform .15s ease; }
+  #toc-toggle[aria-expanded="true"] { border-radius: var(--radius) var(--radius) 0 0; border-bottom-color: transparent; }
+  #toc-toggle[aria-expanded="true"]::after { transform: rotate(180deg); }
+  #toc-toggle[aria-expanded="false"] + #TOC { display: none; }
+  #toc-toggle[aria-expanded="false"] { margin-bottom: 1.5rem; }
+  #TOC { border: 1px solid var(--line); border-top: none; }
+  /* Finger-sized TOC links */
+  .tocify .list-group-item,
+  .tocify .tocify-item { padding-top: .6rem !important; padding-bottom: .6rem !important; font-size: .95rem; }
+  .tocify .tocify-subheader .tocify-item { font-size: .9rem; }
+
+  .main-container { padding-left: 16px; padding-right: 16px; }
+  .toc-content { padding-left: 12px !important; padding-right: 12px !important; }   /* rmarkdown: 30px / 40px */
+  div[style*="border:1px solid"][style*="border-radius: 10px"] { padding: 1rem 1rem !important; }
+  details > summary { padding: .6rem 1rem; }   /* bigger tap target */
+  .navbar .container, .navbar .container-fluid { max-width: 100%; }
+  .navbar-brand { white-space: normal; font-size: 1.05rem; }
+  .navbar .navbar-header .navbar-toggle { order: 2 !important; margin-left: auto !important; margin-right: 0 !important; }
+  h1.title { font-size: 2rem; }
+  h1:not(.title) { font-size: 1.55rem; margin-top: 2.5rem; }
+  pre { font-size: .8rem; }
+  .main-container table:not(.dataTable) { display: block; overflow-x: auto; min-width: 0; }
+}
+
+@media print {
+  .navbar, #TOC, #back-to-top, #read-progress, .copy-btn { display: none !important; }
+  details > * { display: block; }
+}

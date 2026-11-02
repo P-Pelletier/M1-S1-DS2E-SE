@@ -15,20 +15,14 @@
 
 <script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.3.1/bootstrap.bundle.min.js"></script>
+<link href="site_libs/Inter-0.4.10/font.css" rel="stylesheet" />
+<link href="site_libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet" />
+<script src="site_libs/bs3compat-0.9.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.9.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.9.0/bs3compat.js"></script>
 <script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -401,7 +395,7 @@ dt_table_1 = fread(file = &#39;data/table_1.csv&#39;)
 dt_table_2 = fread(file = &#39;data/table_2.csv&#39;)
 dt_cities = fread(file = &#39;data/cities_loc.csv&#39;)
 toc()
-## 0.352 sec elapsed
+## 1.053 sec elapsed
 
 setDT(dt_table_1)
 setDT(dt_table_2)
@@ -489,7 +483,7 @@ tic()
 dt_table_1 = dt_table_1[pmid != &#39;null&#39; &amp; doi != &#39;null&#39;]
 dt_table_2 = dt_table_2[pmid != &#39;null&#39; &amp; year_pub &gt; 1975]
 toc()
-## 0.017 sec elapsed</code></pre>
+## 0.019 sec elapsed</code></pre>
 </div>
 </div>
 <div id="merge" class="section level1" number="3">
@@ -501,7 +495,7 @@ toc()
 tic()
 dt_final_table = na.omit(dt_table_2[dt_table_1, on = &#39;pmid&#39;])
 toc()
-## 0.018 sec elapsed
+## 0.156 sec elapsed
 
 dt_final_table
 ## Key: &lt;pmid&gt;
@@ -520,7 +514,7 @@ dt_final_table
 ## 108722:  9989453
 ##                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               authors
 ##                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                &lt;char&gt;
-##      1:                                                                                                                                                                                                                                                                                                                                              &lt;AUTHOR&gt; Glombik MM Glombik&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Krömer A Krömer&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Salm T Salm&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Huttner WB Huttner&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Gerdes HH Gerdes&lt;AFFILIATION&gt;None
+##      1:                                                                                                                                                                                                                                                                                                                                &lt;AUTHOR&gt; Glombik MM Glombik&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Kr\303\266mer A Kr\303\266mer&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Salm T Salm&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Huttner WB Huttner&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Gerdes HH Gerdes&lt;AFFILIATION&gt;None
 ##      2:                                                                                                                                                                                                                                          &lt;AUTHOR&gt; Lavi E E Lavi&lt;AFFILIATION&gt;Division of Neuropathology, Department of Pathology and Laboratory Medicine, University of Pennsylvania School of Medicine, Philadelphia, PA 19104-6085, USA.lavi@mail.med.upenn.edu&lt;AUTHOR&gt; Das Sarma J J Das Sarma&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Weiss SR S R Weiss&lt;AFFILIATION&gt;None
 ##      3:                                                                                                            &lt;AUTHOR&gt; Saura M M Saura&lt;AFFILIATION&gt;Department of Medicine, The Johns Hopkins University School of Medicine, Baltimore, Maryland 21205, USA.&lt;AUTHOR&gt; Zaragoza C C Zaragoza&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; McMillan A A McMillan&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Quick RA R A Quick&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Hohenadl C C Hohenadl&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Lowenstein JM J M Lowenstein&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Lowenstein CJ C J Lowenstein&lt;AFFILIATION&gt;None
 ##      4:                                                                                                                                                                                                                                                                                                                                                               &lt;AUTHOR&gt; Wang X X Wang&lt;AFFILIATION&gt;Department of Pathobiology, University of Connecticut, U-89,61 North Eagleville Road, Storrs, CT, 06269-3089, USA.&lt;AUTHOR&gt; Khan MI M I Khan&lt;AFFILIATION&gt;None
@@ -607,14 +601,14 @@ tic()
 dt_final_table[,nb_aut := dim(str_match_all(authors, &#39;&lt;AUTHOR&gt;&#39;)[[1]])[1],
                by = &#39;pmid&#39;]
 toc()
-## 1.407 sec elapsed
+## 1.19 sec elapsed
 
 dt_final_table = dt_final_table[nb_aut&gt;0]
 
 dt_final_table[,c(&#39;authors&#39;, &#39;nb_aut&#39;)]
 ##                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               authors
 ##                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                &lt;char&gt;
-##      1:                                                                                                                                                                                                                                                                                                                                              &lt;AUTHOR&gt; Glombik MM Glombik&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Krömer A Krömer&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Salm T Salm&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Huttner WB Huttner&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Gerdes HH Gerdes&lt;AFFILIATION&gt;None
+##      1:                                                                                                                                                                                                                                                                                                                                &lt;AUTHOR&gt; Glombik MM Glombik&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Kr\303\266mer A Kr\303\266mer&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Salm T Salm&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Huttner WB Huttner&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Gerdes HH Gerdes&lt;AFFILIATION&gt;None
 ##      2:                                                                                                                                                                                                                                          &lt;AUTHOR&gt; Lavi E E Lavi&lt;AFFILIATION&gt;Division of Neuropathology, Department of Pathology and Laboratory Medicine, University of Pennsylvania School of Medicine, Philadelphia, PA 19104-6085, USA.lavi@mail.med.upenn.edu&lt;AUTHOR&gt; Das Sarma J J Das Sarma&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Weiss SR S R Weiss&lt;AFFILIATION&gt;None
 ##      3:                                                                                                            &lt;AUTHOR&gt; Saura M M Saura&lt;AFFILIATION&gt;Department of Medicine, The Johns Hopkins University School of Medicine, Baltimore, Maryland 21205, USA.&lt;AUTHOR&gt; Zaragoza C C Zaragoza&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; McMillan A A McMillan&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Quick RA R A Quick&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Hohenadl C C Hohenadl&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Lowenstein JM J M Lowenstein&lt;AFFILIATION&gt;None&lt;AUTHOR&gt; Lowenstein CJ C J Lowenstein&lt;AFFILIATION&gt;None
 ##      4:                                                                                                                                                                                                                                                                                                                                                               &lt;AUTHOR&gt; Wang X X Wang&lt;AFFILIATION&gt;Department of Pathobiology, University of Connecticut, U-89,61 North Eagleville Road, Storrs, CT, 06269-3089, USA.&lt;AUTHOR&gt; Khan MI M I Khan&lt;AFFILIATION&gt;None
@@ -672,7 +666,7 @@ dt_final_table[, &#39;title&#39; := .(tolower(title)),
                                               ifelse(oa == &#39;Y&#39;,1,0)),
                  by = &#39;pmid&#39;]
 toc()
-## 2.141 sec elapsed
+## 1.806 sec elapsed
 
 
 sum(dt_final_table$ML)
@@ -701,7 +695,7 @@ dt_final_table[,.(share_oa = sum(as.numeric(oa))/.N,
 ## 1:     0 0.7266799  11.277353
 ## 2:     1 0.8018018   1.054054
 toc()
-## 0.008 sec elapsed</code></pre>
+## 0.006 sec elapsed</code></pre>
 </div>
 </div>
 <div id="clean-up-pub_type" class="section level1" number="7">
@@ -712,7 +706,7 @@ toc()
 tic()
 dt_final_table[,pub_type := str_match_all(pubtype, &#39;\\[&quot;&quot;(.*?)&quot;&quot;&#39;)[[1]][2],by = &#39;pmid&#39;]
 toc()
-## 1.009 sec elapsed
+## 0.952 sec elapsed
 
 dt_final_table[,.(pubtype,pub_type)]
 ##                                                                                                                                                     pubtype
@@ -1128,7 +1122,7 @@ countries_dt = dt_final_table[,c(&#39;pmid&#39;,&#39;authors&#39;)
                               ][,.(authors = unlist(tstrsplit(authors, &quot;&lt;AUTHOR&gt;&quot;))),
                                 by= &#39;pmid&#39;]
 toc()
-## 3.383 sec elapsed
+## 3.078 sec elapsed
 countries_dt
 ## Key: &lt;pmid&gt;
 ##             pmid
@@ -1148,7 +1142,7 @@ countries_dt
 ##                                                                                                                                                             &lt;char&gt;
 ##      1:                                                                                                                                                           
 ##      2:                                                                                                                        Glombik MM Glombik&lt;AFFILIATION&gt;None
-##      3:                                                                                                                           Krömer A Krömer&lt;AFFILIATION&gt;None
+##      3:                                                                                                             Kr\303\266mer A Kr\303\266mer&lt;AFFILIATION&gt;None
 ##      4:                                                                                                                               Salm T Salm&lt;AFFILIATION&gt;None
 ##      5:                                                                                                                        Huttner WB Huttner&lt;AFFILIATION&gt;None
 ##     ---                                                                                                                                                           
@@ -1170,7 +1164,7 @@ countries_dt = countries_dt[,
 setkey(countries_dt,pmid,clean_aff)
 countries_dt = unique(countries_dt)
 toc()
-## 2.842 sec elapsed
+## 3.653 sec elapsed
 
 countries_dt
 ## Key: &lt;pmid, clean_aff&gt;
@@ -1192,7 +1186,7 @@ countries_dt
 ##      1:   Division of Neuropathology, Department of Pathology and Laboratory Medicine, University of Pennsylvania School of Medicine, Philadelphia, PA 19104-6085, USA.lavi@mail.med.upenn.edu
 ##      2:                                                                               Department of Medicine, The Johns Hopkins University School of Medicine, Baltimore, Maryland 21205, USA.
 ##      3:                                                                     Department of Pathobiology, University of Connecticut, U-89,61 North Eagleville Road, Storrs, CT, 06269-3089, USA.
-##      4:                                                                                 Centre d&#39;Etude et de Recherches Vétérinaires et Agrochimiques 99, Brussels, Belgium. calet@var.fgov.be
+##      4:                                                                   Centre d&#39;Etude et de Recherches V\303\251t\303\251rinaires et Agrochimiques 99, Brussels, Belgium. calet@var.fgov.be
 ##      5:                                                                                 Department of Internal Veterinary Medicine, University of Zurich, Switzerland. mgut@vetklinik.unizh.ch
 ##     ---                                                                                                                                                                                       
 ## 291653: Department of Medicine, Health, and Biological Sciences, University of Southampton, School of Medicine, Southampton General Hospital, Southampton, Hampshire, United Kingdom S016 6YD.
@@ -1209,7 +1203,7 @@ countries_dt[, clean_aff := str_replace_all(clean_aff,&#39; USA&#39;,&#39;United
                ][, clean_aff := str_replace_all(clean_aff,&#39; Korea&#39;,&#39;South Korea&#39;)
                  ][, clean_aff := tolower(clean_aff)]
 toc()
-## 1.44 sec elapsed
+## 1.611 sec elapsed
 countries_dt
 ## Key: &lt;pmid&gt;
 ##             pmid
@@ -1230,7 +1224,7 @@ countries_dt
 ##      1: division of neuropathology, department of pathology and laboratory medicine, university of pennsylvania school of medicine, philadelphia, pa 19104-6085,united states.lavi@mail.med.upenn.edu
 ##      2:                                                                             department of medicine, the johns hopkins university school of medicine, baltimore, maryland 21205,united states.
 ##      3:                                                                   department of pathobiology, university of connecticut, u-89,61 north eagleville road, storrs, ct, 06269-3089,united states.
-##      4:                                                                                        centre d&#39;etude et de recherches vétérinaires et agrochimiques 99, brussels, belgium. calet@var.fgov.be
+##      4:                                                                          centre d&#39;etude et de recherches v&lt;U+00E9&gt;t&lt;U+00E9&gt;rinaires et agrochimiques 99, brussels, belgium. calet@var.fgov.be
 ##      5:                                                                                        department of internal veterinary medicine, university of zurich, switzerland. mgut@vetklinik.unizh.ch
 ##     ---                                                                                                                                                                                              
 ## 291653:        department of medicine, health, and biological sciences, university of southampton, school of medicine, southampton general hospital, southampton, hampshire, united kingdom s016 6yd.
@@ -1249,7 +1243,7 @@ tic()
 countries_dt[,country := .(str_extract(clean_aff, pattern)),
              by=c(&#39;pmid&#39;, &#39;clean_aff&#39;)]
 toc()
-## 29.002 sec elapsed
+## 31.382 sec elapsed
 countries_dt
 ## Key: &lt;pmid, clean_aff&gt;
 ##             pmid
@@ -1270,7 +1264,7 @@ countries_dt
 ##      1: division of neuropathology, department of pathology and laboratory medicine, university of pennsylvania school of medicine, philadelphia, pa 19104-6085,united states.lavi@mail.med.upenn.edu
 ##      2:                                                                             department of medicine, the johns hopkins university school of medicine, baltimore, maryland 21205,united states.
 ##      3:                                                                   department of pathobiology, university of connecticut, u-89,61 north eagleville road, storrs, ct, 06269-3089,united states.
-##      4:                                                                                        centre d&#39;etude et de recherches vétérinaires et agrochimiques 99, brussels, belgium. calet@var.fgov.be
+##      4:                                                                          centre d&#39;etude et de recherches v&lt;U+00E9&gt;t&lt;U+00E9&gt;rinaires et agrochimiques 99, brussels, belgium. calet@var.fgov.be
 ##      5:                                                                                        department of internal veterinary medicine, university of zurich, switzerland. mgut@vetklinik.unizh.ch
 ##     ---                                                                                                                                                                                              
 ## 291653:        department of medicine, health, and biological sciences, university of southampton, school of medicine, southampton general hospital, southampton, hampshire, united kingdom s016 6yd.
@@ -1297,13 +1291,13 @@ countries_dt = countries_dt[!is.na(country), -&#39;clean_aff&#39;]
 setkey(countries_dt,pmid,country)
 countries_dt = unique(countries_dt)
 toc()
-## 0.061 sec elapsed
+## 0.072 sec elapsed
 
 tic()
 countries_year = countries_dt[dt_final_table[,c(&#39;pmid&#39;,&#39;year_pub&#39;)], on =&#39;pmid&#39;]
 countries_year = na.omit(countries_year)
 toc()
-## 0.012 sec elapsed
+## 0.016 sec elapsed
 
 tic()
 countries_pub_dt = countries_year[,
@@ -1320,7 +1314,7 @@ head(countries_pub_dt[order(n,decreasing = T)])
 ## 5:          india     2020  3199
 ## 6:         france     2020  2639
 toc()
-## 0.007 sec elapsed</code></pre>
+## 0.01 sec elapsed</code></pre>
 </div>
 </div>
 <div id="country-bar-plot-with-plotly" class="section level1"
@@ -1340,6 +1334,7 @@ class="uri">https://plotly.com/r/bar-charts/</a></p></li>
 <div class="r">
 <pre class="r"><code># R 
 library(plotly)
+## Loading required package: ggplot2
 ## 
 ## Attaching package: &#39;plotly&#39;
 ## The following object is masked from &#39;package:ggplot2&#39;:
@@ -1379,11 +1374,69 @@ plot_top_n(10,2001)
 ## No trace type specified:
 ##   Based on info supplied, a &#39;bar&#39; trace seems appropriate.
 ##   Read more about this trace type -&gt; https://plotly.com/r/reference/#bar</code></pre>
-<div class="plotly html-widget html-fill-item" id="htmlwidget-e0b14b5067de818650e8" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-e0b14b5067de818650e8">{"x":{"visdat":{"6fdf21fe951f":["function () ","plotlyVisDat"]},"cur_data":"6fdf21fe951f","attrs":{"6fdf21fe951f":{"x":{},"y":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"yaxis":{"domain":[0,1],"automargin":true,"title":"Count","type":"log"},"barmode":"stack","xaxis":{"domain":[0,1],"automargin":true,"title":"year_pub","type":"category","categoryorder":"array","categoryarray":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"]},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":[2,4,10,21,25,32,39,43,51,26,45,42,71,96,120,114,115,127,137,2058,3],"type":"bar","name":"australia","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":[16,13,45,70,61,72,62,71,70,64,64,73,90,113,130,136,120,134,172,2342,4],"type":"bar","name":"canada","marker":{"color":"rgba(228,156,113,1)","line":{"color":"rgba(228,156,113,1)"}},"textfont":{"color":"rgba(228,156,113,1)"},"error_y":{"color":"rgba(228,156,113,1)"},"error_x":{"color":"rgba(228,156,113,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":[102,186,182,164,156,145,171,222,165,172,317,393,516,532,568,593,739,7894,25],"type":"bar","name":"china","marker":{"color":"rgba(201,152,157,1)","line":{"color":"rgba(201,152,157,1)"}},"textfont":{"color":"rgba(201,152,157,1)"},"error_y":{"color":"rgba(201,152,157,1)"},"error_x":{"color":"rgba(201,152,157,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":[12,12,17,32,39,36,46,41,57,44,54,43,86,127,130,148,135,158,157,2639,4],"type":"bar","name":"france","marker":{"color":"rgba(175,154,200,1)","line":{"color":"rgba(175,154,200,1)"}},"textfont":{"color":"rgba(175,154,200,1)"},"error_y":{"color":"rgba(175,154,200,1)"},"error_x":{"color":"rgba(175,154,200,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":[18,19,31,35,36,70,53,59,55,46,59,48,80,127,146,151,165,171,177,2108,1],"type":"bar","name":"germany","marker":{"color":"rgba(226,148,184,1)","line":{"color":"rgba(226,148,184,1)"}},"textfont":{"color":"rgba(226,148,184,1)"},"error_y":{"color":"rgba(226,148,184,1)"},"error_x":{"color":"rgba(226,148,184,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2015","2013","2014","2016","2017","2018","2019","2020","2021"],"y":[4,1,5,9,8,10,9,24,18,32,31,30,65,54,82,88,88,91,125,3199,8],"type":"bar","name":"india","marker":{"color":"rgba(176,208,99,1)","line":{"color":"rgba(176,208,99,1)"}},"textfont":{"color":"rgba(176,208,99,1)"},"error_y":{"color":"rgba(176,208,99,1)"},"error_x":{"color":"rgba(176,208,99,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":[9,8,18,24,34,31,32,37,33,31,41,43,48,69,94,111,110,115,131,5933,5],"type":"bar","name":"italy","marker":{"color":"rgba(227,217,62,1)","line":{"color":"rgba(227,217,62,1)"}},"textfont":{"color":"rgba(227,217,62,1)"},"error_y":{"color":"rgba(227,217,62,1)"},"error_x":{"color":"rgba(227,217,62,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2019","2018","2020","2021"],"y":[8,10,17,14,18,18,19,38,31,25,34,44,44,63,79,87,76,110,98,2014,5],"type":"bar","name":"spain","marker":{"color":"rgba(245,207,100,1)","line":{"color":"rgba(245,207,100,1)"}},"textfont":{"color":"rgba(245,207,100,1)"},"error_y":{"color":"rgba(245,207,100,1)"},"error_x":{"color":"rgba(245,207,100,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2014","2013","2015","2016","2017","2018","2019","2020","2021"],"y":[22,20,56,68,72,81,74,85,101,87,89,90,175,125,252,201,229,206,287,6058,10],"type":"bar","name":"united kingdom","marker":{"color":"rgba(219,192,155,1)","line":{"color":"rgba(219,192,155,1)"}},"textfont":{"color":"rgba(219,192,155,1)"},"error_y":{"color":"rgba(219,192,155,1)"},"error_x":{"color":"rgba(219,192,155,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2012","2011","2013","2014","2015","2016","2017","2018","2020","2019","2021"],"y":[158,130,228,370,395,465,411,505,538,570,554,555,608,632,739,729,749,753,10670,803,20],"type":"bar","name":"united states","marker":{"color":"rgba(179,179,179,1)","line":{"color":"rgba(179,179,179,1)"}},"textfont":{"color":"rgba(179,179,179,1)"},"error_y":{"color":"rgba(179,179,179,1)"},"error_x":{"color":"rgba(179,179,179,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-743ca1323ef56132cb0d" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-743ca1323ef56132cb0d">{"x":{"visdat":{"ac853532638":["function () ","plotlyVisDat"]},"cur_data":"ac853532638","attrs":{"ac853532638":{"x":{},"y":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"yaxis":{"domain":[0,1],"automargin":true,"title":"Count","type":"log"},"barmode":"stack","xaxis":{"domain":[0,1],"automargin":true,"title":"year_pub","type":"category","categoryorder":"array","categoryarray":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"]},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":[2,4,10,21,25,32,39,43,51,26,45,42,71,96,120,114,115,127,137,2058,3],"type":"bar","name":"australia","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":[16,13,45,70,61,72,62,71,70,64,64,73,90,113,130,136,120,134,172,2342,4],"type":"bar","name":"canada","marker":{"color":"rgba(228,156,113,1)","line":{"color":"rgba(228,156,113,1)"}},"textfont":{"color":"rgba(228,156,113,1)"},"error_y":{"color":"rgba(228,156,113,1)"},"error_x":{"color":"rgba(228,156,113,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":[102,186,182,164,156,145,171,222,165,172,317,393,516,532,568,593,739,7894,25],"type":"bar","name":"china","marker":{"color":"rgba(201,152,157,1)","line":{"color":"rgba(201,152,157,1)"}},"textfont":{"color":"rgba(201,152,157,1)"},"error_y":{"color":"rgba(201,152,157,1)"},"error_x":{"color":"rgba(201,152,157,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":[12,12,17,32,39,36,46,41,57,44,54,43,86,127,130,148,135,158,157,2639,4],"type":"bar","name":"france","marker":{"color":"rgba(175,154,200,1)","line":{"color":"rgba(175,154,200,1)"}},"textfont":{"color":"rgba(175,154,200,1)"},"error_y":{"color":"rgba(175,154,200,1)"},"error_x":{"color":"rgba(175,154,200,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":[18,19,31,35,36,70,53,59,55,46,59,48,80,127,146,151,165,171,177,2108,1],"type":"bar","name":"germany","marker":{"color":"rgba(226,148,184,1)","line":{"color":"rgba(226,148,184,1)"}},"textfont":{"color":"rgba(226,148,184,1)"},"error_y":{"color":"rgba(226,148,184,1)"},"error_x":{"color":"rgba(226,148,184,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2015","2013","2014","2016","2017","2018","2019","2020","2021"],"y":[4,1,5,9,8,10,9,24,18,32,31,30,65,54,82,88,88,91,125,3199,8],"type":"bar","name":"india","marker":{"color":"rgba(176,208,99,1)","line":{"color":"rgba(176,208,99,1)"}},"textfont":{"color":"rgba(176,208,99,1)"},"error_y":{"color":"rgba(176,208,99,1)"},"error_x":{"color":"rgba(176,208,99,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021"],"y":[9,8,18,24,34,31,32,37,33,31,41,43,48,69,94,111,110,115,131,5933,5],"type":"bar","name":"italy","marker":{"color":"rgba(227,217,62,1)","line":{"color":"rgba(227,217,62,1)"}},"textfont":{"color":"rgba(227,217,62,1)"},"error_y":{"color":"rgba(227,217,62,1)"},"error_x":{"color":"rgba(227,217,62,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2019","2018","2020","2021"],"y":[8,10,17,14,18,18,19,38,31,25,34,44,44,63,79,87,76,110,98,2014,5],"type":"bar","name":"spain","marker":{"color":"rgba(245,207,100,1)","line":{"color":"rgba(245,207,100,1)"}},"textfont":{"color":"rgba(245,207,100,1)"},"error_y":{"color":"rgba(245,207,100,1)"},"error_x":{"color":"rgba(245,207,100,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2014","2013","2015","2016","2017","2018","2019","2020","2021"],"y":[22,20,56,68,72,81,74,85,101,87,89,90,175,125,252,201,229,206,287,6058,10],"type":"bar","name":"united kingdom","marker":{"color":"rgba(219,192,155,1)","line":{"color":"rgba(219,192,155,1)"}},"textfont":{"color":"rgba(219,192,155,1)"},"error_y":{"color":"rgba(219,192,155,1)"},"error_x":{"color":"rgba(219,192,155,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2012","2011","2013","2014","2015","2016","2017","2018","2020","2019","2021"],"y":[158,130,228,370,395,465,411,505,538,570,554,555,608,632,739,729,749,753,10670,803,20],"type":"bar","name":"united states","marker":{"color":"rgba(179,179,179,1)","line":{"color":"rgba(179,179,179,1)"}},"textfont":{"color":"rgba(179,179,179,1)"},"error_y":{"color":"rgba(179,179,179,1)"},"error_x":{"color":"rgba(179,179,179,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 
+<!-- Small UX helpers: reading progress, back-to-top, copy buttons on code -->
+<div id="read-progress"></div>
+<button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+
+<script>
+(function () {
+  var bar = document.getElementById('read-progress');
+  var top = document.getElementById('back-to-top');
+
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    top.classList.toggle('show', h.scrollTop > 600);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  // Phones: the TOC is stacked above the title, so collapse it behind a button
+  var toc = document.getElementById('TOC');
+  if (toc) {
+    var phone = window.matchMedia('(max-width: 767.98px)');
+    var toggle = document.createElement('button');
+    toggle.id = 'toc-toggle';
+    toggle.type = 'button';
+    toggle.textContent = 'Contents';
+    toggle.setAttribute('aria-controls', 'TOC');
+    toggle.setAttribute('aria-expanded', 'false');
+    toc.parentNode.insertBefore(toggle, toc);
+    toggle.addEventListener('click', function () {
+      toggle.setAttribute('aria-expanded', toggle.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+    });
+    // close it again once a section is picked
+    toc.addEventListener('click', function (e) {
+      if (phone.matches && e.target.closest('.tocify-item')) toggle.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  // Copy button on source code blocks only (not on printed output)
+  document.querySelectorAll('pre.sourceCode, pre.r, pre.python').forEach(function (pre) {
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.type = 'button';
+    btn.textContent = 'Copy';
+    btn.addEventListener('click', function () {
+      // collapse = TRUE merges output (## ...) into the block: strip it
+      var text = pre.querySelector('code').innerText
+        .split('\n').filter(function (l) { return !/^## /.test(l); }).join('\n');
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'Copied ✓';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      });
+    });
+    pre.appendChild(btn);
+  });
+})();
+</script>
 
 
 </div>

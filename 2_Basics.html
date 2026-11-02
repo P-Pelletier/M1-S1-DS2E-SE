@@ -15,20 +15,14 @@
 
 <script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.3.1/bootstrap.bundle.min.js"></script>
+<link href="site_libs/Inter-0.4.10/font.css" rel="stylesheet" />
+<link href="site_libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet" />
+<script src="site_libs/bs3compat-0.9.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.9.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.9.0/bs3compat.js"></script>
 <script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -1801,24 +1795,114 @@ package Pandas is also view deeper in following chapters.</p>
 import pandas
 
 df = pandas.DataFrame(arr)
-df
-##     0   1
-## 0  12  14
-## 1   2   5
-## 2   3   6
-## 3   7   8
+df</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>12</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre class="python"><code>
 vec = [1,2,3,4,5,6]
 
 df = pandas.DataFrame({&#39;vec&#39;:vec,&#39;vec1&#39;:range(2,8)})
-df
-##    vec  vec1
-## 0    1     2
-## 1    2     3
-## 2    3     4
-## 3    4     5
-## 4    5     6
-## 5    6     7</code></pre>
+df</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>vec</th>
+      <th>vec1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
 <div class="python">
 <pre class="python"><code># Python
@@ -1842,14 +1926,76 @@ a
 
 df2 = df
 df[&#39;vec&#39;][0] = 30
-df2
-##    vec  vec1  vec2
-## 0   30     2     3
-## 1    2     3     4
-## 2    3     4     5
-## 3    4     5     6
-## 4    5     6     7
-## 5    6     7     8</code></pre>
+## &lt;string&gt;:1: ChainedAssignmentError: A value is being set on a copy of a DataFrame or Series through chained assignment.
+## Such chained assignment never works to update the original DataFrame or Series, because the intermediate object on which we are setting values always behaves as a copy (due to Copy-on-Write).
+## 
+## Try using &#39;.loc[row_indexer, col_indexer] = value&#39; instead, to perform the assignment in a single step.
+## 
+## See the documentation for a more detailed explanation: https://pandas.pydata.org/docs/dev/user_guide/migration.html#chained-assignment
+df2</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>vec</th>
+      <th>vec1</th>
+      <th>vec2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>6</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>7</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
 <div
 style="border:1px solid; padding:10px; margin-bottom:10px; border-radius: 10px; background-color: #f9f9f9;">
@@ -2029,7 +2175,7 @@ while total &lt; 1:
     total += rnd
   
 total
-## 1.24367199192576</code></pre>
+## 2.460320626988826</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -2059,7 +2205,7 @@ while(total &lt; 1){
 }
   
 total
-## [1] 1.499935</code></pre>
+## [1] 1.088732</code></pre>
 </div>
 </div>
 </div>
@@ -2125,7 +2271,7 @@ for val in lst:
   if val &gt; 2:
     results.append(val)
 time.time()-t
-## 0.001924753189086914
+## 0.0022840499877929688
 
 results
 ## [3, 4]
@@ -2134,7 +2280,7 @@ t = time.time()
 # this loop their will produce the same output than a using List comprehension.
 results = [val for val in lst if val&gt;2]
 time.time()-t
-## 0.0012159347534179688
+## 0.0014030933380126953
 
 results
 ## [3, 4]</code></pre>
@@ -2152,7 +2298,7 @@ for val in st:
   if val &gt; 2:
     results.add(val)
 time.time()-t
-## 0.0022101402282714844
+## 0.0021982192993164062
 
 results
 ## {3, 4}
@@ -2162,7 +2308,7 @@ t = time.time()
 # this loop their will produce the same output than a using Set comprehension.
 results = {val for val in st if val&gt;2}
 time.time()-t
-## 0.001332998275756836
+## 0.00664973258972168
 
 results
 ## {3, 4}</code></pre>
@@ -2180,7 +2326,7 @@ for val in dct:
   if dct[val] &gt; 2:
     results.update({str(val): dct[val]})
 time.time()-t
-## 0.0019440650939941406
+## 0.0021719932556152344
 
 results
 ## {&#39;c&#39;: 3, &#39;d&#39;: 4}
@@ -2189,7 +2335,7 @@ t = time.time()
 # this loop their will produce the same output than a using Dict comprehension.
 results = {str(val): dct[val] for val in dct if dct[val]&gt;2}
 time.time()-t
-## 0.0013091564178466797
+## 0.0017199516296386719
 
 results
 ## {&#39;c&#39;: 3, &#39;d&#39;: 4}</code></pre>
@@ -2268,7 +2414,7 @@ t = time.time()
 clean_sum(seq = seq)
 ## 1560
 time.time() - t
-## 0.0014710426330566406
+## 0.001650094985961914
 
 
 def clean_sum2(seq):
@@ -2279,7 +2425,7 @@ t = time.time()
 clean_sum2(seq = seq)
 ## 1560
 time.time() - t
-## 0.001271963119506836</code></pre>
+## 0.023755788803100586</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -2302,7 +2448,7 @@ t = Sys.time()
 clean_sum(seq = seq)
 ## [1] 1560
 Sys.time() - t
-## Time difference of 0.005253077 secs
+## Time difference of 0.004118919 secs
 
 
 
@@ -2315,7 +2461,7 @@ t &lt;- Sys.time()
 clean_sum(seq = seq)
 ## [1] 1560
 Sys.time() - t
-## Time difference of 0.0008060932 secs</code></pre>
+## Time difference of 0.0004508495 secs</code></pre>
 </div>
 </div>
 </div>
@@ -2450,6 +2596,64 @@ vectorisation</a></p>
 </div>
 </div>
 
+<!-- Small UX helpers: reading progress, back-to-top, copy buttons on code -->
+<div id="read-progress"></div>
+<button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+
+<script>
+(function () {
+  var bar = document.getElementById('read-progress');
+  var top = document.getElementById('back-to-top');
+
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    top.classList.toggle('show', h.scrollTop > 600);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  // Phones: the TOC is stacked above the title, so collapse it behind a button
+  var toc = document.getElementById('TOC');
+  if (toc) {
+    var phone = window.matchMedia('(max-width: 767.98px)');
+    var toggle = document.createElement('button');
+    toggle.id = 'toc-toggle';
+    toggle.type = 'button';
+    toggle.textContent = 'Contents';
+    toggle.setAttribute('aria-controls', 'TOC');
+    toggle.setAttribute('aria-expanded', 'false');
+    toc.parentNode.insertBefore(toggle, toc);
+    toggle.addEventListener('click', function () {
+      toggle.setAttribute('aria-expanded', toggle.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+    });
+    // close it again once a section is picked
+    toc.addEventListener('click', function (e) {
+      if (phone.matches && e.target.closest('.tocify-item')) toggle.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  // Copy button on source code blocks only (not on printed output)
+  document.querySelectorAll('pre.sourceCode, pre.r, pre.python').forEach(function (pre) {
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.type = 'button';
+    btn.textContent = 'Copy';
+    btn.addEventListener('click', function () {
+      // collapse = TRUE merges output (## ...) into the block: strip it
+      var text = pre.querySelector('code').innerText
+        .split('\n').filter(function (l) { return !/^## /.test(l); }).join('\n');
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'Copied ✓';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      });
+    });
+    pre.appendChild(btn);
+  });
+})();
+</script>
 
 
 </div>

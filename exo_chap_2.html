@@ -15,20 +15,14 @@
 
 <script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.3.1/bootstrap.bundle.min.js"></script>
+<link href="site_libs/Inter-0.4.10/font.css" rel="stylesheet" />
+<link href="site_libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet" />
+<script src="site_libs/bs3compat-0.9.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.9.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.9.0/bs3compat.js"></script>
 <script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -408,7 +402,7 @@ t = Sys.time()
 sum_n_power_last_digit(1000,10)
 ##  [1] &quot;9&quot; &quot;1&quot; &quot;1&quot; &quot;0&quot; &quot;8&quot; &quot;4&quot; &quot;6&quot; &quot;7&quot; &quot;0&quot; &quot;0&quot;
 Sys.time() - t
-## Time difference of 0.008686066 secs</code></pre>
+## Time difference of 0.01296806 secs</code></pre>
 </div>
 </div>
 <div id="python" class="section level2" number="1.2">
@@ -442,7 +436,7 @@ t = time.time()
 sum_n_power_last_digit(1000,10)
 ## &#39;9110846700&#39;
 time.time() - t
-## 0.0056819915771484375</code></pre>
+## 0.006315946578979492</code></pre>
 </div>
 </div>
 </div>
@@ -470,7 +464,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below1(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 0.4065418 secs
+## Time difference of 0.217433 secs
 
 
 
@@ -484,7 +478,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below2(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 1.117711 secs
+## Time difference of 0.6898961 secs
 
 
 
@@ -498,7 +492,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below3(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 0.008708954 secs</code></pre>
+## Time difference of 0.01585317 secs</code></pre>
 </div>
 </div>
 <div id="python-1" class="section level3" number="2.1.2">
@@ -519,7 +513,7 @@ t = time.time()
 get_sum_multiples_below1(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.025700807571411133
+## 0.028362035751342773
 
 
 def get_sum_multiples_below2(below,mutiple_1,multiple_2):
@@ -530,7 +524,7 @@ t = time.time()
 get_sum_multiples_below2(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.028688907623291016
+## 0.032347917556762695
 
 
 def get_sum_multiples_below3(below,mutiple_1,multiple_2):
@@ -542,7 +536,7 @@ t = time.time()
 get_sum_multiples_below3(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.04091191291809082
+## 0.0451507568359375
 
 
 
@@ -555,7 +549,7 @@ t = time.time()
 get_sum_multiples_below4(1000000,3,5)
 ## np.int64(233333166668)
 time.time() - t
-## 0.01642894744873047</code></pre>
+## 0.023269176483154297</code></pre>
 </div>
 </div>
 </div>
@@ -595,7 +589,7 @@ t &lt;- Sys.time()
 nth_prime(10001)
 ## [1] 104743
 Sys.time() - t
-## Time difference of 0.7728629 secs
+## Time difference of 0.5482528 secs
 
 
 nth_prime2 &lt;- function(nth){
@@ -616,7 +610,7 @@ t &lt;- Sys.time()
 nth_prime2(10001)
 ## [1] 104743
 Sys.time() - t
-## Time difference of 0.582736 secs</code></pre>
+## Time difference of 0.45894 secs</code></pre>
 </div>
 </div>
 <div id="python-2" class="section level3" number="2.2.2">
@@ -647,7 +641,7 @@ t = time.time()
 nth_prime(10001)
 ## 104743
 time.time() - t
-## 0.07397699356079102
+## 0.07919621467590332
 
 
 def nth_prime2(nth):
@@ -667,7 +661,7 @@ t = time.time()
 nth_prime2(10001)
 ## 104743
 time.time() - t
-## 0.16478991508483887</code></pre>
+## 0.17551493644714355</code></pre>
 </div>
 </div>
 </div>
@@ -690,12 +684,70 @@ palindromes = [x for x in products if str(x)==str(x)[::-1]]
 print(max(palindromes))
 ## 906609
 time.time() - t
-## 0.08670210838317871</code></pre>
+## 0.10074901580810547</code></pre>
 </div>
 <p><a href="3_Arrays_Vectors.html"> Go back to chapter 2</a></p>
 </div>
 </div>
 
+<!-- Small UX helpers: reading progress, back-to-top, copy buttons on code -->
+<div id="read-progress"></div>
+<button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+
+<script>
+(function () {
+  var bar = document.getElementById('read-progress');
+  var top = document.getElementById('back-to-top');
+
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    top.classList.toggle('show', h.scrollTop > 600);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  // Phones: the TOC is stacked above the title, so collapse it behind a button
+  var toc = document.getElementById('TOC');
+  if (toc) {
+    var phone = window.matchMedia('(max-width: 767.98px)');
+    var toggle = document.createElement('button');
+    toggle.id = 'toc-toggle';
+    toggle.type = 'button';
+    toggle.textContent = 'Contents';
+    toggle.setAttribute('aria-controls', 'TOC');
+    toggle.setAttribute('aria-expanded', 'false');
+    toc.parentNode.insertBefore(toggle, toc);
+    toggle.addEventListener('click', function () {
+      toggle.setAttribute('aria-expanded', toggle.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+    });
+    // close it again once a section is picked
+    toc.addEventListener('click', function (e) {
+      if (phone.matches && e.target.closest('.tocify-item')) toggle.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  // Copy button on source code blocks only (not on printed output)
+  document.querySelectorAll('pre.sourceCode, pre.r, pre.python').forEach(function (pre) {
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.type = 'button';
+    btn.textContent = 'Copy';
+    btn.addEventListener('click', function () {
+      // collapse = TRUE merges output (## ...) into the block: strip it
+      var text = pre.querySelector('code').innerText
+        .split('\n').filter(function (l) { return !/^## /.test(l); }).join('\n');
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'Copied ✓';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      });
+    });
+    pre.appendChild(btn);
+  });
+})();
+</script>
 
 
 </div>

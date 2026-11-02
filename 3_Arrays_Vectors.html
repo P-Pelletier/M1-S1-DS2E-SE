@@ -15,20 +15,14 @@
 
 <script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<link href="site_libs/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-5.3.1/bootstrap.bundle.min.js"></script>
+<link href="site_libs/Inter-0.4.10/font.css" rel="stylesheet" />
+<link href="site_libs/JetBrains_Mono-0.4.10/font.css" rel="stylesheet" />
+<script src="site_libs/bs3compat-0.9.0/transition.js"></script>
+<script src="site_libs/bs3compat-0.9.0/tabs.js"></script>
+<script src="site_libs/bs3compat-0.9.0/bs3compat.js"></script>
 <script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -402,12 +396,12 @@ lst = list(range(2000000))
 t = time.time()
 arr_2 = arr*2
 time.time() - t
-## 0.006739139556884766
+## 0.008231878280639648
 
 t = time.time()
 lst_2 = [i*2  for i in lst]
 time.time() - t
-## 0.021797895431518555</code></pre>
+## 0.03186392784118652</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -419,7 +413,7 @@ vec = c(1:2000000)
 t = Sys.time()
 vec_2 = vec*2
 Sys.time() - t
-## Time difference of 0.00257206 secs
+## Time difference of 0.002928019 secs
 
 t = Sys.time()
 vec_2_loop &lt;- rep(0,length(vec))
@@ -427,7 +421,7 @@ for(i in 1:length(vec)){
   vec_2_loop[i] = vec[i]*2
     }
 Sys.time() - t
-## Time difference of 0.1197219 secs</code></pre>
+## Time difference of 0.121727 secs</code></pre>
 </div>
 </div>
 </div>
@@ -612,14 +606,10 @@ seq(1, 4, length.out = 10)
 arr_rd = np.random.randn(4,5)
 
 arr_rd
-## array([[-1.33952175e+00,  1.22071591e+00,  5.76721935e-01,
-##         -6.26253351e-01, -2.61185704e-03],
-##        [ 7.05617478e-01,  1.13717427e-01,  1.74653248e-01,
-##         -6.82634913e-01, -2.68689462e-01],
-##        [ 1.12199458e+00,  3.49450329e-01,  2.66535086e-01,
-##          2.50150232e-01, -2.58821150e-01],
-##        [-5.52368746e-01,  1.05893184e-01, -9.28211938e-01,
-##         -2.68808278e+00,  4.82327953e-01]])</code></pre>
+## array([[-1.21887061, -0.52512947, -0.58144531, -0.84587015,  0.02681897],
+##        [ 1.32078149,  0.29487199, -0.47453372, -1.03087538,  0.17005914],
+##        [-0.85243438,  0.77492207, -1.16787968,  0.08748725,  0.43582302],
+##        [ 0.94949035, -0.27943347,  0.06267203, -0.29950029, -1.37008865]])</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -630,11 +620,11 @@ arr_rd
 mat_rd &lt;- matrix(rnorm(4*5),4,5)
 
 mat_rd
-##            [,1]       [,2]        [,3]       [,4]        [,5]
-## [1,]  0.2843290 -1.9360957 -1.73290934 -0.7167748 -1.81599807
-## [2,]  1.2245251  2.6357024 -2.30157759 -0.7038928  0.74748374
-## [3,]  0.3941497  1.3683239 -0.20105003 -0.1347477 -0.04645494
-## [4,] -2.2583160  0.5984619 -0.01868813 -0.8490810 -1.03206005</code></pre>
+##            [,1]       [,2]       [,3]       [,4]       [,5]
+## [1,] -0.4743842  0.4356534  0.6818674  0.9630581 -0.6878542
+## [2,] -2.1677097  0.6900466  1.3994179 -1.3966304  0.4943089
+## [3,]  0.1500652  0.3242242  1.2079575  1.1652540 -0.5342890
+## [4,]  0.1833213 -0.6531807 -0.5331316  0.4663592 -0.4131538</code></pre>
 </div>
 </div>
 </div>
@@ -899,8 +889,8 @@ mat[-2,]
 arr = np.random.randn(10)
 
 arr
-## array([ 0.55362894, -0.92812522, -1.06856489,  0.99160095,  0.88314684,
-##        -1.47997287,  0.15545915, -1.50116766,  0.48026097,  0.61767938])
+## array([ 1.51020985,  0.46808877, -1.25302517, -0.38618787, -0.86565105,
+##        -2.47645269, -0.77428181,  0.44509779, -0.50602997,  0.04687156])
 arr.sort()
 </code></pre>
 <pre class="python"><code># Python 
@@ -908,10 +898,10 @@ arr.sort()
 arr = np.random.randn(4,3)
 
 arr
-## array([[-0.48539526, -0.06614056,  0.78217971],
-##        [-0.0455197 , -0.73038539,  1.63142109],
-##        [-0.96818455,  1.92365276,  2.28668514],
-##        [-0.15303005,  0.98473509, -0.47546953]])
+## array([[ 0.63241945,  1.01248669, -1.43783509],
+##        [-1.25202159,  1.40268236,  0.05208913],
+##        [ 1.23347478, -0.50573021, -0.64048266],
+##        [ 1.25360351, -1.03408393,  0.52141969]])
 arr.sort(1)
 </code></pre>
 </div>
@@ -923,27 +913,27 @@ arr.sort(1)
 arr &lt;- rnorm(10)
 
 arr
-##  [1]  0.8549672 -0.4093803  0.7205933  0.9980313  0.9626051 -0.5713735
-##  [7] -0.2263444 -0.6893314 -0.7362330 -0.6039860
+##  [1]  2.09587202  1.07675873 -0.69873438  0.93829265 -1.11424733  0.47567077
+##  [7]  0.50515493  1.13374249  0.09081001 -0.93707624
 sort(arr)
-##  [1] -0.7362330 -0.6893314 -0.6039860 -0.5713735 -0.4093803 -0.2263444
-##  [7]  0.7205933  0.8549672  0.9626051  0.9980313</code></pre>
+##  [1] -1.11424733 -0.93707624 -0.69873438  0.09081001  0.47567077  0.50515493
+##  [7]  0.93829265  1.07675873  1.13374249  2.09587202</code></pre>
 <pre class="r"><code># R
 
 arr &lt;- matrix(rnorm(4*3),4,3)
 
 arr
-##             [,1]       [,2]       [,3]
-## [1,] -0.63021358 -1.5681169 -0.3527171
-## [2,]  0.06050562  1.9075538  0.5152889
-## [3,] -0.07583089 -0.8443039 -0.4779911
-## [4,]  0.88827136 -0.5283868  2.0469722
+##             [,1]         [,2]       [,3]
+## [1,]  0.47982213  0.006368085 -0.7504143
+## [2,]  1.77707967  0.912941495 -0.8144901
+## [3,] -1.01692968 -0.753858794 -2.1058457
+## [4,]  0.09139429  0.436464734  0.7902348
 apply(arr,MARGIN = 2, FUN = sort)
-##             [,1]       [,2]       [,3]
-## [1,] -0.63021358 -1.5681169 -0.4779911
-## [2,] -0.07583089 -0.8443039 -0.3527171
-## [3,]  0.06050562 -0.5283868  0.5152889
-## [4,]  0.88827136  1.9075538  2.0469722</code></pre>
+##             [,1]         [,2]       [,3]
+## [1,] -1.01692968 -0.753858794 -2.1058457
+## [2,]  0.09139429  0.006368085 -0.8144901
+## [3,]  0.47982213  0.436464734 -0.7504143
+## [4,]  1.77707967  0.912941495  0.7902348</code></pre>
 </div>
 </div>
 </div>
@@ -1054,13 +1044,13 @@ arr = np.arange(200000)
 t = time.time()
 results = [(i if i%2==0 else 0) for i in arr]
 time.time() - t
-## 0.009582757949829102
+## 0.011970043182373047
 
 
 t = time.time()
 results = np.where(arr%2!=0,0,arr)
 time.time() - t
-## 0.0020558834075927734</code></pre>
+## 0.0023097991943359375</code></pre>
 <pre class="python"><code># Python 
 
 arr = np.arange(20000000)
@@ -1069,13 +1059,13 @@ arr = np.arange(20000000)
 t = time.time()
 results = [(i if i%2==0 else 0) for i in arr]
 time.time() - t
-## 0.841174840927124
+## 0.9709830284118652
 
 
 t = time.time()
 results = np.where(arr%2!=0,0,arr)
 time.time() - t
-## 0.09565281867980957</code></pre>
+## 0.08831071853637695</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -1094,13 +1084,13 @@ for(i in 1:length(vec)){
   }
 }
 Sys.time() - t
-## Time difference of 0.02257609 secs
+## Time difference of 0.02444792 secs
 
 
 t &lt;- Sys.time()
 results &lt;- ifelse(vec%%2!=0,vec,0)
 Sys.time() - t
-## Time difference of 0.00338006 secs</code></pre>
+## Time difference of 0.003113985 secs</code></pre>
 <pre class="r"><code># R
 
 vec &lt;- seq(1,20000000)
@@ -1115,13 +1105,13 @@ for(i in 1:length(vec)){
   }
 }
 Sys.time() - t
-## Time difference of 1.775931 secs
+## Time difference of 2.00854 secs
 
 
 t &lt;- Sys.time()
 results &lt;- ifelse(vec%%2!=0,vec,0)
 Sys.time() - t
-## Time difference of 0.4151349 secs
+## Time difference of 0.495091 secs
 
 
 ## other way using which
@@ -1129,7 +1119,7 @@ Sys.time() - t
 t &lt;- Sys.time()
 vec[which(vec%%2==0)] = 0
 Sys.time() - t 
-## Time difference of 0.172961 secs</code></pre>
+## Time difference of 0.145829 secs</code></pre>
 </div>
 </div>
 </div>
@@ -1550,7 +1540,7 @@ arr_1
 
 # by row, by columns you need to tranpose the array
 map(np.sum,arr_1)
-## &lt;map object at 0x148296b30&gt;
+## &lt;map object at 0x113682bc0&gt;
 list(map(np.sum,arr_1))
 ## [np.int64(28), np.int64(32), np.int64(36), np.int64(40)]
 np.fromiter(map(sum,arr_1), dtype = int)
@@ -1582,13 +1572,64 @@ arr_1 = np.arange(1,17).reshape([4,4], order = &#39;F&#39;)
 
 #transform the array into a DataFrame
 df_1 = pd.DataFrame(arr_1)
-df_1
-##    0  1   2   3
-## 0  1  5   9  13
-## 1  2  6  10  14
-## 2  3  7  11  15
-## 3  4  8  12  16
+df_1</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>5</td>
+      <td>9</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>6</td>
+      <td>10</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>7</td>
+      <td>11</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>8</td>
+      <td>12</td>
+      <td>16</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre class="python"><code>
 
 # Apply the function by column
 df_1.apply(sum)
@@ -1625,6 +1666,64 @@ numbers.</p>
 </div>
 </div>
 
+<!-- Small UX helpers: reading progress, back-to-top, copy buttons on code -->
+<div id="read-progress"></div>
+<button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+
+<script>
+(function () {
+  var bar = document.getElementById('read-progress');
+  var top = document.getElementById('back-to-top');
+
+  function onScroll() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    top.classList.toggle('show', h.scrollTop > 600);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  // Phones: the TOC is stacked above the title, so collapse it behind a button
+  var toc = document.getElementById('TOC');
+  if (toc) {
+    var phone = window.matchMedia('(max-width: 767.98px)');
+    var toggle = document.createElement('button');
+    toggle.id = 'toc-toggle';
+    toggle.type = 'button';
+    toggle.textContent = 'Contents';
+    toggle.setAttribute('aria-controls', 'TOC');
+    toggle.setAttribute('aria-expanded', 'false');
+    toc.parentNode.insertBefore(toggle, toc);
+    toggle.addEventListener('click', function () {
+      toggle.setAttribute('aria-expanded', toggle.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+    });
+    // close it again once a section is picked
+    toc.addEventListener('click', function (e) {
+      if (phone.matches && e.target.closest('.tocify-item')) toggle.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  // Copy button on source code blocks only (not on printed output)
+  document.querySelectorAll('pre.sourceCode, pre.r, pre.python').forEach(function (pre) {
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.type = 'button';
+    btn.textContent = 'Copy';
+    btn.addEventListener('click', function () {
+      // collapse = TRUE merges output (## ...) into the block: strip it
+      var text = pre.querySelector('code').innerText
+        .split('\n').filter(function (l) { return !/^## /.test(l); }).join('\n');
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'Copied ✓';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      });
+    });
+    pre.appendChild(btn);
+  });
+})();
+</script>
 
 
 </div>
