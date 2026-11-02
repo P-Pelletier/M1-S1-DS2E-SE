@@ -39,7 +39,7 @@ There are three different grades in this course :
 - A written exam at the end of the semester (**<span style="font-size: 1.2em;">14/12/2026</span>**), on paper and without a computer.
 <p>&nbsp;</p>
 
-- A project to be handed in by groups of 2-3 (**<span style="font-size: 1.2em;">13/01/2026</span>**). This project is totally unbounded but here is a guideline:
+- A project to be handed in by groups of 2-3 (**<span style="font-size: 1.2em;">date to be announced</span>**). This project is totally unbounded but here is a guideline:
   
   **<span style="font-size: 1em;">Project Overview</span>**: Personal Data Analysis Tool
   
