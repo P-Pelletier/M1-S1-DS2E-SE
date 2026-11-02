@@ -36,7 +36,7 @@ This lecture is structured as follows (each section is covered with R and Python
 
 There are three different grades in this course :
 
-- A written exam at the end of the semester (**<span style="font-size: 1.2em;">16/12/2025</span>**).
+- A written exam at the end of the semester (**<span style="font-size: 1.2em;">14/12/2026</span>**), on paper and without a computer.
 <p>&nbsp;</p>
 
 - A project to be handed in by groups of 2-3 (**<span style="font-size: 1.2em;">13/01/2026</span>**). This project is totally unbounded but here is a guideline:
@@ -66,7 +66,7 @@ There are three different grades in this course :
 <p>&nbsp;</p>
 
 
-- The project must be presented orally, students will discuss the issues raised in the project. They will present the weak and strong points of their codes and the different approaches used to address them during the creation of their tools.
+- The project must be presented orally on a date **to be announced**. Students will discuss the issues raised in the project. They will present the weak and strong points of their codes and the different approaches used to address them during the creation of their tools.
 
 <div style="text-align: center;">
 ![https://p-pelletier.github.io/M1-S1-DS2E-SE](img/M1S1DS2ESE.jpg){width=50%}
