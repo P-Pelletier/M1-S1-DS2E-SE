@@ -967,7 +967,7 @@ a
 <details>
 <summary>Click here to see the solution</summary>
 ```{python,echo = T, error = T, collapse = TRUE}
-my_dict = {"name": "Pierre", "age": 29, "city": "Strasbourg"}
+my_dict = {"name": "Mathieu", "age": 35, "city": "Strasbourg"}
 my_dict['city'] = ["Strasbourg","Schiltigheim"]
 print(my_dict)
 my_dict['city'].append('Colmar')

@@ -1,0 +1,948 @@
+---
+title: "Chapitre 1 — Exos hardcore (entraînement perso)"
+output:
+  html_document:
+    theme:
+      version: 5
+      bootswatch: flatly
+    toc: true
+    toc_float: true
+    number_sections: true
+    css: ../custom.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE, collapse = TRUE)
+library(reticulate)
+py_require('numpy')
+```
+
+Tout reste dans le périmètre du chapitre 1 : opérateurs, types et coercition, références et mutabilité, structures (vecteurs, matrices, listes, dicts, sets, tuples), boucles, compréhensions, fonctions. Pas de dplyr ni pandas.
+Chaque exo existe en R **et** en Python. Les encadrés « À expliquer » listent les points à faire ressortir quand tu corriges devant les étudiants.
+
+<p>&nbsp;</p>
+
+# Prédire la sortie : références et mutabilité
+
+Sans exécuter, donne la sortie de chaque bloc. Ensuite, corrige chaque piège pour obtenir le comportement « intuitif ».
+
+```{python, eval = FALSE}
+# Python
+# (a)
+grid = [[0] * 3] * 3
+grid[0][0] = 1
+print(grid)
+
+# (b)
+def add(x, acc=[]):
+    acc.append(x)
+    return acc
+add(1); print(add(2))
+
+# (c)
+t = (1, [2, 3])
+t[1].append(4)
+print(t)
+t[1] += [5]
+
+# (d)
+x = [1, 2, 3]; y = x
+x = x + [4]; print(y)
+x = y; x += [4]; print(y)
+
+# (e)
+fs = [lambda: i for i in range(3)]
+print([f() for f in fs])
+```
+
+```{r, eval = FALSE}
+# R
+# (f)
+x <- c(1, 2, 3)
+f <- function(v) { v[1] <- 100; v }
+y <- f(x); x
+
+# (g)
+fs <- list()
+for (i in 1:3) fs[[i]] <- function() i
+sapply(fs, function(f) f())
+
+# (h)
+gs <- lapply(1:3, function(i) function() i)
+sapply(gs, function(g) g())
+
+# (i)
+l <- list(a = 1, b = 2)
+l$a <- NULL; length(l)
+l["b"] <- list(NULL); length(l); l
+```
+
+<details>
+<summary>Solution</summary>
+
+<div class = "python">
+```{python}
+# (a) the same inner list repeated 3 times
+grid = [[0] * 3] * 3
+grid[0][0] = 1
+grid
+grid = [[0] * 3 for _ in range(3)]   # fix
+grid[0][0] = 1
+grid
+
+# (b) the default value is evaluated ONCE, when the function is defined
+def add(x, acc=[]):
+    acc.append(x)
+    return acc
+add(1); add(2)
+def add(x, acc=None):                # fix
+    if acc is None:
+        acc = []
+    acc.append(x)
+    return acc
+add(1); add(2)
+
+# (c) tuple immutable, but its content may be mutable
+t = (1, [2, 3])
+t[1].append(4)
+t
+t[1] += [5]   # TypeError... but the list WAS extended anyway
+t
+
+# (d) x = x + [4] creates a new object, x += [4] mutates in place
+x = [1, 2, 3]; y = x
+x = x + [4]; y
+x = y; x += [4]; y
+
+# (e) late binding: i is looked up when the lambda is called
+fs = [lambda: i for i in range(3)]
+[f() for f in fs]
+fs = [lambda i=i: i for i in range(3)]   # fix: freeze i as default arg
+[f() for f in fs]
+```
+</div>
+
+<div class = "r">
+```{r}
+# (f) copy-on-modify: x is untouched
+x <- c(1, 2, 3)
+f <- function(v) { v[1] <- 100; v }
+y <- f(x); x; y
+
+# (g) closures capture the environment, not the value: i = 3 at the end
+fs <- list()
+for (i in 1:3) fs[[i]] <- function() i
+sapply(fs, function(f) f())
+for (i in 1:3) local({ j <- i; fs[[j]] <<- function() j })   # fix
+sapply(fs, function(f) f())
+
+# (h) each lapply call has its own environment (and forces i since R 3.2)
+gs <- lapply(1:3, function(i) function() i)
+sapply(gs, function(g) g())
+
+# (i) assigning NULL removes, assigning list(NULL) stores a NULL
+l <- list(a = 1, b = 2)
+l$a <- NULL; length(l)
+l["b"] <- list(NULL); length(l); l
+```
+</div>
+</details>
+
+<div style="border:1px solid; padding:10px; margin-bottom:10px; border-radius: 10px; background-color: #f9f9f9;">
+**À expliquer :** en Python, une variable est une étiquette sur un objet (comparer `id(x)` avant et après). En R, c'est du *copy-on-modify* : on ne modifie jamais l'objet de l'appelant. Les closures des deux langages capturent un *environnement*, pas une valeur. `+=` sur une liste revient à `.extend()` et non à `x = x + ...`.
+</div>
+
+<p>&nbsp;</p>
+
+# Prédire la sortie : coercition, arithmétique et logique
+
+```{r, eval = FALSE}
+# R
+c(1, "2", TRUE); c(1, TRUE, NA); TRUE + TRUE
+c(1, 2, 3, 4) + c(10, 20); 1:3 + 1:2
+0.1 + 0.2 == 0.3
+NA > 1; NA & FALSE; NA || TRUE; length(NULL); length(NA)
+typeof(1:2); typeof(c(1:2, 3)); identical(1L, 1)
+-5 %/% 2; -5 %% 2; round(2.5); round(3.5)
+"10" < "9"; 3 %in% c(1, NA, 3); NA %in% c(1, NA)
+```
+
+```{python, eval = FALSE}
+# Python
+True + True; -5 // 2; -5 % 2; int(-2.7); round(2.5); round(3.5)
+0.1 + 0.2 == 0.3
+[1, 2] * 2; "ab" * 3
+None == False; bool([]); bool("False"); bool(0.0)
+1 == 1.0; {1, 1.0, True}; {True: 'a', 1: 'b', 1.0: 'c'}
+"10" < "9"; 1 < 2 < 3 == 3; (1 < 2) < 3
+```
+
+Ensuite, écris `approx_equal(a, b, tol = 1e-9)` :
+
+- R : vectorisée, renvoie `NA` si un des deux est `NA`, et gère le recyclage seulement quand les longueurs sont multiples (sinon `stop()`).
+- Python : sur deux listes de même longueur, renvoie une liste de `True` / `False` / `None` (`None` si un des deux vaut `None`).
+
+<details>
+<summary>Solution</summary>
+
+<div class = "r">
+```{r}
+c(1, "2", TRUE); c(1, TRUE, NA); TRUE + TRUE
+c(1, 2, 3, 4) + c(10, 20); 1:3 + 1:2
+0.1 + 0.2 == 0.3
+NA > 1; NA & FALSE; NA || TRUE; length(NULL); length(NA)
+typeof(1:2); typeof(c(1:2, 3)); identical(1L, 1)
+-5 %/% 2; -5 %% 2; round(2.5); round(3.5)
+"10" < "9"; 3 %in% c(1, NA, 3); NA %in% c(1, NA)
+
+approx_equal <- function(a, b, tol = 1e-9) {
+  la <- length(a); lb <- length(b)
+  if (max(la, lb) %% min(la, lb) != 0) stop("lengths are not multiples")
+  abs(a - b) <= tol * pmax(1, abs(a), abs(b))
+}
+approx_equal(c(0.1 + 0.2, 1, NA), c(0.3, 1.1, 2))
+approx_equal(1:3, 1:2)
+```
+</div>
+
+<div class = "python">
+```{python}
+True + True; -5 // 2; -5 % 2; int(-2.7); round(2.5); round(3.5)
+0.1 + 0.2 == 0.3
+[1, 2] * 2; "ab" * 3
+None == False; bool([]); bool("False"); bool(0.0)
+1 == 1.0; {1, 1.0, True}; {True: 'a', 1: 'b', 1.0: 'c'}
+"10" < "9"; 1 < 2 < 3 == 3; (1 < 2) < 3
+
+def approx_equal(a, b, tol=1e-9):
+    if len(a) != len(b):
+        raise ValueError("lengths differ")
+    return [None if x is None or y is None
+            else abs(x - y) <= tol * max(1, abs(x), abs(y))
+            for x, y in zip(a, b)]
+approx_equal([0.1 + 0.2, 1, None], [0.3, 1.1, 2])
+```
+</div>
+</details>
+
+<div style="border:1px solid; padding:10px; margin-bottom:10px; border-radius: 10px; background-color: #f9f9f9;">
+**À expliquer :** la hiérarchie de coercition en R (logical < integer < double < character). La logique à trois valeurs avec `NA` (`NA & FALSE` vaut `FALSE`). Les deux langages arrondissent au pair (`round(2.5) = 2`). `//` et `%/%` arrondissent vers −∞, alors que `int()` tronque vers 0. `True == 1` et `hash(True) == hash(1)`, d'où le set et le dict qui « fusionnent ». Les comparaisons chaînées en Python : `1 < 2 < 3 == 3` se lit `1<2 and 2<3 and 3==3`. Tolérance relative ou tolérance absolue.
+</div>
+
+<p>&nbsp;</p>
+
+# Collatz avec mémoïsation
+
+La suite de Collatz : $n \to n/2$ si $n$ est pair, $n \to 3n+1$ sinon, jusqu'à 1. Quel nombre de départ **inférieur à un million** produit la chaîne la plus longue ?
+
+1. Écris une version naïve et mesure son temps sur 100 000.
+2. Écris une version avec cache (un `dict` en Python, un vecteur préalloué en R). Les valeurs intermédiaires dépassent la borne : il faut gérer ce cas.
+
+<details>
+<summary>Solution</summary>
+
+<div class = "python">
+```{python}
+import time
+
+def collatz_len(n):
+    steps = 1
+    while n != 1:
+        n = n // 2 if n % 2 == 0 else 3 * n + 1
+        steps += 1
+    return steps
+
+t = time.time()
+max(range(1, 100_000), key=collatz_len)
+round(time.time() - t, 2)
+
+def longest_collatz(limit):
+    cache = {1: 1}
+    for start in range(2, limit):
+        path, n = [], start
+        while n not in cache:          # walk until a known value
+            path.append(n)
+            n = n // 2 if n % 2 == 0 else 3 * n + 1
+        length = cache[n]
+        for m in reversed(path):       # fill the cache backwards
+            length += 1
+            cache[m] = length
+    return max(range(1, limit), key=cache.__getitem__)
+
+t = time.time()
+longest_collatz(1_000_000)
+round(time.time() - t, 2)
+```
+</div>
+
+<div class = "r">
+```{r}
+collatz_len <- function(n) {
+  steps <- 1
+  while (n != 1) {
+    n <- if (n %% 2 == 0) n / 2 else 3 * n + 1
+    steps <- steps + 1
+  }
+  steps
+}
+t <- Sys.time()
+which.max(sapply(1:99999, collatz_len))
+Sys.time() - t
+
+longest_collatz <- function(limit) {
+  cache <- integer(limit)              # cache[n] = length, 0 = unknown
+  cache[1] <- 1L
+  for (start in 2:(limit - 1)) {
+    n <- start; steps <- 0L
+    while (n >= limit || cache[n] == 0L) {   # values above limit are not cached
+      n <- if (n %% 2 == 0) n / 2 else 3 * n + 1
+      steps <- steps + 1L
+    }
+    cache[start] <- steps + cache[n]
+  }
+  which.max(cache[1:(limit - 1)])
+}
+t <- Sys.time()
+longest_collatz(1e6)
+Sys.time() - t
+```
+</div>
+</details>
+
+<div style="border:1px solid; padding:10px; margin-bottom:10px; border-radius: 10px; background-color: #f9f9f9;">
+**À expliquer :** l'ordre d'évaluation dans `n >= limit || cache[n] == 0` (court-circuit : sans lui, `cache[n]` sort des bornes et vaut `NA`). Pourquoi la version R ne cache que le point de départ alors que la version Python cache tout le chemin. Dict (taille libre) contre vecteur préalloué (accès O(1), mémoire fixe). `max(..., key=)` en Python et `which.max` en R.
+</div>
+
+<p>&nbsp;</p>
+
+# Compression RLE (sans `rle()` ni `itertools`)
+
+1. `encode("aaabccddddddddddddx")` doit renvoyer `"a3b1c2d12x1"`.
+2. `decode("a3b1c2d12x1")` doit renvoyer la chaîne d'origine. Attention aux nombres à plusieurs chiffres.
+3. Vérifie sur 1 000 chaînes aléatoires que `decode(encode(s)) == s`.
+4. Bonus : que se passe-t-il si la chaîne d'origine contient des chiffres ? Propose un format qui le gère.
+
+<details>
+<summary>Solution</summary>
+
+<div class = "python">
+```{python}
+import random
+
+def encode(s):
+    if not s:
+        return ""
+    out, prev, count = [], s[0], 1
+    for ch in s[1:]:
+        if ch == prev:
+            count += 1
+        else:
+            out.append(f"{prev}{count}")
+            prev, count = ch, 1
+    out.append(f"{prev}{count}")
+    return "".join(out)
+
+def decode(code):
+    out, i = [], 0
+    while i < len(code):
+        ch, i = code[i], i + 1
+        j = i
+        while j < len(code) and code[j].isdigit():
+            j += 1
+        out.append(ch * int(code[i:j]))
+        i = j
+    return "".join(out)
+
+encode("aaabccddddddddddddx")
+decode("a3b1c2d12x1")
+all(decode(encode(s)) == s
+    for s in ("".join(random.choices("ab", k=random.randint(0, 50))) for _ in range(1000)))
+```
+</div>
+
+<div class = "r">
+```{r}
+encode <- function(s) {
+  ch <- strsplit(s, "")[[1]]
+  if (length(ch) == 0) return("")
+  starts <- c(TRUE, ch[-1] != ch[-length(ch)])     # TRUE where a new run starts
+  run_id <- cumsum(starts)
+  counts <- tabulate(run_id)
+  paste0(ch[starts], counts, collapse = "")
+}
+
+decode <- function(code) {
+  letters_ <- regmatches(code, gregexpr("[^0-9]", code))[[1]]
+  counts <- as.integer(regmatches(code, gregexpr("[0-9]+", code))[[1]])
+  paste(rep(letters_, counts), collapse = "")
+}
+
+encode("aaabccddddddddddddx")
+decode("a3b1c2d12x1")
+set.seed(1)
+all(replicate(1000, {
+  s <- paste(sample(c("a", "b"), sample(1:50, 1), replace = TRUE), collapse = "")
+  decode(encode(s)) == s
+}))
+```
+</div>
+</details>
+
+<div style="border:1px solid; padding:10px; margin-bottom:10px; border-radius: 10px; background-color: #f9f9f9;">
+**À expliquer :** la boucle avec état (`prev`, `count`) en Python et le vectorisé en R (comparaison décalée `ch[-1] != ch[-length(ch)]`, puis `cumsum`). C'est le même algorithme pensé de deux façons. Les cas limites : chaîne vide, un seul caractère. Bonus : les chiffres cassent le format, il faut un séparateur ou un échappement (`"3a|12d"`).
+</div>
+
+<p>&nbsp;</p>
+
+# Matrice en spirale
+
+1. `spiral(n)` renvoie une matrice $n \times n$ remplie de 1 à $n^2$ en spirale horaire depuis le coin haut-gauche (une liste de listes en Python, une `matrix` en R).
+2. `unspiral(m)` lit une matrice rectangulaire quelconque (pas forcément carrée) en spirale et renvoie le vecteur.
+3. Vérifie que `unspiral(spiral(n))` vaut `1:n^2` pour n = 1…10.
+
+<details>
+<summary>Solution</summary>
+
+<div class = "python">
+```{python}
+def spiral(n):
+    m = [[0] * n for _ in range(n)]      # NOT [[0]*n]*n, see exercise 1
+    top, bottom, left, right = 0, n - 1, 0, n - 1
+    k = 1
+    while top <= bottom and left <= right:
+        for j in range(left, right + 1):  m[top][j] = k; k += 1
+        top += 1
+        for i in range(top, bottom + 1):  m[i][right] = k; k += 1
+        right -= 1
+        if top <= bottom:
+            for j in range(right, left - 1, -1): m[bottom][j] = k; k += 1
+            bottom -= 1
+        if left <= right:
+            for i in range(bottom, top - 1, -1): m[i][left] = k; k += 1
+            left += 1
+    return m
+
+def unspiral(m):
+    m = [row[:] for row in m]             # copy: we are going to destroy it
+    out = []
+    while m:
+        out += m.pop(0)                                   # top row
+        m = [list(col) for col in zip(*m)][::-1]          # rotate counter-clockwise
+    return out
+
+for row in spiral(4): print(row)
+unspiral([[1, 2, 3], [4, 5, 6]])
+all(unspiral(spiral(n)) == list(range(1, n * n + 1)) for n in range(1, 11))
+```
+</div>
+
+<div class = "r">
+```{r}
+spiral <- function(n) {
+  m <- matrix(0L, n, n)
+  top <- 1; bottom <- n; left <- 1; right <- n; k <- 1L
+  while (top <= bottom && left <= right) {
+    for (j in left:right) { m[top, j] <- k; k <- k + 1L }
+    top <- top + 1
+    if (top <= bottom) for (i in top:bottom) { m[i, right] <- k; k <- k + 1L }
+    right <- right - 1
+    if (top <= bottom && left <= right) {
+      for (j in right:left) { m[bottom, j] <- k; k <- k + 1L }
+      bottom <- bottom - 1
+    }
+    if (left <= right && top <= bottom) {
+      for (i in bottom:top) { m[i, left] <- k; k <- k + 1L }
+      left <- left + 1
+    }
+  }
+  m
+}
+
+unspiral <- function(m) {
+  out <- c()
+  while (length(m) > 0) {
+    out <- c(out, m[1, ])
+    m <- m[-1, , drop = FALSE]                 # drop = FALSE keeps a matrix
+    if (nrow(m) == 0) break
+    m <- t(m)[ncol(m):1, , drop = FALSE]       # rotate counter-clockwise
+  }
+  out
+}
+
+spiral(4)
+unspiral(matrix(1:6, 2, byrow = TRUE))
+all(sapply(1:10, function(n) identical(unspiral(spiral(n)), 1:(n^2))))
+```
+</div>
+</details>
+
+<div style="border:1px solid; padding:10px; margin-bottom:10px; border-radius: 10px; background-color: #f9f9f9;">
+**À expliquer :** le piège de `a:b` en R quand `a > b` (`3:2` donne `c(3, 2)` et non une séquence vide), d'où les `if` en plus par rapport à Python, où `range` vide ne fait rien. Indexation à partir de 1 ou de 0. `drop = FALSE`. `zip(*m)` pour transposer. `matrix(..., byrow = TRUE)`.
+</div>
+
+<p>&nbsp;</p>
+
+# Parenthèses équilibrées (pile)
+
+`check("([]{()})")` renvoie `TRUE`. `check("([)]")` renvoie la **position** du premier caractère fautif (1-based en R, 0-based en Python). `check("((")` renvoie la position de la parenthèse ouvrante restée orpheline. Les autres caractères sont ignorés : `check("f(x[1]) + {y}")` vaut `TRUE`.
+
+<details>
+<summary>Solution</summary>
+
+<div class = "python">
+```{python}
+def check(s):
+    pairs = {')': '(', ']': '[', '}': '{'}
+    stack = []                                # list used as a stack: (char, position)
+    for i, ch in enumerate(s):
+        if ch in "([{":
+            stack.append((ch, i))
+        elif ch in pairs:
+            if not stack or stack[-1][0] != pairs[ch]:
+                return i
+            stack.pop()
+    return True if not stack else stack[0][1]
+
+[check(s) for s in ["([]{()})", "([)]", "((", "f(x[1]) + {y}", ")"]]
+```
+</div>
+
+<div class = "r">
+```{r}
+check <- function(s) {
+  pairs <- c(")" = "(", "]" = "[", "}" = "{")
+  ch <- strsplit(s, "")[[1]]
+  stack <- character(0); pos <- integer(0)
+  for (i in seq_along(ch)) {
+    if (ch[i] %in% c("(", "[", "{")) {
+      stack <- c(stack, ch[i]); pos <- c(pos, i)
+    } else if (ch[i] %in% names(pairs)) {
+      if (length(stack) == 0 || stack[length(stack)] != pairs[[ch[i]]]) return(i)
+      stack <- stack[-length(stack)]; pos <- pos[-length(pos)]
+    }
+  }
+  if (length(stack) == 0) TRUE else pos[1]
+}
+sapply(c("([]{()})", "([)]", "((", "f(x[1]) + {y}", ")"), check)
+```
+</div>
+</details>
+
+<div style="border:1px solid; padding:10px; margin-bottom:10px; border-radius: 10px; background-color: #f9f9f9;">
+**À expliquer :** le dict / vecteur nommé comme table de correspondance. `seq_along` et `1:length(x)`, qui casse sur une chaîne vide (`1:0`). Pourquoi `pairs[[...]]` et non `pairs[...]` (le nom reste attaché). Une fonction qui renvoie tantôt un booléen, tantôt un entier : bonne idée ou pas ? `sapply` simplifie tout en entiers (`TRUE` devient 1), ce qui illustre la coercition de l'exo 2.
+</div>
+
+<p>&nbsp;</p>
+
+# Fonctions qui fabriquent des fonctions
+
+1. `make_counter()` renvoie une fonction qui renvoie 1, puis 2, puis 3… à chaque appel. Deux compteurs doivent être indépendants.
+2. `compose(f, g, h)` renvoie la fonction `x -> f(g(h(x)))`, pour un nombre quelconque de fonctions.
+3. `memoize(f)` renvoie une version de `f` avec cache. Applique-la à un `fib` récursif naïf et explique pourquoi `fib <- memoize(fib)` accélère **aussi les appels récursifs**, alors que `fast_fib <- memoize(fib)` ne le fait pas.
+
+<details>
+<summary>Solution</summary>
+
+<div class = "python">
+```{python}
+import time
+
+def make_counter():
+    count = 0
+    def counter():
+        nonlocal count            # without it: UnboundLocalError
+        count += 1
+        return count
+    return counter
+c1, c2 = make_counter(), make_counter()
+c1(); c1(); c2()
+
+def compose(*fs):
+    def composed(x):
+        for f in reversed(fs):
+            x = f(x)
+        return x
+    return composed
+compose(lambda x: x + 1, lambda x: x * 2, abs)(-5)   # (|-5| * 2) + 1
+
+def memoize(f):
+    cache = {}
+    def wrapper(n):
+        if n not in cache:
+            cache[n] = f(n)
+        return cache[n]
+    return wrapper
+
+def fib(n):
+    return n if n < 2 else fib(n - 1) + fib(n - 2)
+
+fast_fib = memoize(fib)       # recursive calls still hit the slow global `fib`
+t = time.time(); fast_fib(27); round(time.time() - t, 3)
+
+fib = memoize(fib)            # now the global name `fib` IS the cached version
+t = time.time(); fib(27); round(time.time() - t, 5)
+fib(300)
+```
+</div>
+
+<div class = "r">
+```{r}
+make_counter <- function() {
+  count <- 0
+  function() {
+    count <<- count + 1       # <- would create a local copy
+    count
+  }
+}
+c1 <- make_counter(); c2 <- make_counter()
+c1(); c1(); c2()
+
+compose <- function(...) {
+  fs <- list(...)
+  function(x) {
+    for (f in rev(fs)) x <- f(x)
+    x
+  }
+}
+compose(function(x) x + 1, function(x) x * 2, abs)(-5)
+
+memoize <- function(f) {
+  force(f)                    # without it: infinite recursion (lazy evaluation!)
+  cache <- list()
+  function(n) {
+    key <- as.character(n)    # list names are strings
+    if (is.null(cache[[key]])) cache[[key]] <<- f(n)
+    cache[[key]]
+  }
+}
+
+fib <- function(n) if (n < 2) n else fib(n - 1) + fib(n - 2)
+
+fast_fib <- memoize(fib)
+t <- Sys.time(); fast_fib(22); Sys.time() - t
+
+fib <- memoize(fib)
+t <- Sys.time(); fib(22); Sys.time() - t
+fib(80)
+```
+</div>
+</details>
+
+<div style="border:1px solid; padding:10px; margin-bottom:10px; border-radius: 10px; background-color: #f9f9f9;">
+**À expliquer :** les fonctions sont des objets dans les deux langages (lien avec `func_list` du cours). `nonlocal` en Python et `<<-` en R. La résolution des noms à l'appel : l'appel récursif dans `fib` cherche le nom global `fib`, d'où l'effet du réassignement. Le passage de O(φⁿ) à O(n). En R, `fib(80)` dépasse `2^53` : à partir de là, les doubles ne sont plus exacts, contrairement aux `int` Python, qui sont de précision arbitraire. **Piège R :** sans `force(f)`, la promesse `f` n'est évaluée qu'au premier appel, quand `fib` désigne déjà la version mémoïsée, d'où une récursion infinie. Fais-la planter en direct, c'est très parlant.
+</div>
+
+<p>&nbsp;</p>
+
+# Crible d'Ératosthène
+
+1. Compte les nombres premiers **< 10⁷** avec un crible. Résultat attendu : 664 579.
+2. En R, écris une version en boucle pure, puis une version qui utilise l'affectation vectorisée `is_p[seq(i*i, n, by = i)] <- FALSE`. En Python, une version en boucle pure, puis une version avec l'affectation par slice `is_p[i*i::i] = ...`.
+3. Compare avec la méthode `is_nb_prime` de l'exo du cours (tester chaque nombre) sur 10⁵. Combien de fois plus rapide ?
+
+<details>
+<summary>Solution</summary>
+
+<div class = "python">
+```{python}
+import time
+
+def sieve_loop(n):
+    is_p = [True] * n
+    is_p[0] = is_p[1] = False
+    for i in range(2, int(n ** 0.5) + 1):
+        if is_p[i]:
+            for j in range(i * i, n, i):
+                is_p[j] = False
+    return sum(is_p)
+
+def sieve_slice(n):
+    is_p = [True] * n
+    is_p[0] = is_p[1] = False
+    for i in range(2, int(n ** 0.5) + 1):
+        if is_p[i]:
+            is_p[i * i::i] = [False] * len(range(i * i, n, i))
+    return sum(is_p)
+
+def is_nb_prime(nb):
+    for j in range(2, int(nb ** 0.5) + 1):
+        if nb % j == 0:
+            return False
+    return nb >= 2
+
+t = time.time(); sieve_loop(10**6); round(time.time() - t, 2)
+t = time.time(); sieve_slice(10**7); round(time.time() - t, 2)
+t = time.time(); sum(is_nb_prime(k) for k in range(10**5)); round(time.time() - t, 2)
+t = time.time(); sieve_slice(10**5); round(time.time() - t, 4)
+```
+</div>
+
+<div class = "r">
+```{r}
+sieve_loop <- function(n) {
+  is_p <- rep(TRUE, n); is_p[1] <- FALSE        # index k means the number k
+  for (i in 2:floor(sqrt(n))) {
+    if (is_p[i]) {
+      j <- i * i
+      while (j <= n) { is_p[j] <- FALSE; j <- j + i }
+    }
+  }
+  sum(is_p)
+}
+
+sieve_vec <- function(n) {
+  is_p <- rep(TRUE, n); is_p[1] <- FALSE
+  for (i in 2:floor(sqrt(n))) {
+    if (is_p[i]) is_p[seq(i * i, n, by = i)] <- FALSE
+  }
+  sum(is_p)
+}
+
+is_nb_prime <- function(nb) {
+  if (nb < 2) return(FALSE)
+  if (nb < 4) return(TRUE)
+  all(nb %% 2:floor(sqrt(nb)) != 0)
+}
+
+t <- Sys.time(); sieve_loop(1e6); Sys.time() - t
+t <- Sys.time(); sieve_vec(1e7 - 1); Sys.time() - t
+t <- Sys.time(); sum(sapply(1:(1e5 - 1), is_nb_prime)); Sys.time() - t
+```
+</div>
+</details>
+
+<div style="border:1px solid; padding:10px; margin-bottom:10px; border-radius: 10px; background-color: #f9f9f9;">
+**À expliquer :** « < 10⁷ » donne `range(n)` en Python mais `1:(n-1)` en R. Le décalage d'indice entre le nombre k et la case k (R) ou k (Python, grâce à la case 0). Pourquoi on commence à `i*i`. Le message du cours (« vectorization is king in R ») s'applique aussi en Python, où le slice assignment est exécuté en C. La complexité O(n log log n) du crible contre O(n√n) pour les tests un par un.
+</div>
+
+<p>&nbsp;</p>
+
+# Dictionnaires et ensembles
+
+1. **Two-sum en O(n)** : étant donné un vecteur `x` et une cible, renvoie les indices de la première paire dont la somme vaut la cible, en un seul passage. En Python, utilise un dict. En R, un `environment` (vrai hash) ou un vecteur nommé.
+2. **Anagrammes** : groupe `c("listen","silent","enlist","google","gooegl","cat","act","tac","dog")` par anagramme et renvoie les groupes de taille ≥ 2, du plus grand au plus petit.
+3. **Premier caractère non répété** : `"swiss"` donne `"w"`, `"aabb"` donne `None` / `NA`. Contrainte : deux passages au maximum.
+
+<details>
+<summary>Solution</summary>
+
+<div class = "python">
+```{python}
+def two_sum(x, target):
+    seen = {}                                  # value -> index
+    for i, v in enumerate(x):
+        if target - v in seen:                 # membership in a dict: O(1)
+            return seen[target - v], i
+        seen.setdefault(v, i)
+    return None
+two_sum([3, 9, 4, 7, 1, 5], 12)
+
+words = ["listen", "silent", "enlist", "google", "gooegl", "cat", "act", "tac", "dog"]
+groups = {}
+for w in words:
+    groups.setdefault("".join(sorted(w)), []).append(w)
+sorted([g for g in groups.values() if len(g) >= 2], key=len, reverse=True)
+
+def first_unique(s):
+    counts = {}
+    for ch in s:
+        counts[ch] = counts.get(ch, 0) + 1
+    return next((ch for ch in s if counts[ch] == 1), None)
+first_unique("swiss"), first_unique("aabb")
+```
+</div>
+
+<div class = "r">
+```{r}
+two_sum <- function(x, target) {
+  seen <- new.env()                            # environments are hash tables
+  for (i in seq_along(x)) {
+    key <- as.character(target - x[i])
+    if (exists(key, envir = seen, inherits = FALSE)) return(c(get(key, envir = seen), i))
+    k <- as.character(x[i])
+    if (!exists(k, envir = seen, inherits = FALSE)) assign(k, i, envir = seen)
+  }
+  NULL
+}
+two_sum(c(3, 9, 4, 7, 1, 5), 12)
+
+words <- c("listen", "silent", "enlist", "google", "gooegl", "cat", "act", "tac", "dog")
+keys <- sapply(words, function(w) paste(sort(strsplit(w, "")[[1]]), collapse = ""))
+groups <- split(unname(words), keys)
+groups <- groups[lengths(groups) >= 2]
+groups[order(lengths(groups), decreasing = TRUE)]
+
+first_unique <- function(s) {
+  ch <- strsplit(s, "")[[1]]
+  counts <- table(ch)
+  u <- ch[counts[ch] == 1]
+  if (length(u) == 0) NA else u[1]
+}
+first_unique("swiss"); first_unique("aabb")
+```
+</div>
+</details>
+
+<div style="border:1px solid; padding:10px; margin-bottom:10px; border-radius: 10px; background-color: #f9f9f9;">
+**À expliquer :** pourquoi `x in list` est en O(n) alors que `x in set` ou `x in dict` est en O(1). R n'a pas de dict natif : les vecteurs nommés sont en O(n), alors que `environment` est un vrai hash. `setdefault` et `get(k, 0)`. La clé canonique (lettres triées) comme astuce générale de regroupement. `split()` en R. Les noms dans `sapply` : `unname`.
+</div>
+
+<p>&nbsp;</p>
+
+# Rendu de monnaie et récursion
+
+Avec les pièces de 1, 2, 5, 10, 20, 50, 100 et 200 centimes :
+
+1. Écris une fonction **récursive** qui compte le nombre de façons de faire 200 centimes. L'ordre ne compte pas : 1+2 et 2+1, c'est la même façon.
+2. Elle est lente : réécris-la en programmation dynamique avec une seule boucle sur les pièces et un vecteur de taille 201. Résultat attendu : 73 682.
+3. Écris `permutations(s)` récursive, sans librairie, qui renvoie les permutations **distinctes** d'une chaîne. `"aabb"` en a 6, pas 24.
+
+<details>
+<summary>Solution</summary>
+
+<div class = "python">
+```{python}
+import time
+coins = [1, 2, 5, 10, 20, 50, 100, 200]
+
+def ways_rec(amount, i=len(coins) - 1):
+    if amount == 0:
+        return 1
+    if amount < 0 or i < 0:
+        return 0
+    # either use coin i (and keep it available), or never use it again
+    return ways_rec(amount - coins[i], i) + ways_rec(amount, i - 1)
+
+t = time.time(); ways_rec(200); round(time.time() - t, 2)
+
+def ways_dp(amount):
+    ways = [1] + [0] * amount            # ways[a] = number of ways to make a
+    for c in coins:                      # coins in the OUTER loop -> order ignored
+        for a in range(c, amount + 1):
+            ways[a] += ways[a - c]
+    return ways[amount]
+ways_dp(200)
+
+def permutations(s):
+    if len(s) <= 1:
+        return [s]
+    out = []
+    for ch in sorted(set(s)):            # each distinct letter only once as head
+        rest = s.replace(ch, "", 1)
+        out += [ch + p for p in permutations(rest)]
+    return out
+permutations("aabb"); len(permutations("mississippi"))
+```
+</div>
+
+<div class = "r">
+```{r}
+coins <- c(1, 2, 5, 10, 20, 50, 100, 200)
+
+ways_rec <- function(amount, i = length(coins)) {
+  if (amount == 0) return(1)
+  if (amount < 0 || i == 0) return(0)
+  ways_rec(amount - coins[i], i) + ways_rec(amount, i - 1)
+}
+t <- Sys.time(); ways_rec(200); Sys.time() - t
+
+ways_dp <- function(amount) {
+  ways <- c(1, rep(0, amount))           # ways[a + 1] = number of ways to make a
+  for (cn in coins) {
+    if (cn > amount) next
+    for (a in cn:amount) ways[a + 1] <- ways[a + 1] + ways[a - cn + 1]
+  }
+  ways[amount + 1]
+}
+ways_dp(200)
+
+permutations <- function(s) {
+  if (nchar(s) <= 1) return(s)
+  ch <- strsplit(s, "")[[1]]
+  out <- c()
+  for (h in sort(unique(ch))) {
+    rest <- paste(ch[-match(h, ch)], collapse = "")   # remove ONE occurrence
+    out <- c(out, paste0(h, permutations(rest)))
+  }
+  out
+}
+permutations("aabb"); length(permutations("mississippi"))
+```
+</div>
+</details>
+
+<div style="border:1px solid; padding:10px; margin-bottom:10px; border-radius: 10px; background-color: #f9f9f9;">
+**À expliquer :** l'ordre des boucles en DP. Avec les pièces à l'extérieur, on compte des combinaisons ; en inversant les boucles, on compte des suites ordonnées : fais-leur calculer les deux. Le décalage `+1` en R pour représenter la somme 0. Pourquoi `1:0` aurait cassé sans le `next`. La limite de récursion (`sys.getrecursionlimit()`, `expressions` en R). Le vérifier : 11!/(4!·4!·2!) = 34 650 pour mississippi.
+</div>
+
+<p>&nbsp;</p>
+
+# Jeu de la vie (bords toriques)
+
+Une grille de 0 et de 1. Une cellule vivante survit si elle a 2 ou 3 voisins vivants. Une cellule morte naît si elle en a exactement 3. Les bords sont reliés (tore).
+
+1. `step(grid)` calcule la génération suivante. En Python, avec des boucles pures sur une liste de listes ; en R, **sans aucune boucle sur les cellules**, en sommant 8 matrices décalées.
+2. Vérifie qu'un « blinker » (3 cellules alignées) a une période de 2.
+3. Vérifie qu'un « glider » sur une grille 8×8 revient à sa forme initiale, décalée d'une case en diagonale, après 4 générations, et qu'il revient exactement à sa position de départ après 32 générations.
+
+<details>
+<summary>Solution</summary>
+
+<div class = "python">
+```{python}
+def step(grid):
+    n, p = len(grid), len(grid[0])
+    new = [[0] * p for _ in range(n)]
+    for i in range(n):
+        for j in range(p):
+            s = sum(grid[(i + di) % n][(j + dj) % p]      # % gives the torus for free,
+                    for di in (-1, 0, 1) for dj in (-1, 0, 1)  # even for -1
+                    if (di, dj) != (0, 0))
+            new[i][j] = 1 if s == 3 or (grid[i][j] == 1 and s == 2) else 0
+    return new
+
+def run(grid, k):
+    for _ in range(k):
+        grid = step(grid)
+    return grid
+
+blinker = [[0] * 5 for _ in range(5)]
+for j in (1, 2, 3): blinker[2][j] = 1
+run(blinker, 2) == blinker, run(blinker, 1) == blinker
+
+glider = [[0] * 8 for _ in range(8)]
+for i, j in [(0, 1), (1, 2), (2, 0), (2, 1), (2, 2)]: glider[i][j] = 1
+shifted = [row[-1:] + row[:-1] for row in glider[-1:] + glider[:-1]]   # roll (+1, +1)
+run(glider, 4) == shifted, run(glider, 32) == glider
+```
+</div>
+
+<div class = "r">
+```{r}
+shift <- function(m, di, dj) {
+  n <- nrow(m); p <- ncol(m)
+  m[((seq_len(n) - 1 - di) %% n) + 1, ((seq_len(p) - 1 - dj) %% p) + 1]
+}
+
+step <- function(g) {
+  s <- 0
+  for (di in -1:1) for (dj in -1:1)            # 8 shifts, not n*p cells
+    if (di != 0 || dj != 0) s <- s + shift(g, di, dj)
+  (s == 3 | (g == 1 & s == 2)) * 1
+}
+
+run <- function(g, k) { for (i in seq_len(k)) g <- step(g); g }
+
+blinker <- matrix(0, 5, 5); blinker[3, 2:4] <- 1
+identical(run(blinker, 2), blinker); identical(run(blinker, 1), blinker)
+
+glider <- matrix(0, 8, 8)
+glider[cbind(c(1, 2, 3, 3, 3), c(2, 3, 1, 2, 3))] <- 1   # matrix indexing
+identical(run(glider, 4), shift(glider, 1, 1)); identical(run(glider, 32), glider)
+```
+</div>
+</details>
+
+<div style="border:1px solid; padding:10px; margin-bottom:10px; border-radius: 10px; background-color: #f9f9f9;">
+**À expliquer :** le `%` des deux langages renvoie un résultat positif pour un diviseur positif (`-1 %% 5 == 4`), ce qui fait le tore sans `if`. En R, le passage 1-based / 0-based : `((i - 1 - d) %% n) + 1`. L'indexation par matrice `m[cbind(i, j)]`. `TRUE * 1` pour revenir au numérique. `identical` (type strict : 0 ≠ 0L) et `==`. Pourquoi `new` doit être une nouvelle grille et non une modification sur place, ce qui renvoie à l'exo 1.
+</div>
