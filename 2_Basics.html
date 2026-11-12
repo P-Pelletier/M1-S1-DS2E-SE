@@ -1579,10 +1579,10 @@ city to the list by using the append method.</p>
 <summary>
 Click here to see the solution
 </summary>
-<pre class="python"><code>my_dict = {&quot;name&quot;: &quot;Pierre&quot;, &quot;age&quot;: 29, &quot;city&quot;: &quot;Strasbourg&quot;}
+<pre class="python"><code>my_dict = {&quot;name&quot;: &quot;Mathieu&quot;, &quot;age&quot;: 35, &quot;city&quot;: &quot;Strasbourg&quot;}
 my_dict[&#39;city&#39;] = [&quot;Strasbourg&quot;,&quot;Schiltigheim&quot;]
 print(my_dict)
-## {&#39;name&#39;: &#39;Pierre&#39;, &#39;age&#39;: 29, &#39;city&#39;: [&#39;Strasbourg&#39;, &#39;Schiltigheim&#39;]}
+## {&#39;name&#39;: &#39;Mathieu&#39;, &#39;age&#39;: 35, &#39;city&#39;: [&#39;Strasbourg&#39;, &#39;Schiltigheim&#39;]}
 my_dict[&#39;city&#39;].append(&#39;Colmar&#39;)</code></pre>
 </details>
 <p>
@@ -2175,7 +2175,7 @@ while total &lt; 1:
     total += rnd
   
 total
-## 2.460320626988826</code></pre>
+## 1.2720668283356995</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -2205,7 +2205,7 @@ while(total &lt; 1){
 }
   
 total
-## [1] 1.088732</code></pre>
+## [1] 1.214956</code></pre>
 </div>
 </div>
 </div>
@@ -2271,7 +2271,7 @@ for val in lst:
   if val &gt; 2:
     results.append(val)
 time.time()-t
-## 0.0022840499877929688
+## 0.0019299983978271484
 
 results
 ## [3, 4]
@@ -2280,7 +2280,7 @@ t = time.time()
 # this loop their will produce the same output than a using List comprehension.
 results = [val for val in lst if val&gt;2]
 time.time()-t
-## 0.0014030933380126953
+## 0.0013287067413330078
 
 results
 ## [3, 4]</code></pre>
@@ -2298,7 +2298,7 @@ for val in st:
   if val &gt; 2:
     results.add(val)
 time.time()-t
-## 0.0021982192993164062
+## 0.001911163330078125
 
 results
 ## {3, 4}
@@ -2308,7 +2308,7 @@ t = time.time()
 # this loop their will produce the same output than a using Set comprehension.
 results = {val for val in st if val&gt;2}
 time.time()-t
-## 0.00664973258972168
+## 0.0013129711151123047
 
 results
 ## {3, 4}</code></pre>
@@ -2326,7 +2326,7 @@ for val in dct:
   if dct[val] &gt; 2:
     results.update({str(val): dct[val]})
 time.time()-t
-## 0.0021719932556152344
+## 0.0019168853759765625
 
 results
 ## {&#39;c&#39;: 3, &#39;d&#39;: 4}
@@ -2335,7 +2335,7 @@ t = time.time()
 # this loop their will produce the same output than a using Dict comprehension.
 results = {str(val): dct[val] for val in dct if dct[val]&gt;2}
 time.time()-t
-## 0.0017199516296386719
+## 0.0012309551239013672
 
 results
 ## {&#39;c&#39;: 3, &#39;d&#39;: 4}</code></pre>
@@ -2414,7 +2414,7 @@ t = time.time()
 clean_sum(seq = seq)
 ## 1560
 time.time() - t
-## 0.001650094985961914
+## 0.0012750625610351562
 
 
 def clean_sum2(seq):
@@ -2425,7 +2425,7 @@ t = time.time()
 clean_sum2(seq = seq)
 ## 1560
 time.time() - t
-## 0.023755788803100586</code></pre>
+## 0.0012481212615966797</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -2448,7 +2448,7 @@ t = Sys.time()
 clean_sum(seq = seq)
 ## [1] 1560
 Sys.time() - t
-## Time difference of 0.004118919 secs
+## Time difference of 0.001308918 secs
 
 
 
@@ -2461,7 +2461,7 @@ t &lt;- Sys.time()
 clean_sum(seq = seq)
 ## [1] 1560
 Sys.time() - t
-## Time difference of 0.0004508495 secs</code></pre>
+## Time difference of 0.0002851486 secs</code></pre>
 </div>
 </div>
 </div>
@@ -2505,7 +2505,6 @@ x2
 <div class="r">
 <pre class="r"><code># R
 library(zeallot)
-## Error in library(zeallot): there is no package called &#39;zeallot&#39;
 
 add_two &lt;- function(nb){
   nb = nb + 2
@@ -2527,11 +2526,10 @@ global_function &lt;- function(nb){
 func_list = c(add_two,square_nb)
 
 c(x1, x2) %&lt;-% global_function(c(2,3))
-## Error in c(x1, x2) %&lt;-% global_function(c(2, 3)): could not find function &quot;%&lt;-%&quot;
 x1
-## Error: object &#39;x1&#39; not found
+## [1] 16
 x2
-## Error: object &#39;x2&#39; not found</code></pre>
+## [1] 25</code></pre>
 </div>
 </div>
 </div>
