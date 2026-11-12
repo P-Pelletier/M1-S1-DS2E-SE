@@ -1,0 +1,49 @@
+---
+title: "Dplyr"
+---
+
+
+<style>
+div.python pre { background-color: #e9f7f5
+; }
+</style>
+
+<style>
+div.r pre { background-color: #fff5fd; }
+</style>
+
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,error=TRUE, warnings = F)
+library(reticulate)
+py_require('pandas')
+py_require('numpy')
+py_require('seaborn')
+py_require('plotly')
+```
+
+
+<a href="5_Data_Analysis_R.html">Go back to chapter 4</a> 
+
+# Import datasets
+
+
+<div class = "r">
+
+```{python}
+import pandas as pd
+import numpy as np
+import time
+import re
+import seaborn as sns
+import plotly.express as px
+
+t = time.time()
+table_1 = pd.read_csv('data/table_1.csv')
+table_2 = pd.read_csv('data/table_2.csv')
+cities = pd.read_csv('data/cities_loc.csv')
+time.time() - t
+```

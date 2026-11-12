@@ -111,7 +111,7 @@ What is the 10 001st prime number?
 
 is_nb_prime <- function(nb){
    is_prime = TRUE
-   for(j in 2:(round(sqrt(nb))+1)){
+   for(j in 2:(round(sqrt(nb)))){
       if(nb%%j == 0){
         is_prime = FALSE
         break
@@ -121,7 +121,7 @@ is_nb_prime <- function(nb){
 }
 
 nth_prime <- function(nth){
-  primes = c(1,2)
+  primes = c(2)
   i = 2
   while(length(primes)<nth){
     i <- i+1
@@ -150,16 +150,16 @@ import numpy as np
 
 def is_nb_prime(nb):
   is_prime = True
-  for j in range(2,(int(np.sqrt(nb))+1)):
+  for j in range(2,int(np.sqrt(nb))+1):
     if nb%j == 0:
       is_prime = False
       break
   return is_prime
 
 def nth_prime(nth):
-  primes = [1,2]
+  primes = [2]
   i = 2
-  while len(primes) < nth+1:
+  while len(primes) < nth:
     i+=1 
     is_prime = is_nb_prime(i)
     if is_prime == True:
