@@ -371,39 +371,32 @@ div.r pre { background-color: #fff5fd; }
 <div id="import-datasets" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Import datasets</h1>
 <div class="python">
-<pre class="python"><code>import pandas as pd</code></pre>
-<pre><code>## ModuleNotFoundError: No module named &#39;pandas&#39;</code></pre>
-<pre class="python"><code>import numpy as np
+<pre class="python"><code>import pandas as pd
+import numpy as np
 import time
 import re
-import seaborn as sns</code></pre>
-<pre><code>## ModuleNotFoundError: No module named &#39;seaborn&#39;</code></pre>
-<pre class="python"><code>import plotly.express as px</code></pre>
-<pre><code>## ModuleNotFoundError: No module named &#39;plotly&#39;</code></pre>
-<pre class="python"><code>t = time.time()
-table_1 = pd.read_csv(&#39;data/table_1.csv&#39;)</code></pre>
-<pre><code>## NameError: name &#39;pd&#39; is not defined</code></pre>
-<pre class="python"><code>table_2 = pd.read_csv(&#39;data/table_2.csv&#39;)</code></pre>
-<pre><code>## NameError: name &#39;pd&#39; is not defined</code></pre>
-<pre class="python"><code>cities = pd.read_csv(&#39;data/cities_loc.csv&#39;)</code></pre>
-<pre><code>## NameError: name &#39;pd&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.005809307098388672</code></pre>
+import seaborn as sns
+import plotly.express as px
+
+t = time.time()
+table_1 = pd.read_csv(&#39;data/table_1.csv&#39;)
+table_2 = pd.read_csv(&#39;data/table_2.csv&#39;)
+cities = pd.read_csv(&#39;data/cities_loc.csv&#39;)
+time.time() - t</code></pre>
+<pre><code>## 0.3419167995452881</code></pre>
 <div id="clean" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Clean</h1>
 <p>Remove articles with no pmid and no DOI, and all articles before
 1975</p>
 <div class="python">
 <pre class="python"><code>t = time.time()
-table_1 = table_1.dropna(subset = [&#39;pmid&#39;, &#39;doi&#39;])</code></pre>
-<pre><code>## NameError: name &#39;table_1&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.003361940383911133</code></pre>
+table_1 = table_1.dropna(subset = [&#39;pmid&#39;, &#39;doi&#39;])
+time.time() - t</code></pre>
+<pre><code>## 0.009940862655639648</code></pre>
 <pre class="python"><code>t = time.time()
-table_2 = table_2[table_2.year_pub &gt; 1975].dropna(subset = [&#39;pmid&#39;]) </code></pre>
-<pre><code>## NameError: name &#39;table_2&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.002644062042236328</code></pre>
+table_2 = table_2[table_2.year_pub &gt; 1975].dropna(subset = [&#39;pmid&#39;]) 
+time.time() - t</code></pre>
+<pre><code>## 0.011487007141113281</code></pre>
 </div>
 </div>
 <div id="merge" class="section level1" number="3">
@@ -411,12 +404,212 @@ table_2 = table_2[table_2.year_pub &gt; 1975].dropna(subset = [&#39;pmid&#39;]) 
 <p>Merge the two datasets, pmid is unique for each paper</p>
 <div class="python">
 <pre class="python"><code>t = time.time()
-final_table = table_1.merge(table_2, how = &#39;inner&#39;, on = &#39;pmid&#39;)</code></pre>
-<pre><code>## NameError: name &#39;table_1&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.0027942657470703125</code></pre>
+final_table = table_1.merge(table_2, how = &#39;inner&#39;, on = &#39;pmid&#39;)
+time.time() - t</code></pre>
+<pre><code>## 0.010262012481689453</code></pre>
 <pre class="python"><code>final_table</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pmid</th>
+      <th>doi</th>
+      <th>title</th>
+      <th>source</th>
+      <th>language</th>
+      <th>pubtype</th>
+      <th>pubmodel</th>
+      <th>authors</th>
+      <th>year_pub</th>
+      <th>has_data</th>
+      <th>oa</th>
+      <th>cited</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32837036.0</td>
+      <td>10.1007/s12291-020-00919-0</td>
+      <td>The Pathophysiology, Diagnosis and Treatment o...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["review-article", "Review", "Jour...</td>
+      <td>"Print-Electronic"</td>
+      <td>&lt;AUTHOR&gt; Das SK Subir Kumar Das&lt;AFFILIATION&gt;De...</td>
+      <td>2020.0</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>32196410.0</td>
+      <td>10.1080/22221751.2020.1746199</td>
+      <td>Hypothesis for potential pathogenesis of SARS-...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["review-article", "Journal Articl...</td>
+      <td>"Print"</td>
+      <td>&lt;AUTHOR&gt; Lin L Ling Lin&lt;AFFILIATION&gt;Department...</td>
+      <td>2020.0</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>32778421.0</td>
+      <td>10.1016/j.jiph.2020.07.011</td>
+      <td>The outbreak of the novel severe acute respira...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["review-article", "Review", "Jour...</td>
+      <td>"Print-Electronic"</td>
+      <td>&lt;AUTHOR&gt; Bchetnia M Mbarka Bchetnia&lt;AFFILIATIO...</td>
+      <td>2020.0</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>32730205.0</td>
+      <td>10.1016/j.ijsu.2020.07.032</td>
+      <td>A comparative overview of COVID-19, MERS and S...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["review-article", "Review", "Jour...</td>
+      <td>"Print-Electronic"</td>
+      <td>&lt;AUTHOR&gt; Liu J Jie Liu&lt;AFFILIATION&gt;Department ...</td>
+      <td>2020.0</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>32394467.0</td>
+      <td>10.1002/jcp.29785</td>
+      <td>A global treatments for coronaviruses includin...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["review-article", "Review", "Jour...</td>
+      <td>"Print-Electronic"</td>
+      <td>&lt;AUTHOR&gt; Yousefi B Bahman Yousefi&lt;AFFILIATION&gt;...</td>
+      <td>2020.0</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>108717</th>
+      <td>10808380.0</td>
+      <td>10.1007/s11606-000-0019-1</td>
+      <td>Society of General Internal Medicine 23rd annu...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["Congress", "Overall", "abstract"]}</td>
+      <td>"Print"</td>
+      <td>NaN</td>
+      <td>2000.0</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>108718</th>
+      <td>22696127.0</td>
+      <td>10.1007/s13244-012-0153-4</td>
+      <td>ECR 2012 Book of Abstracts - A - Postergraduat...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["calendar", "Journal Article"]}</td>
+      <td>"Print"</td>
+      <td>&lt;AUTHOR&gt;&lt;AFFILIATION&gt;None</td>
+      <td>2012.0</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>108719</th>
+      <td>3368329.0</td>
+      <td>10.1093/nar/16.suppl.r315</td>
+      <td>Codon usage tabulated from the GenBank Genetic...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["Comparative Study", "Research Su...</td>
+      <td>"Print"</td>
+      <td>&lt;AUTHOR&gt; Aota S S Aota&lt;AFFILIATION&gt;National In...</td>
+      <td>1988.0</td>
+      <td>N</td>
+      <td>N</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <th>108720</th>
+      <td>25412402.0</td>
+      <td>10.1002/14651858.cd000011.pub4</td>
+      <td>Interventions for enhancing medication adherence.</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["Meta-Analysis", "Research Suppor...</td>
+      <td>"Electronic"</td>
+      <td>&lt;AUTHOR&gt; Nieuwlaat R Robby Nieuwlaat&lt;AFFILIATI...</td>
+      <td>2014.0</td>
+      <td>N</td>
+      <td>N</td>
+      <td>222</td>
+    </tr>
+    <tr>
+      <th>108721</th>
+      <td>21994484.0</td>
+      <td>10.1007/s13225-011-0088-y</td>
+      <td>European species of Hypocrea part II: species ...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["research-article", "Journal Arti...</td>
+      <td>"Print"</td>
+      <td>&lt;AUTHOR&gt; Jaklitsch WM Walter M Jaklitsch&lt;AFFIL...</td>
+      <td>2011.0</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>44</td>
+    </tr>
+  </tbody>
+</table>
+<p>108722 rows × 12 columns</p>
+</div>
 </div>
 </div>
 <div id="number-of-authors" class="section level1" number="4">
@@ -424,17 +617,28 @@ final_table = table_1.merge(table_2, how = &#39;inner&#39;, on = &#39;pmid&#39;)
 <p>Create a new variable with the number of authors for each paper</p>
 <div class="python">
 <pre class="python"><code>t = time.time()
-final_table = final_table.assign(nb_aut = final_table.authors.map(lambda aut: len(re.findall(&#39;&lt;AUTHOR&gt;&#39;,str(aut)))))</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t </code></pre>
-<pre><code>## 0.0036368370056152344</code></pre>
+final_table = final_table.assign(nb_aut = final_table.authors.map(lambda aut: len(re.findall(&#39;&lt;AUTHOR&gt;&#39;,str(aut)))))
+time.time() - t </code></pre>
+<pre><code>## 0.0863032341003418</code></pre>
 <pre class="python"><code>print(final_table[[&#39;pmid&#39;,&#39;nb_aut&#39;]])</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
+<pre><code>##               pmid  nb_aut
+## 0       32837036.0       1
+## 1       32196410.0       4
+## 2       32778421.0       4
+## 3       32730205.0       7
+## 4       32394467.0       6
+## ...            ...     ...
+## 108717  10808380.0       0
+## 108718  22696127.0       1
+## 108719   3368329.0       5
+## 108720  25412402.0      16
+## 108721  21994484.0       1
+## 
+## [108722 rows x 2 columns]</code></pre>
 <pre class="python"><code>t = time.time()
-final_table = final_table[final_table.nb_aut &gt; 0]</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.002759218215942383</code></pre>
+final_table = final_table[final_table.nb_aut &gt; 0]
+time.time() - t</code></pre>
+<pre><code>## 0.007327079772949219</code></pre>
 </div>
 </div>
 <div id="plot-distribution" class="section level1" number="5">
@@ -443,7 +647,7 @@ final_table = final_table[final_table.nb_aut &gt; 0]</code></pre>
 <div class="python">
 <pre class="python"><code>sns.distplot(np.log(final_table.nb_aut +1), hist = False, kde = True,
                  kde_kws = {&#39;linewidth&#39;: 3})</code></pre>
-<pre><code>## NameError: name &#39;sns&#39; is not defined</code></pre>
+<p><img src="exo_4_pd_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 </div>
 <div id="search-for-dlmlnn-in-title" class="section level1" number="6">
@@ -456,26 +660,289 @@ authors for ML papers and non-ML papers ? Transform has_data and oa into
 binary variable also, what is the share of ML paper that are oa ?</p>
 <div class="python">
 <pre class="python"><code>t = time.time()
-final_table[&#39;title&#39;] = final_table.title.str.lower()</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
-<pre class="python"><code>final_table = final_table.assign(
+final_table[&#39;title&#39;] = final_table.title.str.lower()
+final_table = final_table.assign(
     ML = np.where(final_table.title.str.contains(&#39;deep learning|machine learning|neural networks?&#39;),1,0),
     has_data = np.where(final_table.has_data == &#39;Y&#39;,1,0),
-    oa = np.where(final_table.oa == &#39;Y&#39;,1,0))</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.00436091423034668</code></pre>
+    oa = np.where(final_table.oa == &#39;Y&#39;,1,0))
+time.time() - t</code></pre>
+<pre><code>## 0.09523391723632812</code></pre>
 <pre class="python"><code>final_table</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pmid</th>
+      <th>doi</th>
+      <th>title</th>
+      <th>source</th>
+      <th>language</th>
+      <th>pubtype</th>
+      <th>pubmodel</th>
+      <th>authors</th>
+      <th>year_pub</th>
+      <th>has_data</th>
+      <th>oa</th>
+      <th>cited</th>
+      <th>nb_aut</th>
+      <th>ML</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32837036.0</td>
+      <td>10.1007/s12291-020-00919-0</td>
+      <td>the pathophysiology, diagnosis and treatment o...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["review-article", "Review", "Jour...</td>
+      <td>"Print-Electronic"</td>
+      <td>&lt;AUTHOR&gt; Das SK Subir Kumar Das&lt;AFFILIATION&gt;De...</td>
+      <td>2020.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>32196410.0</td>
+      <td>10.1080/22221751.2020.1746199</td>
+      <td>hypothesis for potential pathogenesis of sars-...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["review-article", "Journal Articl...</td>
+      <td>"Print"</td>
+      <td>&lt;AUTHOR&gt; Lin L Ling Lin&lt;AFFILIATION&gt;Department...</td>
+      <td>2020.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>61</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>32778421.0</td>
+      <td>10.1016/j.jiph.2020.07.011</td>
+      <td>the outbreak of the novel severe acute respira...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["review-article", "Review", "Jour...</td>
+      <td>"Print-Electronic"</td>
+      <td>&lt;AUTHOR&gt; Bchetnia M Mbarka Bchetnia&lt;AFFILIATIO...</td>
+      <td>2020.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>32730205.0</td>
+      <td>10.1016/j.ijsu.2020.07.032</td>
+      <td>a comparative overview of covid-19, mers and s...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["review-article", "Review", "Jour...</td>
+      <td>"Print-Electronic"</td>
+      <td>&lt;AUTHOR&gt; Liu J Jie Liu&lt;AFFILIATION&gt;Department ...</td>
+      <td>2020.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>7</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>32394467.0</td>
+      <td>10.1002/jcp.29785</td>
+      <td>a global treatments for coronaviruses includin...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["review-article", "Review", "Jour...</td>
+      <td>"Print-Electronic"</td>
+      <td>&lt;AUTHOR&gt; Yousefi B Bahman Yousefi&lt;AFFILIATION&gt;...</td>
+      <td>2020.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>6</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>108712</th>
+      <td>7704896.0</td>
+      <td>10.1128/cmr.8.1.87-112.1995</td>
+      <td>feline immunodeficiency virus: an interesting ...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["Research Support, Non-U.S. Gov't...</td>
+      <td>"Print"</td>
+      <td>&lt;AUTHOR&gt; Bendinelli M M Bendinelli&lt;AFFILIATION...</td>
+      <td>1995.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>208</td>
+      <td>9</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>108718</th>
+      <td>22696127.0</td>
+      <td>10.1007/s13244-012-0153-4</td>
+      <td>ecr 2012 book of abstracts - a - postergraduat...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["calendar", "Journal Article"]}</td>
+      <td>"Print"</td>
+      <td>&lt;AUTHOR&gt;&lt;AFFILIATION&gt;None</td>
+      <td>2012.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>108719</th>
+      <td>3368329.0</td>
+      <td>10.1093/nar/16.suppl.r315</td>
+      <td>codon usage tabulated from the genbank genetic...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["Comparative Study", "Research Su...</td>
+      <td>"Print"</td>
+      <td>&lt;AUTHOR&gt; Aota S S Aota&lt;AFFILIATION&gt;National In...</td>
+      <td>1988.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>90</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>108720</th>
+      <td>25412402.0</td>
+      <td>10.1002/14651858.cd000011.pub4</td>
+      <td>interventions for enhancing medication adherence.</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["Meta-Analysis", "Research Suppor...</td>
+      <td>"Electronic"</td>
+      <td>&lt;AUTHOR&gt; Nieuwlaat R Robby Nieuwlaat&lt;AFFILIATI...</td>
+      <td>2014.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>222</td>
+      <td>16</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>108721</th>
+      <td>21994484.0</td>
+      <td>10.1007/s13225-011-0088-y</td>
+      <td>european species of hypocrea part ii: species ...</td>
+      <td>MED</td>
+      <td>eng</td>
+      <td>{"pubType": ["research-article", "Journal Arti...</td>
+      <td>"Print"</td>
+      <td>&lt;AUTHOR&gt; Jaklitsch WM Walter M Jaklitsch&lt;AFFIL...</td>
+      <td>2011.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>44</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>107104 rows × 14 columns</p>
+</div>
 <pre class="python"><code>np.sum(final_table.ML)</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
+<pre><code>## np.int64(222)</code></pre>
 <pre class="python"><code>np.sum(final_table.oa)</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
+<pre><code>## np.int64(77847)</code></pre>
 <pre class="python"><code>np.sum(final_table.has_data)</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
+<pre><code>## np.int64(23980)</code></pre>
 <pre class="python"><code>final_table.groupby(&#39;ML&#39;).agg({&#39;nb_aut&#39;:np.mean,
                                &#39;oa&#39;:np.mean})</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>nb_aut</th>
+      <th>oa</th>
+    </tr>
+    <tr>
+      <th>ML</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.772328</td>
+      <td>0.726680</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6.058559</td>
+      <td>0.801802</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
 </div>
 <div id="clean-up-pub_type" class="section level1" number="7">
@@ -483,12 +950,92 @@ final_table[&#39;title&#39;] = final_table.title.str.lower()</code></pre>
 <p>Clean up pub_type, for simplicity just get the first type</p>
 <div class="python">
 <pre class="python"><code>t = time.time()
-final_table[&#39;pub_type&#39;] = final_table.pubtype.map(lambda pubtype: re.findall(&#39;\[\&quot;(.*?)\&quot;&#39;,pubtype)[0])</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.002557992935180664</code></pre>
+final_table[&#39;pub_type&#39;] = final_table.pubtype.map(lambda pubtype: re.findall(&#39;\[\&quot;(.*?)\&quot;&#39;,pubtype)[0])
+time.time() - t</code></pre>
+<pre><code>## 0.033676862716674805</code></pre>
 <pre class="python"><code>final_table[[&#39;pubtype&#39;,&#39;pub_type&#39;]]</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pubtype</th>
+      <th>pub_type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>{"pubType": ["review-article", "Review", "Jour...</td>
+      <td>review-article</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>{"pubType": ["review-article", "Journal Articl...</td>
+      <td>review-article</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>{"pubType": ["review-article", "Review", "Jour...</td>
+      <td>review-article</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>{"pubType": ["review-article", "Review", "Jour...</td>
+      <td>review-article</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>{"pubType": ["review-article", "Review", "Jour...</td>
+      <td>review-article</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>108712</th>
+      <td>{"pubType": ["Research Support, Non-U.S. Gov't...</td>
+      <td>Research Support, Non-U.S. Gov't</td>
+    </tr>
+    <tr>
+      <th>108718</th>
+      <td>{"pubType": ["calendar", "Journal Article"]}</td>
+      <td>calendar</td>
+    </tr>
+    <tr>
+      <th>108719</th>
+      <td>{"pubType": ["Comparative Study", "Research Su...</td>
+      <td>Comparative Study</td>
+    </tr>
+    <tr>
+      <th>108720</th>
+      <td>{"pubType": ["Meta-Analysis", "Research Suppor...</td>
+      <td>Meta-Analysis</td>
+    </tr>
+    <tr>
+      <th>108721</th>
+      <td>{"pubType": ["research-article", "Journal Arti...</td>
+      <td>research-article</td>
+    </tr>
+  </tbody>
+</table>
+<p>107104 rows × 2 columns</p>
+</div>
 </div>
 </div>
 <div id="highest-meansd-of-citation" class="section level1" number="8">
@@ -498,9 +1045,155 @@ citation</h1>
 cited and the cleaned pub_type)</p>
 <div class="python">
 <pre class="python"><code>final_table.groupby(&#39;pub_type&#39;).agg({&#39;cited&#39;:np.mean}).sort_values(&#39;cited&#39;,ascending = False)</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cited</th>
+    </tr>
+    <tr>
+      <th>pub_type</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Consensus Development Conference</th>
+      <td>94.128205</td>
+    </tr>
+    <tr>
+      <th>Research Support, American Recovery and Reinvestment Act</th>
+      <td>64.416667</td>
+    </tr>
+    <tr>
+      <th>Research Support, U.S. Gov't, P.H.S.</th>
+      <td>53.980543</td>
+    </tr>
+    <tr>
+      <th>Research Support, N.I.H., Intramural</th>
+      <td>48.481308</td>
+    </tr>
+    <tr>
+      <th>Clinical Trial, Phase II</th>
+      <td>35.285714</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>Webcast</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Addresses</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Technical Report</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Twin Study</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Portrait</th>
+      <td>0.000000</td>
+    </tr>
+  </tbody>
+</table>
+<p>83 rows × 1 columns</p>
+</div>
 <pre class="python"><code>final_table.groupby(&#39;pub_type&#39;).agg({&#39;cited&#39;:lambda x : np.std(x,ddof = 1)}).sort_values(&#39;cited&#39;,ascending = False)</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cited</th>
+    </tr>
+    <tr>
+      <th>pub_type</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Consensus Development Conference</th>
+      <td>392.044048</td>
+    </tr>
+    <tr>
+      <th>Research Support, N.I.H., Intramural</th>
+      <td>144.450609</td>
+    </tr>
+    <tr>
+      <th>Research Support, U.S. Gov't, P.H.S.</th>
+      <td>97.102551</td>
+    </tr>
+    <tr>
+      <th>editorial</th>
+      <td>90.848164</td>
+    </tr>
+    <tr>
+      <th>Clinical Conference</th>
+      <td>84.303766</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>Equivalence Trial</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Personal Narratives</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Twin Study</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Validation Studies</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>obituary</th>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>83 rows × 1 columns</p>
+</div>
 </div>
 </div>
 <div id="most-representative-countres-by-year" class="section level1"
@@ -513,84 +1206,581 @@ country for each author from the loc_cities.csv. You may want to
 separate rows for each authors to get all countries involved in the
 paper,if an authors have multiple affiliations, take the first one.</p>
 <div class="python">
-<pre class="python"><code>countries = list(cities.country.str.lower().drop_duplicates())</code></pre>
-<pre><code>## NameError: name &#39;cities&#39; is not defined</code></pre>
-<pre class="python"><code>countries_pd = final_table[[&#39;pmid&#39;, &#39;authors&#39;]]</code></pre>
-<pre><code>## NameError: name &#39;final_table&#39; is not defined</code></pre>
-<pre class="python"><code>print(countries_pd[&#39;authors&#39;][0])</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
+<pre class="python"><code>countries = list(cities.country.str.lower().drop_duplicates())
+
+countries_pd = final_table[[&#39;pmid&#39;, &#39;authors&#39;]]
+print(countries_pd[&#39;authors&#39;][0])</code></pre>
+<pre><code>## &lt;AUTHOR&gt; Das SK Subir Kumar Das&lt;AFFILIATION&gt;Department of Biochemistry, College of Medicine and JNM Hospital, WBUHS, Kalyani, Nadia, West Bengal 741235 India.</code></pre>
 <pre class="python"><code>print(countries_pd[&#39;authors&#39;][1])</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
+<pre><code>## &lt;AUTHOR&gt; Lin L Ling Lin&lt;AFFILIATION&gt;Department of Infectious Diseases, Peking Union Medical College Hospital, Peking Union Medical College, Chinese Academy of Medical Sciences, Beijing, People&#39;s Republic of China.&lt;AUTHOR&gt; Lu L Lianfeng Lu&lt;AFFILIATION&gt;Department of Infectious Diseases, Peking Union Medical College Hospital, Peking Union Medical College, Chinese Academy of Medical Sciences, Beijing, People&#39;s Republic of China.&lt;AUTHOR&gt; Cao W Wei Cao&lt;AFFILIATION&gt;Department of Infectious Diseases, Peking Union Medical College Hospital, Peking Union Medical College, Chinese Academy of Medical Sciences, Beijing, People&#39;s Republic of China.&lt;AUTHOR&gt; Li T Taisheng Li&lt;AFFILIATION&gt;Department of Infectious Diseases, Peking Union Medical College Hospital, Peking Union Medical College, Chinese Academy of Medical Sciences, Beijing, People&#39;s Republic of China. &lt;AFFILIATION&gt;Center for AIDS Research, Chinese Academy of Medical Sciences and Peking Union Medical College, Beijing, People&#39;s Republic of China. &lt;AFFILIATION&gt;Clinical Immunology Center, Chinese Academy of Medical Sciences, Beijing, People&#39;s Republic of China. &lt;AFFILIATION&gt;Tsinghua-Peking Center for Life Sciences, School of Medicine, Tsinghua University, Beijing, People&#39;s Republic of China.</code></pre>
 <pre class="python"><code>t = time.time()
 countries_pd = countries_pd.assign(
-    authors=countries_pd.authors.str.split(&#39;&lt;AUTHOR&gt;&#39;)).explode(&#39;authors&#39;)</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.002454042434692383</code></pre>
+    authors=countries_pd.authors.str.split(&#39;&lt;AUTHOR&gt;&#39;)).explode(&#39;authors&#39;)
+time.time() - t</code></pre>
+<pre><code>## 0.14776229858398438</code></pre>
 <pre class="python"><code>countries_pd</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pmid</th>
+      <th>authors</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32837036.0</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>32837036.0</td>
+      <td>Das SK Subir Kumar Das&lt;AFFILIATION&gt;Department...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>32196410.0</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>32196410.0</td>
+      <td>Lin L Ling Lin&lt;AFFILIATION&gt;Department of Infe...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>32196410.0</td>
+      <td>Lu L Lianfeng Lu&lt;AFFILIATION&gt;Department of In...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>108720</th>
+      <td>25412402.0</td>
+      <td>Jedraszewski D Dawn Jedraszewski&lt;AFFILIATION&gt;...</td>
+    </tr>
+    <tr>
+      <th>108720</th>
+      <td>25412402.0</td>
+      <td>Cotoi C Chris Cotoi&lt;AFFILIATION&gt;None</td>
+    </tr>
+    <tr>
+      <th>108720</th>
+      <td>25412402.0</td>
+      <td>Haynes RB R Brian Haynes&lt;AFFILIATION&gt;None</td>
+    </tr>
+    <tr>
+      <th>108721</th>
+      <td>21994484.0</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>108721</th>
+      <td>21994484.0</td>
+      <td>Jaklitsch WM Walter M Jaklitsch&lt;AFFILIATION&gt;D...</td>
+    </tr>
+  </tbody>
+</table>
+<p>725407 rows × 2 columns</p>
+</div>
 </div>
 <div class="python">
 <pre class="python"><code>t = time.time()
 countries_pd = countries_pd[(countries_pd.authors != &#39;&#39;)
-                                &amp; (-countries_pd.authors.str.contains(&#39;&lt;AFFILIATION&gt;None&#39;))]</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.0027310848236083984</code></pre>
+                                &amp; (-countries_pd.authors.str.contains(&#39;&lt;AFFILIATION&gt;None&#39;))]
+time.time() - t</code></pre>
+<pre><code>## 0.1142120361328125</code></pre>
 <pre class="python"><code>t = time.time()
 countries_pd = countries_pd.assign(
-    authors = countries_pd.authors.map(lambda aff: aff.split(&#39;&lt;AFFILIATION&gt;&#39;)[1])).drop_duplicates(subset=[&#39;pmid&#39;, &#39;authors&#39;])</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.0024471282958984375</code></pre>
+    authors = countries_pd.authors.map(lambda aff: aff.split(&#39;&lt;AFFILIATION&gt;&#39;)[1])).drop_duplicates(subset=[&#39;pmid&#39;, &#39;authors&#39;])
+time.time() - t</code></pre>
+<pre><code>## 0.20442605018615723</code></pre>
 <pre class="python"><code>countries_pd</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pmid</th>
+      <th>authors</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32837036.0</td>
+      <td>Department of Biochemistry, College of Medicin...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>32196410.0</td>
+      <td>Department of Infectious Diseases, Peking Unio...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>32196410.0</td>
+      <td>Department of Infectious Diseases, Peking Unio...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>32778421.0</td>
+      <td>Université du Québec à Chicoutimi (UQAC), Dépa...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>32778421.0</td>
+      <td>Centre de recherche, Institut universitaire de...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>108709</th>
+      <td>18843651.0</td>
+      <td>Department of Anesthesiology, Pharmacology and...</td>
+    </tr>
+    <tr>
+      <th>108712</th>
+      <td>7704896.0</td>
+      <td>Department of Biomedicine, University of Pisa,...</td>
+    </tr>
+    <tr>
+      <th>108719</th>
+      <td>3368329.0</td>
+      <td>National Institute of Genetics, Mishima, Japan.</td>
+    </tr>
+    <tr>
+      <th>108720</th>
+      <td>25412402.0</td>
+      <td>Department of Clinical Epidemiology and Biosta...</td>
+    </tr>
+    <tr>
+      <th>108721</th>
+      <td>21994484.0</td>
+      <td>Department of Systematic and Evolutionary Bota...</td>
+    </tr>
+  </tbody>
+</table>
+<p>291657 rows × 2 columns</p>
+</div>
 </div>
 <div class="python">
 <pre class="python"><code>t = time.time()
 for abr, name in zip([&#39; USA&#39;, &#39; UK&#39;, &#39; Korea&#39;], [&#39;United States&#39;, &#39;United Kingdom&#39;, &#39;South Korea&#39;]):
-    countries_pd.authors = countries_pd.authors.map(lambda aff: re.sub(abr,name,aff))</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
-<pre class="python"><code>    
-countries_pd.authors = countries_pd.authors.str.lower()</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.00428009033203125</code></pre>
+    countries_pd.authors = countries_pd.authors.map(lambda aff: re.sub(abr,name,aff))
+    
+countries_pd.authors = countries_pd.authors.str.lower()
+time.time() - t</code></pre>
+<pre><code>## 0.34483909606933594</code></pre>
 </div>
 <div class="python">
 <pre class="python"><code>t = time.time()
-countries_matched = countries_pd.authors.map(lambda aff: [country for country in countries if country in aff])</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
-<pre class="python"><code>countries_pd = countries_pd.assign(country = countries_matched).drop(&#39;authors&#39;, axis = 1)</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
-<pre class="python"><code>countries_pd[&#39;country&#39;] = countries_pd.country.map(lambda x: x[0] if x else &#39;&#39;)</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
-<pre class="python"><code>countries_pd</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
+countries_matched = countries_pd.authors.map(lambda aff: [country for country in countries if country in aff])
+countries_pd = countries_pd.assign(country = countries_matched).drop(&#39;authors&#39;, axis = 1)
+countries_pd[&#39;country&#39;] = countries_pd.country.map(lambda x: x[0] if x else &#39;&#39;)
+countries_pd</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pmid</th>
+      <th>country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32837036.0</td>
+      <td>india</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>32196410.0</td>
+      <td>china</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>32196410.0</td>
+      <td>china</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>32778421.0</td>
+      <td>canada</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>32778421.0</td>
+      <td>canada</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>108709</th>
+      <td>18843651.0</td>
+      <td>canada</td>
+    </tr>
+    <tr>
+      <th>108712</th>
+      <td>7704896.0</td>
+      <td>italy</td>
+    </tr>
+    <tr>
+      <th>108719</th>
+      <td>3368329.0</td>
+      <td>japan</td>
+    </tr>
+    <tr>
+      <th>108720</th>
+      <td>25412402.0</td>
+      <td>canada</td>
+    </tr>
+    <tr>
+      <th>108721</th>
+      <td>21994484.0</td>
+      <td>austria</td>
+    </tr>
+  </tbody>
+</table>
+<p>291657 rows × 2 columns</p>
+</div>
 <pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.008009910583496094</code></pre>
+<pre><code>## 4.533170223236084</code></pre>
 </div>
 <div class="python">
 <pre class="python"><code>t = time.time()
-countries_pd = countries_pd[countries_pd.country != &#39;&#39;].drop_duplicates(subset=[&#39;pmid&#39;, &#39;country&#39;])</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.0025560855865478516</code></pre>
+countries_pd = countries_pd[countries_pd.country != &#39;&#39;].drop_duplicates(subset=[&#39;pmid&#39;, &#39;country&#39;])
+time.time() - t</code></pre>
+<pre><code>## 0.02268385887145996</code></pre>
 <pre class="python"><code>countries_pd</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pmid</th>
+      <th>country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32837036.0</td>
+      <td>india</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>32196410.0</td>
+      <td>china</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>32778421.0</td>
+      <td>canada</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>32730205.0</td>
+      <td>china</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>32394467.0</td>
+      <td>iran</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>108709</th>
+      <td>18843651.0</td>
+      <td>canada</td>
+    </tr>
+    <tr>
+      <th>108712</th>
+      <td>7704896.0</td>
+      <td>italy</td>
+    </tr>
+    <tr>
+      <th>108719</th>
+      <td>3368329.0</td>
+      <td>japan</td>
+    </tr>
+    <tr>
+      <th>108720</th>
+      <td>25412402.0</td>
+      <td>canada</td>
+    </tr>
+    <tr>
+      <th>108721</th>
+      <td>21994484.0</td>
+      <td>austria</td>
+    </tr>
+  </tbody>
+</table>
+<p>111479 rows × 2 columns</p>
+</div>
 <pre class="python"><code>t = time.time()
-countries_year = countries_pd.merge(final_table[[&#39;pmid&#39;,&#39;year_pub&#39;]], how = &#39;left&#39;, on = &#39;pmid&#39;)</code></pre>
-<pre><code>## NameError: name &#39;countries_pd&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.0022382736206054688</code></pre>
+countries_year = countries_pd.merge(final_table[[&#39;pmid&#39;,&#39;year_pub&#39;]], how = &#39;left&#39;, on = &#39;pmid&#39;)
+time.time() - t</code></pre>
+<pre><code>## 0.0041201114654541016</code></pre>
 <pre class="python"><code>countries_year</code></pre>
-<pre><code>## NameError: name &#39;countries_year&#39; is not defined</code></pre>
-<pre class="python"><code>countries_year = countries_year.groupby([&#39;country&#39;, &#39;year_pub&#39;]).agg(n = (&#39;pmid&#39;, len)).sort_values(&#39;n&#39;, ascending = False)</code></pre>
-<pre><code>## NameError: name &#39;countries_year&#39; is not defined</code></pre>
-<pre class="python"><code>countries_year = countries_year.reset_index()</code></pre>
-<pre><code>## NameError: name &#39;countries_year&#39; is not defined</code></pre>
-<pre class="python"><code>countries_year</code></pre>
-<pre><code>## NameError: name &#39;countries_year&#39; is not defined</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pmid</th>
+      <th>country</th>
+      <th>year_pub</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>32837036.0</td>
+      <td>india</td>
+      <td>2020.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>32196410.0</td>
+      <td>china</td>
+      <td>2020.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>32778421.0</td>
+      <td>canada</td>
+      <td>2020.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>32730205.0</td>
+      <td>china</td>
+      <td>2020.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>32394467.0</td>
+      <td>iran</td>
+      <td>2020.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>111474</th>
+      <td>18843651.0</td>
+      <td>canada</td>
+      <td>2008.0</td>
+    </tr>
+    <tr>
+      <th>111475</th>
+      <td>7704896.0</td>
+      <td>italy</td>
+      <td>1995.0</td>
+    </tr>
+    <tr>
+      <th>111476</th>
+      <td>3368329.0</td>
+      <td>japan</td>
+      <td>1988.0</td>
+    </tr>
+    <tr>
+      <th>111477</th>
+      <td>25412402.0</td>
+      <td>canada</td>
+      <td>2014.0</td>
+    </tr>
+    <tr>
+      <th>111478</th>
+      <td>21994484.0</td>
+      <td>austria</td>
+      <td>2011.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>111479 rows × 3 columns</p>
+</div>
+<pre class="python"><code>countries_year = countries_year.groupby([&#39;country&#39;, &#39;year_pub&#39;]).agg(n = (&#39;pmid&#39;, len)).sort_values(&#39;n&#39;, ascending = False)
+countries_year = countries_year.reset_index()
+countries_year</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>year_pub</th>
+      <th>n</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>united states</td>
+      <td>2020.0</td>
+      <td>11668</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>china</td>
+      <td>2020.0</td>
+      <td>7888</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>united kingdom</td>
+      <td>2020.0</td>
+      <td>6262</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>italy</td>
+      <td>2020.0</td>
+      <td>5910</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>india</td>
+      <td>2020.0</td>
+      <td>3297</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1904</th>
+      <td>mexico</td>
+      <td>2003.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1905</th>
+      <td>mexico</td>
+      <td>2005.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1906</th>
+      <td>mexico</td>
+      <td>2010.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1907</th>
+      <td>micronesia</td>
+      <td>2014.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1908</th>
+      <td>lebanon</td>
+      <td>2014.0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>1909 rows × 3 columns</p>
+</div>
 </div>
 </div>
 <div id="country-bar-plot-with-plotly" class="section level1"
@@ -600,16 +1790,15 @@ plotly</h1>
 <p>Select the top 25 of countries involved in coronavirus research since
 2001, plot the evolution on a bar chart with plot_ly</p>
 <div class="python">
-<pre class="python"><code>wide_countries = countries_year.pivot(index=&quot;year_pub&quot;, columns=&quot;country&quot;, values=&quot;n&quot;).reset_index()</code></pre>
-<pre><code>## NameError: name &#39;countries_year&#39; is not defined</code></pre>
-<pre class="python"><code>wide_countries = wide_countries[wide_countries.year_pub &gt; 2000]</code></pre>
-<pre><code>## NameError: name &#39;wide_countries&#39; is not defined</code></pre>
-<pre class="python"><code>countries_to_plot = list(wide_countries.fillna(0).drop(&#39;year_pub&#39;,axis = 1).apply(sum).sort_values(ascending=False).head(10).index)</code></pre>
-<pre><code>## NameError: name &#39;wide_countries&#39; is not defined</code></pre>
-<pre class="python"><code>fig = px.bar(wide_countries, x=&quot;year_pub&quot;, y=countries_to_plot)</code></pre>
-<pre><code>## NameError: name &#39;px&#39; is not defined</code></pre>
-<pre class="python"><code>fig.update_yaxes(type=&quot;log&quot;)</code></pre>
-<pre><code>## NameError: name &#39;fig&#39; is not defined</code></pre>
+<pre class="python"><code>wide_countries = countries_year.pivot(index=&quot;year_pub&quot;, columns=&quot;country&quot;, values=&quot;n&quot;).reset_index()
+wide_countries = wide_countries[wide_countries.year_pub &gt; 2000]
+
+countries_to_plot = list(wide_countries.fillna(0).drop(&#39;year_pub&#39;,axis = 1).apply(sum).sort_values(ascending=False).head(10).index)
+
+fig = px.bar(wide_countries, x=&quot;year_pub&quot;, y=countries_to_plot)
+fig.update_yaxes(type=&quot;log&quot;)</code></pre>
+<div style="height:100%; width:100%;">                        <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-4.1.1.min.js" integrity="sha256-O24V1F27f8pb0glCkelh3cVHLNiHAJ5gCaVtq2aNch8=" crossorigin="anonymous"></script>                <div id="50bc3379-72e1-4921-96cf-c805d5ad5343" class="plotly-graph-div" style="height:100%; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("50bc3379-72e1-4921-96cf-c805d5ad5343")) {                    Plotly.newPlot(                        "50bc3379-72e1-4921-96cf-c805d5ad5343",                        [{"hovertemplate":"variable=united states\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"united states","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"united states","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAABAZEAAAAAAAMBgQAAAAAAAAG5AAAAAAABweEAAAAAAAHB5QAAAAAAAIH5AAAAAAABAe0AAAAAAAIiAQAAAAAAAUIFAAAAAAACQgkAAAAAAAFiCQAAAAAAAgIJAAAAAAACQhEAAAAAAAPCFQAAAAAAAWIlAAAAAAAD4iEAAAAAAAACJQAAAAAAACIlAAAAAAADYikAAAAAAAMrGQAAAAAAAADVA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=china\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"china","marker":{"color":"#EF553B","pattern":{"shape":""}},"name":"china","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAA+H8AAAAAAAD4fwAAAAAAQFlAAAAAAADgZ0AAAAAAAMBnQAAAAAAAQGVAAAAAAACgY0AAAAAAAEBiQAAAAAAAYGVAAAAAAAAgbEAAAAAAAOBkQAAAAAAAAGZAAAAAAADwc0AAAAAAAFB4QAAAAAAACIBAAAAAAABogEAAAAAAALCBQAAAAAAAcIJAAAAAAAAYh0AAAAAAANC+QAAAAAAAADlA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=united kingdom\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"united kingdom","marker":{"color":"#00cc96","pattern":{"shape":""}},"name":"united kingdom","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAANkAAAAAAAAA2QAAAAAAAgE1AAAAAAADAUUAAAAAAAEBSQAAAAAAAgFVAAAAAAACAU0AAAAAAAEBWQAAAAAAAAFpAAAAAAAAAVkAAAAAAAIBXQAAAAAAAAFdAAAAAAADAX0AAAAAAAABnQAAAAAAAcHBAAAAAAACgakAAAAAAAABuQAAAAAAA4GpAAAAAAABgckAAAAAAAHa4QAAAAAAAACRA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=italy\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"italy","marker":{"color":"#ab63fa","pattern":{"shape":""}},"name":"italy","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAJEAAAAAAAAAgQAAAAAAAADJAAAAAAAAAOEAAAAAAAIBBQAAAAAAAAD5AAAAAAAAAQEAAAAAAAIBCQAAAAAAAgEBAAAAAAAAAP0AAAAAAAIBEQAAAAAAAgEVAAAAAAAAASEAAAAAAAMBRQAAAAAAAwFdAAAAAAABAXEAAAAAAAEBbQAAAAAAAgFxAAAAAAACAYEAAAAAAABa3QAAAAAAAABRA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=india\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"india","marker":{"color":"#FFA15A","pattern":{"shape":""}},"name":"india","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAEEAAAAAAAADwPwAAAAAAABRAAAAAAAAAIkAAAAAAAAAgQAAAAAAAACRAAAAAAAAAIkAAAAAAAAA4QAAAAAAAADJAAAAAAACAQEAAAAAAAAA\u002fQAAAAAAAAD5AAAAAAAAAS0AAAAAAAIBVQAAAAAAAAFFAAAAAAAAAV0AAAAAAAABXQAAAAAAAwFdAAAAAAABAYEAAAAAAAMKpQAAAAAAAACBA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=france\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"france","marker":{"color":"#19d3f3","pattern":{"shape":""}},"name":"france","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAJkAAAAAAAAAqQAAAAAAAADFAAAAAAAAAQEAAAAAAAIBDQAAAAAAAAEJAAAAAAAAAR0AAAAAAAABEQAAAAAAAAExAAAAAAACARUAAAAAAAIBKQAAAAAAAAEZAAAAAAADAVUAAAAAAACBgQAAAAAAAwGBAAAAAAAAAYkAAAAAAAABhQAAAAAAAwGNAAAAAAACAY0AAAAAAALSkQAAAAAAAABBA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=canada\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"canada","marker":{"color":"#FF6692","pattern":{"shape":""}},"name":"canada","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAMEAAAAAAAAAqQAAAAAAAgEZAAAAAAACAUUAAAAAAAIBOQAAAAAAAAFJAAAAAAAAAT0AAAAAAAMBRQAAAAAAAgFFAAAAAAABAUEAAAAAAAIBPQAAAAAAAgFJAAAAAAABAVkAAAAAAAEBdQAAAAAAAgGBAAAAAAACAYUAAAAAAAIBeQAAAAAAAIGFAAAAAAADAZUAAAAAAAHaiQAAAAAAAABBA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=germany\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"germany","marker":{"color":"#B6E880","pattern":{"shape":""}},"name":"germany","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAM0AAAAAAAAA2QAAAAAAAAD9AAAAAAACAQUAAAAAAAABCQAAAAAAAgFFAAAAAAACASkAAAAAAAIBNQAAAAAAAgEtAAAAAAAAAR0AAAAAAAIBNQAAAAAAAAEhAAAAAAAAAVEAAAAAAACBgQAAAAAAA4GJAAAAAAABAY0AAAAAAAMBkQAAAAAAAgGVAAAAAAADAZkAAAAAAANSgQAAAAAAAAPA\u002f"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=australia\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"australia","marker":{"color":"#FF97FF","pattern":{"shape":""}},"name":"australia","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAAEAAAAAAAAAUQAAAAAAAACRAAAAAAAAANkAAAAAAAAA6QAAAAAAAgEBAAAAAAACAQ0AAAAAAAABGQAAAAAAAgElAAAAAAAAAO0AAAAAAAABHQAAAAAAAAEVAAAAAAAAAUkAAAAAAAIBYQAAAAAAAgF5AAAAAAACAXkAAAAAAAMBcQAAAAAAAYGBAAAAAAABAYUAAAAAAAHagQAAAAAAAAAhA"},"yaxis":"y","type":"bar"},{"hovertemplate":"variable=spain\u003cbr\u003eyear_pub=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"spain","marker":{"color":"#FECB52","pattern":{"shape":""}},"name":"spain","orientation":"v","showlegend":true,"textposition":"auto","x":{"dtype":"f8","bdata":"AAAAAABEn0AAAAAAAEifQAAAAAAATJ9AAAAAAABQn0AAAAAAAFSfQAAAAAAAWJ9AAAAAAABcn0AAAAAAAGCfQAAAAAAAZJ9AAAAAAABon0AAAAAAAGyfQAAAAAAAcJ9AAAAAAAB0n0AAAAAAAHifQAAAAAAAfJ9AAAAAAACAn0AAAAAAAISfQAAAAAAAiJ9AAAAAAACMn0AAAAAAAJCfQAAAAAAAlJ9A"},"xaxis":"x","y":{"dtype":"f8","bdata":"AAAAAAAAIEAAAAAAAAAmQAAAAAAAADFAAAAAAAAALEAAAAAAAAAyQAAAAAAAADJAAAAAAAAAM0AAAAAAAABDQAAAAAAAAD9AAAAAAAAAOUAAAAAAAABBQAAAAAAAAEZAAAAAAAAARkAAAAAAAIBPQAAAAAAAAFRAAAAAAAAAVkAAAAAAAEBTQAAAAAAAgFhAAAAAAACAW0AAAAAAANyfQAAAAAAAABRA"},"yaxis":"y","type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"year_pub"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"value"},"type":"log"},"legend":{"title":{"text":"variable"},"tracegroupgap":0},"margin":{"t":60},"barmode":"relative"},                        {"responsive": true}                    )                };            </script>        </div>
 </div>
 </div>
 </div>

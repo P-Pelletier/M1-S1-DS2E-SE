@@ -19,6 +19,7 @@ div.r pre { background-color: #fff5fd; }
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, error=TRUE, warnings = F ,collapse = T)
+Sys.setenv(RETICULATE_PYTHON = "managed")  # ignore any interpreter set by RStudio, use py_require()
 library(reticulate)
 ```
 

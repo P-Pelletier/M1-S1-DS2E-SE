@@ -1793,19 +1793,116 @@ package Pandas is also view deeper in following chapters.</p>
 <pre class="python"><code># Python
 
 import pandas
-## ModuleNotFoundError: No module named &#39;pandas&#39;
 
 df = pandas.DataFrame(arr)
-## NameError: name &#39;pandas&#39; is not defined
-df
-## NameError: name &#39;df&#39; is not defined
+df</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>12</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre class="python"><code>
 vec = [1,2,3,4,5,6]
 
 df = pandas.DataFrame({&#39;vec&#39;:vec,&#39;vec1&#39;:range(2,8)})
-## NameError: name &#39;pandas&#39; is not defined
-df
-## NameError: name &#39;df&#39; is not defined</code></pre>
+df</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>vec</th>
+      <th>vec1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
 <div class="python">
 <pre class="python"><code># Python
@@ -1813,21 +1910,86 @@ df
 # access element of a Pandas Data Frame
 
 df[&#39;vec&#39;] 
-## NameError: name &#39;df&#39; is not defined</code></pre>
+## 0    1
+## 1    2
+## 2    3
+## 3    4
+## 4    5
+## 5    6
+## Name: vec, dtype: int64</code></pre>
 <pre class="python"><code># modify
 vec2 = range(3,9)
 df[&#39;vec2&#39;] = vec2 # add values from other vector
-## NameError: name &#39;df&#39; is not defined
 a
 ## {1, 2, 3, 12, 14}</code></pre>
 <pre class="python"><code># mutable
 
 df2 = df
-## NameError: name &#39;df&#39; is not defined
-df[&#39;vec&#39;][0] = 30
-## NameError: name &#39;df&#39; is not defined
-df2
-## NameError: name &#39;df2&#39; is not defined</code></pre>
+df.loc[0, &#39;vec&#39;] = 30
+df2</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>vec</th>
+      <th>vec1</th>
+      <th>vec2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>30</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>4</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>6</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>7</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
 <div
 style="border:1px solid; padding:10px; margin-bottom:10px; border-radius: 10px; background-color: #f9f9f9;">
@@ -1838,12 +2000,12 @@ dictionary with two columns: “Name” and “Age”.</p>
 Click here to see the solution
 </summary>
 <pre class="python"><code>import pandas as pd
-## ModuleNotFoundError: No module named &#39;pandas&#39;
 data = {&quot;Name&quot;: [&quot;Alice&quot;, &quot;Bob&quot;], &quot;Age&quot;: [25, 24]}
 df = pd.DataFrame(data)
-## NameError: name &#39;pd&#39; is not defined
 print(df)
-## NameError: name &#39;df&#39; is not defined</code></pre>
+##     Name  Age
+## 0  Alice   25
+## 1    Bob   24</code></pre>
 </details>
 <p>
  
@@ -1855,9 +2017,10 @@ that contains the square of ‘Age’.</p>
 Click here to see the solution
 </summary>
 <pre class="python"><code>df[&quot;Squared_Age&quot;] = df[&quot;Age&quot;] ** 2
-## NameError: name &#39;df&#39; is not defined
 print(df)
-## NameError: name &#39;df&#39; is not defined</code></pre>
+##     Name  Age  Squared_Age
+## 0  Alice   25          625
+## 1    Bob   24          576</code></pre>
 </details>
 </div>
 <p>
@@ -2006,7 +2169,7 @@ while total &lt; 1:
     total += rnd
   
 total
-## 2.407072142880679</code></pre>
+## 3.0931345930306255</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -2036,7 +2199,7 @@ while(total &lt; 1){
 }
   
 total
-## [1] 1.04074</code></pre>
+## [1] 1.953584</code></pre>
 </div>
 </div>
 </div>
@@ -2102,7 +2265,7 @@ for val in lst:
   if val &gt; 2:
     results.append(val)
 time.time()-t
-## 0.0020782947540283203
+## 0.0018138885498046875
 
 results
 ## [3, 4]
@@ -2111,7 +2274,7 @@ t = time.time()
 # this loop their will produce the same output than a using List comprehension.
 results = [val for val in lst if val&gt;2]
 time.time()-t
-## 0.0015559196472167969
+## 0.0012218952178955078
 
 results
 ## [3, 4]</code></pre>
@@ -2129,7 +2292,7 @@ for val in st:
   if val &gt; 2:
     results.add(val)
 time.time()-t
-## 0.0018169879913330078
+## 0.0019757747650146484
 
 results
 ## {3, 4}
@@ -2139,7 +2302,7 @@ t = time.time()
 # this loop their will produce the same output than a using Set comprehension.
 results = {val for val in st if val&gt;2}
 time.time()-t
-## 0.001191854476928711
+## 0.0013418197631835938
 
 results
 ## {3, 4}</code></pre>
@@ -2157,7 +2320,7 @@ for val in dct:
   if dct[val] &gt; 2:
     results.update({str(val): dct[val]})
 time.time()-t
-## 0.0018947124481201172
+## 0.001895904541015625
 
 results
 ## {&#39;c&#39;: 3, &#39;d&#39;: 4}
@@ -2166,7 +2329,7 @@ t = time.time()
 # this loop their will produce the same output than a using Dict comprehension.
 results = {str(val): dct[val] for val in dct if dct[val]&gt;2}
 time.time()-t
-## 0.0012462139129638672
+## 0.0012140274047851562
 
 results
 ## {&#39;c&#39;: 3, &#39;d&#39;: 4}</code></pre>
@@ -2245,7 +2408,7 @@ t = time.time()
 clean_sum(seq = seq)
 ## 1560
 time.time() - t
-## 0.001252889633178711
+## 0.0013709068298339844
 
 
 def clean_sum2(seq):
@@ -2256,7 +2419,7 @@ t = time.time()
 clean_sum2(seq = seq)
 ## 1560
 time.time() - t
-## 0.0012462139129638672</code></pre>
+## 0.0012869834899902344</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -2279,7 +2442,7 @@ t = Sys.time()
 clean_sum(seq = seq)
 ## [1] 1560
 Sys.time() - t
-## Time difference of 0.001461983 secs
+## Time difference of 0.001450062 secs
 
 
 
@@ -2292,7 +2455,7 @@ t &lt;- Sys.time()
 clean_sum(seq = seq)
 ## [1] 1560
 Sys.time() - t
-## Time difference of 0.0003421307 secs</code></pre>
+## Time difference of 0.0003631115 secs</code></pre>
 </div>
 </div>
 </div>
