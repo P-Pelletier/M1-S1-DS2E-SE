@@ -371,24 +371,19 @@ div.r pre { background-color: #fff5fd; }
 <div id="import-datasets" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Import datasets</h1>
 <div class="r">
-<pre class="python"><code>import pandas as pd</code></pre>
-<pre><code>## ModuleNotFoundError: No module named &#39;pandas&#39;</code></pre>
-<pre class="python"><code>import numpy as np
+<pre class="python"><code>import pandas as pd
+import numpy as np
 import time
 import re
-import seaborn as sns</code></pre>
-<pre><code>## ModuleNotFoundError: No module named &#39;seaborn&#39;</code></pre>
-<pre class="python"><code>import plotly.express as px</code></pre>
-<pre><code>## ModuleNotFoundError: No module named &#39;plotly&#39;</code></pre>
-<pre class="python"><code>t = time.time()
-table_1 = pd.read_csv(&#39;data/table_1.csv&#39;)</code></pre>
-<pre><code>## NameError: name &#39;pd&#39; is not defined</code></pre>
-<pre class="python"><code>table_2 = pd.read_csv(&#39;data/table_2.csv&#39;)</code></pre>
-<pre><code>## NameError: name &#39;pd&#39; is not defined</code></pre>
-<pre class="python"><code>cities = pd.read_csv(&#39;data/cities_loc.csv&#39;)</code></pre>
-<pre><code>## NameError: name &#39;pd&#39; is not defined</code></pre>
-<pre class="python"><code>time.time() - t</code></pre>
-<pre><code>## 0.006513118743896484</code></pre>
+import seaborn as sns
+import plotly.express as px
+
+t = time.time()
+table_1 = pd.read_csv(&#39;data/table_1.csv&#39;)
+table_2 = pd.read_csv(&#39;data/table_2.csv&#39;)
+cities = pd.read_csv(&#39;data/cities_loc.csv&#39;)
+time.time() - t</code></pre>
+<pre><code>## 0.3714570999145508</code></pre>
 </div>
 </div>
 

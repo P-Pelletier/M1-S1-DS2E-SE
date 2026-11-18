@@ -2169,7 +2169,7 @@ while total &lt; 1:
     total += rnd
   
 total
-## 3.0931345930306255</code></pre>
+## 1.3691356391282317</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -2199,7 +2199,7 @@ while(total &lt; 1){
 }
   
 total
-## [1] 1.953584</code></pre>
+## [1] 2.608267</code></pre>
 </div>
 </div>
 </div>
@@ -2265,7 +2265,7 @@ for val in lst:
   if val &gt; 2:
     results.append(val)
 time.time()-t
-## 0.0018138885498046875
+## 0.0019881725311279297
 
 results
 ## [3, 4]
@@ -2274,7 +2274,7 @@ t = time.time()
 # this loop their will produce the same output than a using List comprehension.
 results = [val for val in lst if val&gt;2]
 time.time()-t
-## 0.0012218952178955078
+## 0.0013289451599121094
 
 results
 ## [3, 4]</code></pre>
@@ -2292,7 +2292,7 @@ for val in st:
   if val &gt; 2:
     results.add(val)
 time.time()-t
-## 0.0019757747650146484
+## 0.0019359588623046875
 
 results
 ## {3, 4}
@@ -2302,7 +2302,7 @@ t = time.time()
 # this loop their will produce the same output than a using Set comprehension.
 results = {val for val in st if val&gt;2}
 time.time()-t
-## 0.0013418197631835938
+## 0.0013599395751953125
 
 results
 ## {3, 4}</code></pre>
@@ -2320,7 +2320,7 @@ for val in dct:
   if dct[val] &gt; 2:
     results.update({str(val): dct[val]})
 time.time()-t
-## 0.001895904541015625
+## 0.0019528865814208984
 
 results
 ## {&#39;c&#39;: 3, &#39;d&#39;: 4}
@@ -2329,7 +2329,7 @@ t = time.time()
 # this loop their will produce the same output than a using Dict comprehension.
 results = {str(val): dct[val] for val in dct if dct[val]&gt;2}
 time.time()-t
-## 0.0012140274047851562
+## 0.001233816146850586
 
 results
 ## {&#39;c&#39;: 3, &#39;d&#39;: 4}</code></pre>
@@ -2408,7 +2408,7 @@ t = time.time()
 clean_sum(seq = seq)
 ## 1560
 time.time() - t
-## 0.0013709068298339844
+## 0.0014672279357910156
 
 
 def clean_sum2(seq):
@@ -2419,7 +2419,7 @@ t = time.time()
 clean_sum2(seq = seq)
 ## 1560
 time.time() - t
-## 0.0012869834899902344</code></pre>
+## 0.0013082027435302734</code></pre>
 </div>
 </div>
 <div class="col-md-6">
@@ -2442,7 +2442,7 @@ t = Sys.time()
 clean_sum(seq = seq)
 ## [1] 1560
 Sys.time() - t
-## Time difference of 0.001450062 secs
+## Time difference of 0.001454115 secs
 
 
 
@@ -2455,7 +2455,7 @@ t &lt;- Sys.time()
 clean_sum(seq = seq)
 ## [1] 1560
 Sys.time() - t
-## Time difference of 0.0003631115 secs</code></pre>
+## Time difference of 0.000317812 secs</code></pre>
 </div>
 </div>
 </div>
@@ -2583,9 +2583,9 @@ century (1 Jan 1901 to 31 Dec 2000)?</p>
 <p>
  
 </p>
-<p><a href="">Possible solutions in R and Python without
+<p><a href="exo_chap_1.html">Possible solutions in R and Python without
 vectorisation</a> <!--
- exo_chap_1.html
+ 
 --></p>
 </div>
 </div>
