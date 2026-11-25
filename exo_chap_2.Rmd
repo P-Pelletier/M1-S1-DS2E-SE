@@ -305,20 +305,51 @@ A palindromic number reads the same both ways. The largest palindrome made from 
 Find the largest palindrome made from the product of two 3-digit numbers.
 
 
+## R 
+
+<div class = "r">
+```{r}
+
+vec_palindrome = function(seq){
+  vec1 = rep(seq,each = length(seq))
+  vec2 = rep(seq,length(seq))
+  product = vec1*vec2
+  
+  product_inv = stringi::stri_reverse(product)
+  palindromes = product[which(product ==  product_inv)]
+  return(max(palindromes))
+}
+
+t = Sys.time()
+
+three_digits = 100:999
+vec_palindrome(three_digits)
+
+Sys.time() - t
+
+```
+</div>
+
 ## Python 
 
 <div class = "python">
 ```{python}
 # Python
-#
+import time 
+import numpy as np
+
+def vec_palindrome(seq):
+  products = np.repeat(seq, len(seq)) * np.tile(seq, len(seq))
+  products_str = products.astype(str)
+  products_inv = np.strings.slice(products_str, None, None, -1)
+  palindromes = products[products_str == products_inv]
+  return palindromes.max()
+
 t = time.time()
-three_digits = np.arange(100,1000)
-products = np.repeat(three_digits, len(three_digits))*np.tile(three_digits,len(three_digits))
-palindromes = [x for x in products if str(x)==str(x)[::-1]]
-print(max(palindromes))
-time.time() - t
+three_digits = np.arange(100, 1000)
+vec_palindrome(three_digits)
 
-
+t - time.time()
 ```
 
 </div>

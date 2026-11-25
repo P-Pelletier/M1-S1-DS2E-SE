@@ -402,7 +402,7 @@ t = Sys.time()
 sum_n_power_last_digit(1000,10)
 ##  [1] &quot;9&quot; &quot;1&quot; &quot;1&quot; &quot;0&quot; &quot;8&quot; &quot;4&quot; &quot;6&quot; &quot;7&quot; &quot;0&quot; &quot;0&quot;
 Sys.time() - t
-## Time difference of 0.01028299 secs</code></pre>
+## Time difference of 0.005660057 secs</code></pre>
 </div>
 </div>
 <div id="python" class="section level2" number="1.2">
@@ -436,7 +436,7 @@ t = time.time()
 sum_n_power_last_digit(1000,10)
 ## &#39;9110846700&#39;
 time.time() - t
-## 0.0062847137451171875</code></pre>
+## 0.005207061767578125</code></pre>
 </div>
 </div>
 </div>
@@ -464,7 +464,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below1(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 0.4741652 secs
+## Time difference of 0.4360371 secs
 
 
 
@@ -478,7 +478,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below2(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 1.007154 secs
+## Time difference of 0.9527838 secs
 
 
 
@@ -492,7 +492,7 @@ t &lt;- Sys.time()
 get_sum_multiples_below3(1000000,3,5)
 ## [1] 233333166668
 Sys.time() - t
-## Time difference of 0.008934021 secs</code></pre>
+## Time difference of 0.009004831 secs</code></pre>
 </div>
 </div>
 <div id="python-1" class="section level3" number="2.1.2">
@@ -513,7 +513,7 @@ t = time.time()
 get_sum_multiples_below1(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.02732110023498535
+## 0.025885820388793945
 
 
 def get_sum_multiples_below2(below,mutiple_1,multiple_2):
@@ -524,7 +524,7 @@ t = time.time()
 get_sum_multiples_below2(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.029674053192138672
+## 0.029647111892700195
 
 
 def get_sum_multiples_below3(below,mutiple_1,multiple_2):
@@ -536,7 +536,7 @@ t = time.time()
 get_sum_multiples_below3(1000000,3,5)
 ## 233333166668
 time.time() - t
-## 0.04199695587158203
+## 0.04060530662536621
 
 
 
@@ -549,7 +549,7 @@ t = time.time()
 get_sum_multiples_below4(1000000,3,5)
 ## np.int64(233333166668)
 time.time() - t
-## 0.017009973526000977</code></pre>
+## 0.017203807830810547</code></pre>
 </div>
 </div>
 </div>
@@ -589,7 +589,7 @@ t &lt;- Sys.time()
 nth_prime(10001)
 ## [1] 104743
 Sys.time() - t
-## Time difference of 0.758229 secs
+## Time difference of 0.7153111 secs
 
 
 nth_prime2 &lt;- function(nth){
@@ -610,7 +610,7 @@ t &lt;- Sys.time()
 nth_prime2(10001)
 ## [1] 104743
 Sys.time() - t
-## Time difference of 0.642859 secs</code></pre>
+## Time difference of 0.617552 secs</code></pre>
 </div>
 </div>
 <div id="python-2" class="section level3" number="2.2.2">
@@ -641,7 +641,7 @@ t = time.time()
 nth_prime(10001)
 ## 104743
 time.time() - t
-## 0.07897090911865234
+## 0.07639074325561523
 
 
 def nth_prime2(nth):
@@ -661,7 +661,7 @@ t = time.time()
 nth_prime2(10001)
 ## 104743
 time.time() - t
-## 0.1632099151611328</code></pre>
+## 0.16356778144836426</code></pre>
 </div>
 </div>
 </div>
@@ -672,19 +672,51 @@ time.time() - t
 made from the product of two 2-digit numbers is 9009 = 91 × 99.</p>
 <p>Find the largest palindrome made from the product of two 3-digit
 numbers.</p>
-<div id="python-3" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Python</h2>
+<div id="r-3" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> R</h2>
+<div class="r">
+<pre class="r"><code>
+vec_palindrome = function(seq){
+  vec1 = rep(seq,each = length(seq))
+  vec2 = rep(seq,length(seq))
+  product = vec1*vec2
+  
+  product_inv = stringi::stri_reverse(product)
+  palindromes = product[which(product ==  product_inv)]
+  return(max(palindromes))
+}
+
+t = Sys.time()
+
+three_digits = 100:999
+vec_palindrome(three_digits)
+## [1] 906609
+
+Sys.time() - t
+## Time difference of 0.400975 secs</code></pre>
+</div>
+</div>
+<div id="python-3" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Python</h2>
 <div class="python">
 <pre class="python"><code># Python
-#
+import time 
+import numpy as np
+
+def vec_palindrome(seq):
+  products = np.repeat(seq, len(seq)) * np.tile(seq, len(seq))
+  products_str = products.astype(str)
+  products_inv = np.strings.slice(products_str, None, None, -1)
+  palindromes = products[products_str == products_inv]
+  return palindromes.max()
+
 t = time.time()
-three_digits = np.arange(100,1000)
-products = np.repeat(three_digits, len(three_digits))*np.tile(three_digits,len(three_digits))
-palindromes = [x for x in products if str(x)==str(x)[::-1]]
-print(max(palindromes))
-## 906609
-time.time() - t
-## 0.08871102333068848</code></pre>
+three_digits = np.arange(100, 1000)
+vec_palindrome(three_digits)
+## np.int64(906609)
+
+t - time.time()
+## -0.07585906982421875</code></pre>
 </div>
 <p><a href="3_Arrays_Vectors.html"> Go back to chapter 2</a></p>
 </div>
